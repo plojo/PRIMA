@@ -1,1 +1,2 @@
-declare function handleLoad(_event: Event): void;
+declare namespace L01_HelloWorld {
+}
