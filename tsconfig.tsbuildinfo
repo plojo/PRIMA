@@ -165,6 +165,10 @@
         "version": "605943c2e042628fd1f00754c3c74c4ba52cd9369a7424b9d0414fe9a7f8c152",
         "signature": "cb6f510eb40b05aa4566f7c1115d67c132bbe566423d514864d2bd486dae8aab"
       },
+      "./l03_pongpaddles/main.ts": {
+        "version": "ae03b0f1d8cd0df497c071652cde8a868e3f3f414ec30623dbb71f3f4445363b",
+        "signature": "003ada123982c257e692bfa4d90ae4b0deb8f8c178b14943ac55bc3cb121cf26"
+      },
       "./node_modules/@types/node/globals.d.ts": {
         "version": "4d0e3b8334392a2e0adef9caf867118678fb8f38da90d8003184debd62d30f3b",
         "signature": "4d0e3b8334392a2e0adef9caf867118678fb8f38da90d8003184debd62d30f3b"
@@ -534,6 +538,10 @@
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "./l02_firstfudge/main.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l03_pongpaddles/main.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1299,6 +1307,8 @@
       "../../appdata/roaming/npm/node_modules/typescript/lib/lib.esnext.full.d.ts",
       "./fudge/fudgecore.d.ts",
       "./l01_helloworld/test.ts",
+      "./l02_firstfudge/main.ts",
+      "./l03_pongpaddles/main.ts",
       "./node_modules/@types/node/globals.d.ts",
       "./node_modules/@types/node/assert.d.ts",
       "./node_modules/@types/node/async_hooks.d.ts",
@@ -1344,8 +1354,7 @@
       "./node_modules/@types/node/ts3.2/globals.d.ts",
       "./node_modules/@types/node/ts3.2/index.d.ts",
       "./node_modules/@types/webgl2/index.d.ts",
-      "./node_modules/@types/ws/index.d.ts",
-      "./l02_firstfudge/main.ts"
+      "./node_modules/@types/ws/index.d.ts"
     ]
   },
   "version": "3.6.3"
