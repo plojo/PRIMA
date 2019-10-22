@@ -162,8 +162,8 @@
         "signature": "00c7c710670777427362faac6db39d872f23e7c77465ba8879ca5b58d905daa5"
       },
       "./l02_firstfudge/main.ts": {
-        "version": "9dea3d00202294bd4a6b1b77070d9f583990b4f02d2025b60d63106b257c3db9",
-        "signature": "272be63bbb341047188aa5990175f3d43973f5871bf88bfa74880e65b7b76de4"
+        "version": "605943c2e042628fd1f00754c3c74c4ba52cd9369a7424b9d0414fe9a7f8c152",
+        "signature": "cb6f510eb40b05aa4566f7c1115d67c132bbe566423d514864d2bd486dae8aab"
       },
       "./node_modules/@types/node/globals.d.ts": {
         "version": "4d0e3b8334392a2e0adef9caf867118678fb8f38da90d8003184debd62d30f3b",
@@ -1299,7 +1299,6 @@
       "../../appdata/roaming/npm/node_modules/typescript/lib/lib.esnext.full.d.ts",
       "./fudge/fudgecore.d.ts",
       "./l01_helloworld/test.ts",
-      "./l02_firstfudge/main.ts",
       "./node_modules/@types/node/globals.d.ts",
       "./node_modules/@types/node/assert.d.ts",
       "./node_modules/@types/node/async_hooks.d.ts",
@@ -1345,7 +1344,8 @@
       "./node_modules/@types/node/ts3.2/globals.d.ts",
       "./node_modules/@types/node/ts3.2/index.d.ts",
       "./node_modules/@types/webgl2/index.d.ts",
-      "./node_modules/@types/ws/index.d.ts"
+      "./node_modules/@types/ws/index.d.ts",
+      "./l02_firstfudge/main.ts"
     ]
   },
   "version": "3.6.3"
