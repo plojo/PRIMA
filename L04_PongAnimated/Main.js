@@ -1,11 +1,12 @@
 "use strict";
-var L03_PongPaddle;
-(function (L03_PongPaddle) {
+var L03_PongAnimated;
+(function (L03_PongAnimated) {
     var f = FudgeCore;
     window.addEventListener("load", hndLoad);
     let ball = new f.Node("Ball");
     let paddleLeft = new f.Node("PaddleLeft");
     let paddleRight = new f.Node("PaddleRight");
+    let keysPressed = {};
     function hndLoad(_event) {
         const canvas = document.querySelector("canvas");
         f.RenderManager.initialize();
@@ -18,32 +19,44 @@ var L03_PongPaddle;
         paddleLeft.getComponent(f.ComponentMesh).pivot.scaleY(4);
         paddleRight.cmpTransform.local.translateX(20);
         paddleRight.getComponent(f.ComponentMesh).pivot.scaleY(4);
-        L03_PongPaddle.viewport = new f.Viewport();
-        L03_PongPaddle.viewport.initialize("Viewport", pong, cmpCamera, canvas);
-        f.Debug.log(L03_PongPaddle.viewport);
+        L03_PongAnimated.viewport = new f.Viewport();
+        L03_PongAnimated.viewport.initialize("Viewport", pong, cmpCamera, canvas);
+        f.Debug.log(L03_PongAnimated.viewport);
+        window.addEventListener("keyup", hndKeyup);
         window.addEventListener("keydown", hndKeydown);
-        L03_PongPaddle.viewport.draw();
+        L03_PongAnimated.viewport.draw();
+        f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
+        f.Loop.start();
+    }
+    function update(_event) {
+        let moveSpeed = 0.5;
+        if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
+            paddleRight.cmpTransform.local.translate(new f.Vector3(0, moveSpeed, 0));
+        }
+        if (keysPressed[f.KEYBOARD_CODE.ARROW_LEFT]) {
+            paddleRight.cmpTransform.local.translate(new f.Vector3(-moveSpeed, 0, 0));
+        }
+        if (keysPressed[f.KEYBOARD_CODE.ARROW_RIGHT]) {
+            paddleRight.cmpTransform.local.translate(new f.Vector3(moveSpeed, 0, 0));
+        }
+        if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN]) {
+            paddleRight.cmpTransform.local.translate(new f.Vector3(0, -moveSpeed, 0));
+        }
+        if (keysPressed[f.KEYBOARD_CODE.W]) {
+            paddleLeft.cmpTransform.local.translate(new f.Vector3(0, moveSpeed, 0));
+        }
+        if (keysPressed[f.KEYBOARD_CODE.S]) {
+            paddleLeft.cmpTransform.local.translate(new f.Vector3(0, -moveSpeed, 0));
+        }
+        // f.Debug.log("update", keysPressed);
+        f.RenderManager.update();
+        L03_PongAnimated.viewport.draw();
+    }
+    function hndKeyup(_event) {
+        keysPressed[_event.code] = false;
     }
     function hndKeydown(_event) {
-        let moveSpeed = 0.5;
-        switch (_event.code) {
-            case f.KEYBOARD_CODE.W:
-                paddleLeft.cmpTransform.local.translate(new f.Vector3(0, moveSpeed, 0));
-                break;
-            case f.KEYBOARD_CODE.S:
-                paddleLeft.cmpTransform.local.translate(f.Vector3.Y(-moveSpeed));
-                break;
-            case f.KEYBOARD_CODE.ARROW_UP:
-                paddleRight.cmpTransform.local.translateY(moveSpeed);
-                break;
-            case f.KEYBOARD_CODE.ARROW_DOWN:
-                paddleRight.cmpTransform.local.translateY(-moveSpeed);
-                break;
-            default:
-                return;
-        }
-        f.RenderManager.update();
-        L03_PongPaddle.viewport.draw();
+        keysPressed[_event.code] = true;
     }
     function createPong() {
         let pong = new f.Node("Pong");
@@ -63,5 +76,5 @@ var L03_PongPaddle;
         pong.appendChild(paddleRight);
         return pong;
     }
-})(L03_PongPaddle || (L03_PongPaddle = {}));
+})(L03_PongAnimated || (L03_PongAnimated = {}));
 //# sourceMappingURL=Main.js.map
