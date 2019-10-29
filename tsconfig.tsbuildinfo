@@ -170,7 +170,7 @@
         "signature": "003ada123982c257e692bfa4d90ae4b0deb8f8c178b14943ac55bc3cb121cf26"
       },
       "./l04_ponganimated/main.ts": {
-        "version": "d28f1874d4dc10ef1eff32ba1f6fb88071e166594e6f4cd90a43f3696cd1b05e",
+        "version": "5b223c01aadedc79c34e7bc59fd183040af78fb7b2c5e1a36cfc0fa9ac782aeb",
         "signature": "3662e72af484089c4d78a1a56208d1e5384976b05dc9660cdc4ba82a84d59d4d"
       },
       "./node_modules/@types/node/globals.d.ts": {

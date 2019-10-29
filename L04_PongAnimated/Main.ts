@@ -1,27 +1,33 @@
 namespace L03_PongAnimated {
 
-    interface KeyPressed {
-        [code: string]: boolean;
-    }
+    // interface KeyPressed {
+    //     [code: string]: boolean;
+    // }
 
     import f = FudgeCore;
     window.addEventListener("load", hndLoad);
     export let viewport: f.Viewport;
 
-    let ball: f.Node = new f.Node("Ball");
-    let paddleLeft: f.Node = new f.Node("PaddleLeft");
-    let paddleRight: f.Node = new f.Node("PaddleRight");
-    let keysPressed: KeyPressed = {};
+    const ball: f.Node = new f.Node("Ball");
+    const paddleLeft: f.Node = new f.Node("PaddleLeft");
+    const paddleRight: f.Node = new f.Node("PaddleRight");
+    const keysPressed: Map<string, boolean> = new Map();
+
+    const randomNumber: () => number = () => (Math.random() * 2 - 1) / 2;
+    let ballVector: f.Vector3 = new f.Vector3(randomNumber(), randomNumber(), 0);
+
+    const xBoundary: number = 21;
+    const yBoundary: number = 13.5;
 
     function hndLoad(_event: Event): void {
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
         f.RenderManager.initialize();
         console.log(canvas);
 
-        let pong: f.Node = createPong();
+        const pong: f.Node = createPong();
 
-        let zPos: number = 42;
-        let cmpCamera: f.ComponentCamera = new f.ComponentCamera();
+        const zPos: number = 42;
+        const cmpCamera: f.ComponentCamera = new f.ComponentCamera();
         cmpCamera.pivot.translateZ(zPos);
 
         paddleLeft.cmpTransform.local.translateX(-20);
@@ -46,44 +52,65 @@ namespace L03_PongAnimated {
 
     function update(_event: Event): void {
         let moveSpeed: number = 0.5;
-        if (keysPressed[f.KEYBOARD_CODE.ARROW_UP]) {
+        if (keysPressed.get(f.KEYBOARD_CODE.ARROW_UP)) {
             paddleRight.cmpTransform.local.translate(new f.Vector3(0, moveSpeed, 0));
         }
-        if (keysPressed[f.KEYBOARD_CODE.ARROW_LEFT]) {
+        if (keysPressed.get(f.KEYBOARD_CODE.ARROW_LEFT)) {
             paddleRight.cmpTransform.local.translate(new f.Vector3(-moveSpeed, 0, 0));
         }
-        if (keysPressed[f.KEYBOARD_CODE.ARROW_RIGHT]) {
+        if (keysPressed.get(f.KEYBOARD_CODE.ARROW_RIGHT)) {
             paddleRight.cmpTransform.local.translate(new f.Vector3(moveSpeed, 0, 0));
         }
-        if (keysPressed[f.KEYBOARD_CODE.ARROW_DOWN]) {
+        if (keysPressed.get(f.KEYBOARD_CODE.ARROW_DOWN)) {
             paddleRight.cmpTransform.local.translate(new f.Vector3(0, -moveSpeed, 0));
         }
-        if (keysPressed[f.KEYBOARD_CODE.W]) {
+        if (keysPressed.get(f.KEYBOARD_CODE.W)) {
             paddleLeft.cmpTransform.local.translate(new f.Vector3(0, moveSpeed, 0));
         }
-        if (keysPressed[f.KEYBOARD_CODE.S]) {
+        if (keysPressed.get(f.KEYBOARD_CODE.S)) {
             paddleLeft.cmpTransform.local.translate(new f.Vector3(0, -moveSpeed, 0));
         }
-            
 
+        moveBall();
+
+        // f.Debug.log(ball.cmpTransform.local.translation);
         // f.Debug.log("update", keysPressed);
         f.RenderManager.update();
         viewport.draw();
     }
 
     function hndKeyup(_event: KeyboardEvent): void {
-        keysPressed[_event.code] = false;
+        keysPressed.set(_event.code, false);
     }
 
     function hndKeydown(_event: KeyboardEvent): void {
-        keysPressed[_event.code] = true;
+        keysPressed.set(_event.code, true);
+    }
+
+    function moveBall(): void {
+        const ballPos: f.Vector3 = ball.cmpTransform.local.translation;
+        if (ballPos.x >= xBoundary || ballPos.x <= -xBoundary) {
+            ballVector.x = -ballVector.x;
+            ballVector.scale(1.05);
+            randomizeColor(ball);
+        }
+        if (ballPos.y >= yBoundary || ballPos.y <= -yBoundary) {
+            ballVector.y = -ballVector.y;
+            ballVector.scale(1.1);
+            randomizeColor(ball);
+        }
+        if (ballPos.x >= xBoundary)
+            randomizeColor(paddleRight);
+        if (ballPos.x <= -xBoundary)
+            randomizeColor(paddleLeft);
+        ball.cmpTransform.local.translate(ballVector);
     }
 
     function createPong(): f.Node {
         let pong: f.Node = new f.Node("Pong");
 
         let meshQuad: f.Mesh = new f.MeshQuad();
-        let mtrSolidRandom: f.Material = new f.Material("SolidRandom", f.ShaderUniColor, new f.CoatColored(new f.Color(Math.random(), Math.random(), Math.random(), 1)));
+        let mtrSolidRandom: f.Material = new f.Material("SolidRandom", f.ShaderUniColor, randomColoredCoat());
 
         ball.addComponent(new f.ComponentMesh(meshQuad));
         ball.addComponent(new f.ComponentMaterial(mtrSolidRandom));
@@ -102,5 +129,13 @@ namespace L03_PongAnimated {
         pong.appendChild(paddleRight);
 
         return pong;
+    }
+
+    function randomizeColor(_node: f.Node): void {
+        (<f.ComponentMaterial>_node.getComponent(f.ComponentMaterial)).material.setCoat(randomColoredCoat());
+        f.RenderManager.updateNode(_node);
+    }
+    function randomColoredCoat(): f.CoatColored {
+        return new f.CoatColored(new f.Color(Math.random(), Math.random(), Math.random(), 1));
     }
 }
