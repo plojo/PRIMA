@@ -1,4 +1,4 @@
-declare namespace L04_PongAnimated {
+declare namespace L05_PongReflection {
     import f = FudgeCore;
     let viewport: f.Viewport;
 }

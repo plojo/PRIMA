@@ -1412,10 +1412,46 @@ var FudgeCore;
                 this.useRenderData(_renderShader);
             }
         }
+        static injectRenderDataForCoatMatCap(_renderShader) {
+            let crc3 = FudgeCore.RenderOperator.getRenderingContext();
+            let colorUniformLocation = _renderShader.uniforms["u_tint_color"];
+            let { r, g, b, a } = this.tintColor;
+            let tintColorArray = new Float32Array([r, g, b, a]);
+            crc3.uniform4fv(colorUniformLocation, tintColorArray);
+            let floatUniformLocation = _renderShader.uniforms["u_flatmix"];
+            let flatMix = this.flatMix;
+            crc3.uniform1f(floatUniformLocation, flatMix);
+            if (this.renderData) {
+                // buffers exist
+                crc3.activeTexture(WebGL2RenderingContext.TEXTURE0);
+                crc3.bindTexture(WebGL2RenderingContext.TEXTURE_2D, this.renderData["texture0"]);
+                crc3.uniform1i(_renderShader.uniforms["u_texture"], 0);
+            }
+            else {
+                this.renderData = {};
+                // TODO: check if all WebGL-Creations are asserted
+                const texture = FudgeCore.RenderManager.assert(crc3.createTexture());
+                crc3.bindTexture(WebGL2RenderingContext.TEXTURE_2D, texture);
+                try {
+                    crc3.texImage2D(crc3.TEXTURE_2D, 0, crc3.RGBA, crc3.RGBA, crc3.UNSIGNED_BYTE, this.texture.image);
+                    crc3.texImage2D(WebGL2RenderingContext.TEXTURE_2D, 0, WebGL2RenderingContext.RGBA, WebGL2RenderingContext.RGBA, WebGL2RenderingContext.UNSIGNED_BYTE, this.texture.image);
+                }
+                catch (_e) {
+                    FudgeCore.Debug.error(_e);
+                }
+                crc3.texParameteri(WebGL2RenderingContext.TEXTURE_2D, WebGL2RenderingContext.TEXTURE_MAG_FILTER, WebGL2RenderingContext.NEAREST);
+                crc3.texParameteri(WebGL2RenderingContext.TEXTURE_2D, WebGL2RenderingContext.TEXTURE_MIN_FILTER, WebGL2RenderingContext.NEAREST);
+                crc3.generateMipmap(crc3.TEXTURE_2D);
+                this.renderData["texture0"] = texture;
+                crc3.bindTexture(WebGL2RenderingContext.TEXTURE_2D, null);
+                this.useRenderData(_renderShader);
+            }
+        }
     }
     RenderInjector.coatInjections = {
         "CoatColored": RenderInjector.injectRenderDataForCoatColored,
-        "CoatTextured": RenderInjector.injectRenderDataForCoatTextured
+        "CoatTextured": RenderInjector.injectRenderDataForCoatTextured,
+        "CoatMatCap": RenderInjector.injectRenderDataForCoatMatCap
     };
     FudgeCore.RenderInjector = RenderInjector;
 })(FudgeCore || (FudgeCore = {}));
@@ -1467,7 +1503,7 @@ var FudgeCore;
          */
         static getCanvasRect() {
             let canvas = RenderOperator.crc3.canvas;
-            return { x: 0, y: 0, width: canvas.width, height: canvas.height };
+            return FudgeCore.Rectangle.get(0, 0, canvas.width, canvas.height);
         }
         /**
          * Set the size of the offscreen-canvas.
@@ -1822,6 +1858,25 @@ var FudgeCore;
         FudgeCore.RenderInjector.decorateCoat
     ], CoatTextured);
     FudgeCore.CoatTextured = CoatTextured;
+    /**
+     * A [[Coat]] to be used by the MatCap Shader providing a texture, a tint color (0.5 grey is neutral)
+     * and a flatMix number for mixing between smooth and flat shading.
+     */
+    let CoatMatCap = class CoatMatCap extends Coat {
+        constructor(_texture, _tintcolor, _flatmix) {
+            super();
+            this.texture = null;
+            this.tintColor = new FudgeCore.Color(0.5, 0.5, 0.5, 1);
+            this.flatMix = 0.5;
+            this.texture = _texture || new FudgeCore.TextureImage();
+            this.tintColor = _tintcolor || new FudgeCore.Color(0.5, 0.5, 0.5, 1);
+            this.flatMix = _flatmix > 1.0 ? this.flatMix = 1.0 : this.flatMix = _flatmix || 0.5;
+        }
+    };
+    CoatMatCap = __decorate([
+        FudgeCore.RenderInjector.decorateCoat
+    ], CoatMatCap);
+    FudgeCore.CoatMatCap = CoatMatCap;
 })(FudgeCore || (FudgeCore = {}));
 /// <reference path="../Transfer/Serializer.ts"/>
 /// <reference path="../Transfer/Mutable.ts"/>
@@ -1893,6 +1948,7 @@ var FudgeCore;
         }
         reduceMutator(_mutator) {
             delete _mutator.singleton;
+            delete _mutator.container;
         }
     }
     FudgeCore.Component = Component;
@@ -2259,7 +2315,7 @@ var FudgeCore;
                 tanHorizontal = tanFov;
                 tanVertical = tanHorizontal / this.aspectRatio;
             }
-            return { x: 0, y: 0, width: tanHorizontal * 2, height: tanVertical * 2 };
+            return FudgeCore.Rectangle.get(0, 0, tanHorizontal * 2, tanVertical * 2);
         }
         //#region Transfer
         serialize() {
@@ -3102,9 +3158,11 @@ var FudgeCore;
             };
         }
         /**
-         * Creates a new viewport scenetree with a passed rootnode and camera and initializes all nodes currently in the tree(branch).
+         * Connects the viewport to the given canvas to render the given branch to using the given camera-component, and names the viewport as given.
+         * @param _name
          * @param _branch
          * @param _camera
+         * @param _canvas
          */
         initialize(_name, _branch, _camera, _canvas) {
             this.name = _name;
@@ -3125,13 +3183,13 @@ var FudgeCore;
          * Retrieve the size of the destination canvas as a rectangle, x and y are always 0
          */
         getCanvasRectangle() {
-            return { x: 0, y: 0, width: this.canvas.width, height: this.canvas.height };
+            return FudgeCore.Rectangle.get(0, 0, this.canvas.width, this.canvas.height);
         }
         /**
          * Retrieve the client rectangle the canvas is displayed and fit in, x and y are always 0
          */
         getClientRectangle() {
-            return { x: 0, y: 0, width: this.canvas.clientWidth, height: this.canvas.clientHeight };
+            return FudgeCore.Rectangle.get(0, 0, this.canvas.clientWidth, this.canvas.clientHeight);
         }
         /**
          * Set the branch to be drawn in the viewport.
@@ -3471,7 +3529,7 @@ var FudgeCore;
         KEYBOARD_CODE["ZERO"] = "Digit0";
         KEYBOARD_CODE["ONE"] = "Digit1";
         KEYBOARD_CODE["TWO"] = "Digit2";
-        KEYBOARD_CODE["TRHEE"] = "Digit3";
+        KEYBOARD_CODE["THREE"] = "Digit3";
         KEYBOARD_CODE["FOUR"] = "Digit4";
         KEYBOARD_CODE["FIVE"] = "Digit5";
         KEYBOARD_CODE["SIX"] = "Digit6";
@@ -3659,7 +3717,7 @@ var FudgeCore;
             return result;
         }
         getRect(_rectFrame) {
-            return { x: 0, y: 0, width: this.width, height: this.height };
+            return FudgeCore.Rectangle.get(0, 0, this.width, this.height);
         }
     }
     FudgeCore.FramingFixed = FramingFixed;
@@ -3686,7 +3744,7 @@ var FudgeCore;
             return result;
         }
         getRect(_rectFrame) {
-            return { x: 0, y: 0, width: this.normWidth * _rectFrame.width, height: this.normHeight * _rectFrame.height };
+            return FudgeCore.Rectangle.get(0, 0, this.normWidth * _rectFrame.width, this.normHeight * _rectFrame.height);
         }
     }
     FudgeCore.FramingScaled = FramingScaled;
@@ -3715,8 +3773,7 @@ var FudgeCore;
             let minY = _rectFrame.y + this.margin.top * _rectFrame.height + this.padding.top;
             let maxX = _rectFrame.x + (1 - this.margin.right) * _rectFrame.width - this.padding.right;
             let maxY = _rectFrame.y + (1 - this.margin.bottom) * _rectFrame.height - this.padding.bottom;
-            let rect = { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
-            return rect;
+            return FudgeCore.Rectangle.get(minX, minY, maxX - minX, maxY - minY);
         }
         getMutator() {
             return { margin: this.margin, padding: this.padding };
@@ -4403,6 +4460,52 @@ var FudgeCore;
     }
     FudgeCore.Matrix4x4 = Matrix4x4;
     //#endregion
+})(FudgeCore || (FudgeCore = {}));
+var FudgeCore;
+(function (FudgeCore) {
+    class Rectangle extends FudgeCore.Mutable {
+        constructor(_x = 0, _y = 0, _width = 1, _height = 1) {
+            super();
+            this.position = FudgeCore.Recycler.get(FudgeCore.Vector2);
+            this.size = FudgeCore.Recycler.get(FudgeCore.Vector2);
+            this.setPositionAndSize(_x, _y, _width, _height);
+        }
+        static get(_x = 0, _y = 0, _width = 1, _height = 1) {
+            let rect = FudgeCore.Recycler.get(Rectangle);
+            rect.setPositionAndSize(_x, _y, _width, _height);
+            return rect;
+        }
+        setPositionAndSize(_x = 0, _y = 0, _width = 1, _height = 1) {
+            this.position.set(_x, _y);
+            this.size.set(_width, _height);
+        }
+        get x() {
+            return this.position.x;
+        }
+        get y() {
+            return this.position.y;
+        }
+        get width() {
+            return this.size.x;
+        }
+        get height() {
+            return this.size.y;
+        }
+        set x(_x) {
+            this.position.x = _x;
+        }
+        set y(_y) {
+            this.position.y = _y;
+        }
+        set width(_width) {
+            this.position.x = _width;
+        }
+        set height(_height) {
+            this.position.y = _height;
+        }
+        reduceMutator(_mutator) { }
+    }
+    FudgeCore.Rectangle = Rectangle;
 })(FudgeCore || (FudgeCore = {}));
 var FudgeCore;
 (function (FudgeCore) {
@@ -5986,6 +6089,68 @@ var FudgeCore;
         }
     }
     FudgeCore.ShaderFlat = ShaderFlat;
+})(FudgeCore || (FudgeCore = {}));
+var FudgeCore;
+(function (FudgeCore) {
+    /**
+     * Matcap (Material Capture) shading. The texture provided by the coat is used as a matcap material.
+     * Implementation based on https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/
+     * @authors Simon Storl-Schulke, HFU, 2019 | Jirka Dell'Oro-Friedl, HFU, 2019
+     */
+    class ShaderMatCap extends FudgeCore.Shader {
+        static getCoat() {
+            return FudgeCore.CoatMatCap;
+        }
+        static getVertexShaderSource() {
+            return `#version 300 es
+
+                    in vec3 a_position;
+                    in vec3 a_normal;
+                    uniform mat4 u_projection;
+
+                    out vec2 tex_coords_smooth;
+                    flat out vec2 tex_coords_flat;
+
+                    void main() {
+                        mat4 normalMatrix = transpose(inverse(u_projection));
+                        vec4 p = vec4(a_position, 1.0);
+                        vec4 normal4 = vec4(a_normal, 1.0);
+                        vec3 e = normalize( vec3( u_projection * p ) );
+                        vec3 n = normalize( vec3(normalMatrix * normal4) );
+
+                        vec3 r = reflect( e, n );
+                        float m = 2. * sqrt(
+                            pow( r.x, 2. ) +
+                            pow( r.y, 2. ) +
+                            pow( r.z + 1., 2. )
+                        );
+
+                        tex_coords_smooth = r.xy / m + .5;
+                        tex_coords_flat = r.xy / m + .5;
+
+                        gl_Position = u_projection * vec4(a_position, 1.0);
+                    }`;
+        }
+        static getFragmentShaderSource() {
+            return `#version 300 es
+                    precision mediump float;
+                    
+                    uniform vec4 u_tint_color;
+                    uniform float u_flatmix;
+                    uniform sampler2D u_texture;
+                    
+                    in vec2 tex_coords_smooth;
+                    flat in vec2 tex_coords_flat;
+
+                    out vec4 frag;
+
+                    void main() {
+                        vec2 tc = mix(tex_coords_smooth, tex_coords_flat, u_flatmix);
+                        frag = u_tint_color * texture(u_texture, tc) * 2.0;
+                    }`;
+        }
+    }
+    FudgeCore.ShaderMatCap = ShaderMatCap;
 })(FudgeCore || (FudgeCore = {}));
 var FudgeCore;
 (function (FudgeCore) {

@@ -154,8 +154,8 @@
         "signature": "b209a815904a485328677714ef8c4ddd2dcf4040154fa204d25cbf31cd4ff0f3"
       },
       "./fudge/fudgecore.d.ts": {
-        "version": "efe7b63d09fccbb3aeda0caa266ad87b16be81d213eedfc10ff019947ec078ac",
-        "signature": "efe7b63d09fccbb3aeda0caa266ad87b16be81d213eedfc10ff019947ec078ac"
+        "version": "d969e790a200d9109aa6a372fd188b03f7d95632969c68fcaebcab398e8b8ad0",
+        "signature": "d969e790a200d9109aa6a372fd188b03f7d95632969c68fcaebcab398e8b8ad0"
       },
       "./l01_helloworld/test.ts": {
         "version": "c5c9bc697c79246e6c3ae40aa2f0b1aef5236536bfc4919c5a21e5393fd56422",
@@ -170,8 +170,12 @@
         "signature": "003ada123982c257e692bfa4d90ae4b0deb8f8c178b14943ac55bc3cb121cf26"
       },
       "./l04_ponganimated/main.ts": {
-        "version": "5b223c01aadedc79c34e7bc59fd183040af78fb7b2c5e1a36cfc0fa9ac782aeb",
-        "signature": "3662e72af484089c4d78a1a56208d1e5384976b05dc9660cdc4ba82a84d59d4d"
+        "version": "26f4c1c98d822260b41bf4a4e870d51b468225d4d24f92e11c5014c55bcb9ff1",
+        "signature": "af07223ce5be5367fd3d27ba626a7fc93eff2060532ad12b434a1171a688a794"
+      },
+      "./l05_pongreflection/main.ts": {
+        "version": "8125f69625579a7100671755338ae81eda6130fb68fc0ab0e0bd4d8b97a6b10a",
+        "signature": "234a77fd7e206f5e2a9be12e76fe37b88a54c74885a965c0383244d388bb3ed4"
       },
       "./node_modules/@types/node/globals.d.ts": {
         "version": "4d0e3b8334392a2e0adef9caf867118678fb8f38da90d8003184debd62d30f3b",
@@ -550,6 +554,10 @@
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "./l04_ponganimated/main.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l05_pongreflection/main.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1317,6 +1325,7 @@
       "./l01_helloworld/test.ts",
       "./l02_firstfudge/main.ts",
       "./l03_pongpaddles/main.ts",
+      "./l04_ponganimated/main.ts",
       "./node_modules/@types/node/globals.d.ts",
       "./node_modules/@types/node/assert.d.ts",
       "./node_modules/@types/node/async_hooks.d.ts",
@@ -1363,7 +1372,7 @@
       "./node_modules/@types/node/ts3.2/index.d.ts",
       "./node_modules/@types/webgl2/index.d.ts",
       "./node_modules/@types/ws/index.d.ts",
-      "./l04_ponganimated/main.ts"
+      "./l05_pongreflection/main.ts"
     ]
   },
   "version": "3.6.3"

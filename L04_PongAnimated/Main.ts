@@ -1,4 +1,4 @@
-namespace L03_PongAnimated {
+namespace L04_PongAnimated {
 
     // interface KeyPressed {
     //     [code: string]: boolean;
@@ -12,9 +12,8 @@ namespace L03_PongAnimated {
     const paddleLeft: f.Node = new f.Node("PaddleLeft");
     const paddleRight: f.Node = new f.Node("PaddleRight");
     const keysPressed: Map<string, boolean> = new Map();
-
     const randomNumber: () => number = () => (Math.random() * 2 - 1) / 2;
-    let ballVector: f.Vector3 = new f.Vector3(randomNumber(), randomNumber(), 0);
+    let ballDirection: f.Vector3 = new f.Vector3(randomNumber(), randomNumber(), 0);
 
     const xBoundary: number = 21;
     const yBoundary: number = 13.5;
@@ -90,20 +89,20 @@ namespace L03_PongAnimated {
     function moveBall(): void {
         const ballPos: f.Vector3 = ball.cmpTransform.local.translation;
         if (ballPos.x >= xBoundary || ballPos.x <= -xBoundary) {
-            ballVector.x = -ballVector.x;
-            ballVector.scale(1.05);
+            ballDirection.x = -ballDirection.x;
+            ballDirection.scale(1.05);
             randomizeColor(ball);
         }
         if (ballPos.y >= yBoundary || ballPos.y <= -yBoundary) {
-            ballVector.y = -ballVector.y;
-            ballVector.scale(1.1);
+            ballDirection.y = -ballDirection.y;
+            ballDirection.scale(1.1);
             randomizeColor(ball);
         }
         if (ballPos.x >= xBoundary)
             randomizeColor(paddleRight);
         if (ballPos.x <= -xBoundary)
             randomizeColor(paddleLeft);
-        ball.cmpTransform.local.translate(ballVector);
+        ball.cmpTransform.local.translate(ballDirection);
     }
 
     function createPong(): f.Node {
