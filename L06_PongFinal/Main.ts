@@ -14,8 +14,13 @@ namespace L06_PongFinal {
     let paddleRight: f.Node;
 
     const keysPressed: Map<string, boolean> = new Map();
-    const randomNumber: () => number = () => (Math.random() * 2 - 1) / 2;
-    let ballSpeed: f.Vector3 = new f.Vector3(randomNumber(), randomNumber(), 0);
+    
+    let ballMovement: f.Vector3;
+    let paddleSpeed: number = 0.5;
+    let scoreLeft: number = 0;
+    let scoreRight: number = 0;
+
+    let ctx: CanvasRenderingContext2D;
 
     function hndLoad(_event: Event): void {
         const canvas: HTMLCanvasElement = document.querySelector("canvas");
@@ -37,11 +42,18 @@ namespace L06_PongFinal {
 
         viewport.draw();
 
+        ctx = (<HTMLCanvasElement> document.getElementById("gameCanvas")).getContext("2d");
+        console.log(ctx);
+        ctx.font = "30px Comic Sans MS";
+        ctx.fillStyle = "red";
+
         f.Loop.addEventListener(f.EVENT.LOOP_FRAME, update);
         f.Loop.start();
     }
 
     function update(_event: Event): void {
+        ctx.fillText(scoreRight.toString(), 50, 50);
+        ctx.stroke();
         handleControls();
         handleCollision();
         moveBall();
@@ -50,24 +62,23 @@ namespace L06_PongFinal {
     }
 
     function handleControls(): void {
-        let moveSpeed: number = 0.5;
         if (keysPressed.get(f.KEYBOARD_CODE.ARROW_UP)) {
-            paddleRight.cmpTransform.local.translate(new f.Vector3(0, moveSpeed, 0));
+            paddleRight.cmpTransform.local.translate(new f.Vector3(0, paddleSpeed, 0));
         }
-        if (keysPressed.get(f.KEYBOARD_CODE.ARROW_LEFT)) {
-            paddleRight.cmpTransform.local.translate(new f.Vector3(-moveSpeed, 0, 0));
-        }
-        if (keysPressed.get(f.KEYBOARD_CODE.ARROW_RIGHT)) {
-            paddleRight.cmpTransform.local.translate(new f.Vector3(moveSpeed, 0, 0));
-        }
+        // if (keysPressed.get(f.KEYBOARD_CODE.ARROW_LEFT)) {
+        //     paddleRight.cmpTransform.local.translate(new f.Vector3(-paddleSpeed, 0, 0));
+        // }
+        // if (keysPressed.get(f.KEYBOARD_CODE.ARROW_RIGHT)) {
+        //     paddleRight.cmpTransform.local.translate(new f.Vector3(paddleSpeed, 0, 0));
+        // }
         if (keysPressed.get(f.KEYBOARD_CODE.ARROW_DOWN)) {
-            paddleRight.cmpTransform.local.translate(new f.Vector3(0, -moveSpeed, 0));
+            paddleRight.cmpTransform.local.translate(new f.Vector3(0, -paddleSpeed, 0));
         }
         if (keysPressed.get(f.KEYBOARD_CODE.W)) {
-            paddleLeft.cmpTransform.local.translate(new f.Vector3(0, moveSpeed, 0));
+            paddleLeft.cmpTransform.local.translate(new f.Vector3(0, paddleSpeed, 0));
         }
         if (keysPressed.get(f.KEYBOARD_CODE.S)) {
-            paddleLeft.cmpTransform.local.translate(new f.Vector3(0, -moveSpeed, 0));
+            paddleLeft.cmpTransform.local.translate(new f.Vector3(0, -paddleSpeed, 0));
         }
     }
 
@@ -80,9 +91,8 @@ namespace L06_PongFinal {
     }
 
     function moveBall(): void {
-        ball.cmpTransform.local.translate(ballSpeed);
+        ball.cmpTransform.local.translate(ballMovement);
     }
-
 
     function handleCollision(): void {
         for (let node of pong.getChildren()) {
@@ -104,24 +114,44 @@ namespace L06_PongFinal {
     }
 
     function processHit(_node: f.Node): void {
-        console.log("Reflect at: ", _node.name);
+        // console.log("Reflect at: ", _node.name);
         switch (_node.name) {
             case "BoundaryTop":
             case "BoundaryBottom":
-                ballSpeed.y *= -1;
+                ballMovement.y *= -1;
                 randomizeColor(ball);
                 break;
             case "BoundaryLeft":
+                scoreRight++;
+                ctx.fillText(scoreRight.toString(), 50, 50);
+                ctx.restore();
+                console.log("Right score: ", scoreRight);
+                resetBall();
+                break;
             case "BoundaryRight":
-                ballSpeed.x *= -1;
+                scoreLeft++;
+                console.log("Left score: ", scoreLeft);
+                resetBall();
                 break;
             case "PaddleLeft":
-                ballSpeed.x *= -1;
                 randomizeColor(paddleLeft);
+                ballMovement.x *= -1;
+                if (keysPressed.get(f.KEYBOARD_CODE.W)) {
+                    ballMovement.y += paddleSpeed * 0.2;
+                }
+                if (keysPressed.get(f.KEYBOARD_CODE.S)) {
+                    ballMovement.y -= paddleSpeed * 0.2;
+                }
                 break;
             case "PaddleRight":
-                ballSpeed.x *= -1;
                 randomizeColor(paddleRight);
+                ballMovement.x *= -1;
+                if (keysPressed.get(f.KEYBOARD_CODE.ARROW_UP)) {
+                    ballMovement.y += paddleSpeed * 0.2;
+                }
+                if (keysPressed.get(f.KEYBOARD_CODE.ARROW_DOWN)) {
+                    ballMovement.y -= paddleSpeed * 0.2;
+                }
                 break;
             default:
                 console.warn("Oh, nooooo", _node.name);
@@ -146,6 +176,7 @@ namespace L06_PongFinal {
         ball = createNode("Ball", meshQuad, mtrSolidRandom, f.Vector3.ZERO(), f.Vector3.ONE());
         paddleLeft = createNode("PaddleLeft", meshQuad, mtrSolidRandom, new f.Vector3(-19, 0, 0), new f.Vector3(1, 4, 1));
         paddleRight = createNode("PaddleRight", meshQuad, mtrSolidRandom, new f.Vector3(19, 0, 0), new f.Vector3(1, 4, 1));
+        resetBall();
 
         pong.appendChild(ball);
         pong.appendChild(paddleLeft);
@@ -162,6 +193,12 @@ namespace L06_PongFinal {
         node.cmpTransform.local.translate(_translation);
         node.getComponent(f.ComponentMesh).pivot.scale(_scaling);
         return node;
+    }
+
+    function resetBall(): void {
+        const randomNumber: () => number = () => (Math.random() * 2 - 1) / 2;
+        ballMovement = new f.Vector3(randomNumber(), randomNumber(), 0);
+        ball.cmpTransform.local.translation = f.Vector3.ZERO();
     }
 
     function randomizeColor(_node: f.Node): void {

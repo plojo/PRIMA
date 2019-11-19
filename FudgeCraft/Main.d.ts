@@ -1,4 +1,4 @@
-declare namespace L06_PongFinal {
+declare namespace FudgeCraft {
     import f = FudgeCore;
     let viewport: f.Viewport;
 }

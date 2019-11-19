@@ -1,6 +1,6 @@
 "use strict";
-var L05_PongReflection;
-(function (L05_PongReflection) {
+var L06_PongFinal;
+(function (L06_PongFinal) {
     // interface KeyPressed {
     //     [code: string]: boolean;
     // }
@@ -11,8 +11,11 @@ var L05_PongReflection;
     let paddleLeft;
     let paddleRight;
     const keysPressed = new Map();
-    const randomNumber = () => (Math.random() * 2 - 1) / 2;
-    let ballSpeed = new f.Vector3(randomNumber(), randomNumber(), 0);
+    let ballMovement;
+    let paddleSpeed = 0.5;
+    let scoreLeft = 0;
+    let scoreRight = 0;
+    let ctx;
     function hndLoad(_event) {
         const canvas = document.querySelector("canvas");
         f.RenderManager.initialize();
@@ -21,41 +24,46 @@ var L05_PongReflection;
         const zPos = 40;
         const cmpCamera = new f.ComponentCamera();
         cmpCamera.pivot.translateZ(zPos);
-        L05_PongReflection.viewport = new f.Viewport();
-        L05_PongReflection.viewport.initialize("Viewport", pong, cmpCamera, canvas);
-        f.Debug.log(L05_PongReflection.viewport);
+        L06_PongFinal.viewport = new f.Viewport();
+        L06_PongFinal.viewport.initialize("Viewport", pong, cmpCamera, canvas);
+        f.Debug.log(L06_PongFinal.viewport);
         window.addEventListener("keyup", hndKeyup);
         window.addEventListener("keydown", hndKeydown);
-        L05_PongReflection.viewport.draw();
+        L06_PongFinal.viewport.draw();
+        ctx = document.getElementById("gameCanvas").getContext("2d");
+        console.log(ctx);
+        ctx.font = "30px Comic Sans MS";
+        ctx.fillStyle = "red";
         f.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
         f.Loop.start();
     }
     function update(_event) {
+        ctx.fillText(scoreRight.toString(), 50, 50);
+        ctx.stroke();
         handleControls();
         handleCollision();
         moveBall();
         f.RenderManager.update();
-        L05_PongReflection.viewport.draw();
+        L06_PongFinal.viewport.draw();
     }
     function handleControls() {
-        let moveSpeed = 0.5;
         if (keysPressed.get(f.KEYBOARD_CODE.ARROW_UP)) {
-            paddleRight.cmpTransform.local.translate(new f.Vector3(0, moveSpeed, 0));
+            paddleRight.cmpTransform.local.translate(new f.Vector3(0, paddleSpeed, 0));
         }
-        if (keysPressed.get(f.KEYBOARD_CODE.ARROW_LEFT)) {
-            paddleRight.cmpTransform.local.translate(new f.Vector3(-moveSpeed, 0, 0));
-        }
-        if (keysPressed.get(f.KEYBOARD_CODE.ARROW_RIGHT)) {
-            paddleRight.cmpTransform.local.translate(new f.Vector3(moveSpeed, 0, 0));
-        }
+        // if (keysPressed.get(f.KEYBOARD_CODE.ARROW_LEFT)) {
+        //     paddleRight.cmpTransform.local.translate(new f.Vector3(-paddleSpeed, 0, 0));
+        // }
+        // if (keysPressed.get(f.KEYBOARD_CODE.ARROW_RIGHT)) {
+        //     paddleRight.cmpTransform.local.translate(new f.Vector3(paddleSpeed, 0, 0));
+        // }
         if (keysPressed.get(f.KEYBOARD_CODE.ARROW_DOWN)) {
-            paddleRight.cmpTransform.local.translate(new f.Vector3(0, -moveSpeed, 0));
+            paddleRight.cmpTransform.local.translate(new f.Vector3(0, -paddleSpeed, 0));
         }
         if (keysPressed.get(f.KEYBOARD_CODE.W)) {
-            paddleLeft.cmpTransform.local.translate(new f.Vector3(0, moveSpeed, 0));
+            paddleLeft.cmpTransform.local.translate(new f.Vector3(0, paddleSpeed, 0));
         }
         if (keysPressed.get(f.KEYBOARD_CODE.S)) {
-            paddleLeft.cmpTransform.local.translate(new f.Vector3(0, -moveSpeed, 0));
+            paddleLeft.cmpTransform.local.translate(new f.Vector3(0, -paddleSpeed, 0));
         }
     }
     function hndKeyup(_event) {
@@ -65,7 +73,7 @@ var L05_PongReflection;
         keysPressed.set(_event.code, true);
     }
     function moveBall() {
-        ball.cmpTransform.local.translate(ballSpeed);
+        ball.cmpTransform.local.translate(ballMovement);
     }
     function handleCollision() {
         for (let node of pong.getChildren()) {
@@ -85,24 +93,44 @@ var L05_PongReflection;
         return _position.x > topLeft.x && _position.y < topLeft.y && _position.x < bottomRight.x && _position.y > bottomRight.y;
     }
     function processHit(_node) {
-        console.log("Reflect at: ", _node.name);
+        // console.log("Reflect at: ", _node.name);
         switch (_node.name) {
             case "BoundaryTop":
             case "BoundaryBottom":
-                ballSpeed.y *= -1;
+                ballMovement.y *= -1;
                 randomizeColor(ball);
                 break;
             case "BoundaryLeft":
+                scoreRight++;
+                ctx.fillText(scoreRight.toString(), 50, 50);
+                ctx.restore();
+                console.log("Right score: ", scoreRight);
+                resetBall();
+                break;
             case "BoundaryRight":
-                ballSpeed.x *= -1;
+                scoreLeft++;
+                console.log("Left score: ", scoreLeft);
+                resetBall();
                 break;
             case "PaddleLeft":
-                ballSpeed.x *= -1;
                 randomizeColor(paddleLeft);
+                ballMovement.x *= -1;
+                if (keysPressed.get(f.KEYBOARD_CODE.W)) {
+                    ballMovement.y += paddleSpeed * 0.2;
+                }
+                if (keysPressed.get(f.KEYBOARD_CODE.S)) {
+                    ballMovement.y -= paddleSpeed * 0.2;
+                }
                 break;
             case "PaddleRight":
-                ballSpeed.x *= -1;
                 randomizeColor(paddleRight);
+                ballMovement.x *= -1;
+                if (keysPressed.get(f.KEYBOARD_CODE.ARROW_UP)) {
+                    ballMovement.y += paddleSpeed * 0.2;
+                }
+                if (keysPressed.get(f.KEYBOARD_CODE.ARROW_DOWN)) {
+                    ballMovement.y -= paddleSpeed * 0.2;
+                }
                 break;
             default:
                 console.warn("Oh, nooooo", _node.name);
@@ -123,6 +151,7 @@ var L05_PongReflection;
         ball = createNode("Ball", meshQuad, mtrSolidRandom, f.Vector3.ZERO(), f.Vector3.ONE());
         paddleLeft = createNode("PaddleLeft", meshQuad, mtrSolidRandom, new f.Vector3(-19, 0, 0), new f.Vector3(1, 4, 1));
         paddleRight = createNode("PaddleRight", meshQuad, mtrSolidRandom, new f.Vector3(19, 0, 0), new f.Vector3(1, 4, 1));
+        resetBall();
         pong.appendChild(ball);
         pong.appendChild(paddleLeft);
         pong.appendChild(paddleRight);
@@ -137,6 +166,11 @@ var L05_PongReflection;
         node.getComponent(f.ComponentMesh).pivot.scale(_scaling);
         return node;
     }
+    function resetBall() {
+        const randomNumber = () => (Math.random() * 2 - 1) / 2;
+        ballMovement = new f.Vector3(randomNumber(), randomNumber(), 0);
+        ball.cmpTransform.local.translation = f.Vector3.ZERO();
+    }
     function randomizeColor(_node) {
         _node.getComponent(f.ComponentMaterial).material.setCoat(randomColoredCoat());
         f.RenderManager.updateNode(_node);
@@ -144,5 +178,5 @@ var L05_PongReflection;
     function randomColoredCoat() {
         return new f.CoatColored(new f.Color(Math.random(), Math.random(), Math.random(), 1));
     }
-})(L05_PongReflection || (L05_PongReflection = {}));
+})(L06_PongFinal || (L06_PongFinal = {}));
 //# sourceMappingURL=Main.js.map
