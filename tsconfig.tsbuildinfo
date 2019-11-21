@@ -197,6 +197,22 @@
         "version": "b9b876e157c74e65dabeb37849930ea8a96568eda2fb9cc2997c642103fe1cd5",
         "signature": "b544a145eba8a4b070914a264977313b45414aac72d213daf54994d7f1ee5692"
       },
+      "./l08_fudgecraft_movement/cube.ts": {
+        "version": "c1800c76effbb56825a762419c9f2e872be42c87558ce034628b9905bf1b82ca",
+        "signature": "6628863fb18c7eb7dab92ccfe3765f6f3cd41490e20ee7773347bb1622d0a954"
+      },
+      "./l08_fudgecraft_movement/fragment.ts": {
+        "version": "28c896093dade283fea09058d1d3dc312d5008cf565f41a63f08daa1bb1ae934",
+        "signature": "d4d6e6f3b4dc6fb89619d830b3f086c9141d54c35584ae1775c63583bf9b8c49"
+      },
+      "./l08_fudgecraft_movement/grid.ts": {
+        "version": "283ab56c75912818b9552b76f0688db3c21bced4d82f9a05da6babd3d722297a",
+        "signature": "9bec77a06c06ecbb6ab5968f7c9a693f7eb6b5fd9e2de8608dc0b6ff6fea39bc"
+      },
+      "./l08_fudgecraft_movement/main.ts": {
+        "version": "fe97d212cd7cbcba8c06743a5e5e60bf441b5c8a8dc229741e7dd9dd79e0c94d",
+        "signature": "f0ac49ddfde1baab64159217b2a7710a19371970e243cc9cbbe0c0ef6ebd42c9"
+      },
       "./node_modules/@types/node/globals.d.ts": {
         "version": "4d0e3b8334392a2e0adef9caf867118678fb8f38da90d8003184debd62d30f3b",
         "signature": "4d0e3b8334392a2e0adef9caf867118678fb8f38da90d8003184debd62d30f3b"
@@ -598,6 +614,22 @@
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "./l07_fudgecraft_fragments/main.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l08_fudgecraft_movement/cube.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l08_fudgecraft_movement/fragment.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l08_fudgecraft_movement/grid.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l08_fudgecraft_movement/main.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1371,6 +1403,10 @@
       "./l06_pongfinal/main.ts",
       "./l07_fudgecraft_fragments/cube.ts",
       "./l07_fudgecraft_fragments/fragment.ts",
+      "./l07_fudgecraft_fragments/main.ts",
+      "./l08_fudgecraft_movement/cube.ts",
+      "./l08_fudgecraft_movement/fragment.ts",
+      "./l08_fudgecraft_movement/grid.ts",
       "./node_modules/@types/node/globals.d.ts",
       "./node_modules/@types/node/assert.d.ts",
       "./node_modules/@types/node/async_hooks.d.ts",
@@ -1417,7 +1453,7 @@
       "./node_modules/@types/node/ts3.2/index.d.ts",
       "./node_modules/@types/webgl2/index.d.ts",
       "./node_modules/@types/ws/index.d.ts",
-      "./l07_fudgecraft_fragments/main.ts"
+      "./l08_fudgecraft_movement/main.ts"
     ]
   },
   "version": "3.6.3"
