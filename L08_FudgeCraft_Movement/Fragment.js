@@ -17,8 +17,6 @@ var L08_FudgeCraft_Movement;
         }
         static getShapeArray() {
             return [
-                // core
-                [[0, 0, 0]],
                 // I
                 [[0, -1, 0], [0, 0, 0], [0, 1, 0], [0, 2, 0]],
                 // O
@@ -41,14 +39,14 @@ var L08_FudgeCraft_Movement;
         // }
         static getShapeToCubeType() {
             return new Map([
-                [0, L08_FudgeCraft_Movement.CUBE_TYPE.GRAY],
-                [1, L08_FudgeCraft_Movement.CUBE_TYPE.CYAN],
-                [2, L08_FudgeCraft_Movement.CUBE_TYPE.YELLOW],
-                [3, L08_FudgeCraft_Movement.CUBE_TYPE.MAGENTA],
-                [4, L08_FudgeCraft_Movement.CUBE_TYPE.RED],
-                [5, L08_FudgeCraft_Movement.CUBE_TYPE.BLUE],
-                [6, L08_FudgeCraft_Movement.CUBE_TYPE.ORANGE],
-                [7, L08_FudgeCraft_Movement.CUBE_TYPE.GREEN]
+                // [0, CUBE_TYPE.GRAY],
+                [0, L08_FudgeCraft_Movement.CUBE_TYPE.CYAN],
+                [1, L08_FudgeCraft_Movement.CUBE_TYPE.YELLOW],
+                [2, L08_FudgeCraft_Movement.CUBE_TYPE.MAGENTA],
+                [3, L08_FudgeCraft_Movement.CUBE_TYPE.RED],
+                [4, L08_FudgeCraft_Movement.CUBE_TYPE.BLUE],
+                [5, L08_FudgeCraft_Movement.CUBE_TYPE.ORANGE],
+                [6, L08_FudgeCraft_Movement.CUBE_TYPE.GREEN]
             ]);
         }
     }

@@ -154,8 +154,8 @@
         "signature": "b209a815904a485328677714ef8c4ddd2dcf4040154fa204d25cbf31cd4ff0f3"
       },
       "./fudge/fudgecore.d.ts": {
-        "version": "8e4290bc64bb8e8afef1cb35e8c42ca0a4c996b0550615aaecf507974d749fed",
-        "signature": "8e4290bc64bb8e8afef1cb35e8c42ca0a4c996b0550615aaecf507974d749fed"
+        "version": "a73a6d9c7a8c3f3cb9f4fa257be6b345263a07fb26e08d36f505e5ea8cf28a8c",
+        "signature": "a73a6d9c7a8c3f3cb9f4fa257be6b345263a07fb26e08d36f505e5ea8cf28a8c"
       },
       "./fudgecraft/main.ts": {
         "version": "102366aa6b0ae9021f238f5d047d2ca23a16a7e5638daab2321b56229929e923",
@@ -197,21 +197,97 @@
         "version": "b9b876e157c74e65dabeb37849930ea8a96568eda2fb9cc2997c642103fe1cd5",
         "signature": "b544a145eba8a4b070914a264977313b45414aac72d213daf54994d7f1ee5692"
       },
+      "./l08_fudgecraft_collision/control.ts": {
+        "version": "7364641b2331580b18447d265c03a699405baf92bfb54153e8f53ac22034cf2c",
+        "signature": "59ab5307d5740650872484e367e5b46e9dc7d0c870615ca1422433d9854a1d4d"
+      },
+      "./l08_fudgecraft_collision/cube.ts": {
+        "version": "beb9fd7e1c2ad88289ee47f04fb971a9f0fc65d3ecbb94c774b9923c76898b69",
+        "signature": "fa2dd9947b95a4b2d7c5fedbb4559196e34a22eaff000dc28400f5ce13f583a2"
+      },
+      "./l08_fudgecraft_collision/fragment.ts": {
+        "version": "f62c53148d5ac344599013d10a1b5e2c9f52801f73cb5743d92e337b4eb5c74e",
+        "signature": "65f53982648a33ec7d8ab3a64f37fe40a760757c1f6cd87d9938e0f5e679816e"
+      },
+      "./l08_fudgecraft_collision/grid.ts": {
+        "version": "68319eaa4f661510b5b8be318ade4a1539c6ba0528f913f7e81007f0bbfc424d",
+        "signature": "2ba6600d0852d4864484d12628990541150bb9623a80af1febfd4da9a133b936"
+      },
+      "./l08_fudgecraft_collision/main.ts": {
+        "version": "128d585d68534993c286b0ec056aba08688a91bb5a7506c9a0f2d02187d833e7",
+        "signature": "a638b446371065c1502c4bdd9e18293a08a89a5d28b8d45d12370e829e87a0d9"
+      },
+      "./l08_fudgecraft_collision/test.ts": {
+        "version": "50066602824b384c457ccf47be6540576d4138fe509b672a0f3e1f618f5fc188",
+        "signature": "4e9855736da024137edd3f3a0c9bd30292f23ad8c126dad38bbb15adfdc87846"
+      },
       "./l08_fudgecraft_movement/cube.ts": {
-        "version": "c1800c76effbb56825a762419c9f2e872be42c87558ce034628b9905bf1b82ca",
-        "signature": "6628863fb18c7eb7dab92ccfe3765f6f3cd41490e20ee7773347bb1622d0a954"
+        "version": "ca989ff2a3e92ef20cdf5379ab46d833db99b6093467221f9c9acc39eea7e883",
+        "signature": "e72560eb827df97b370e2061967896fc1a319883c5bd7ea18544a879024ee39a"
       },
       "./l08_fudgecraft_movement/fragment.ts": {
-        "version": "28c896093dade283fea09058d1d3dc312d5008cf565f41a63f08daa1bb1ae934",
+        "version": "d0fbdc7e25e0da83be5d9863a1333f495bed5392391639d28871c400aa1bd721",
         "signature": "d4d6e6f3b4dc6fb89619d830b3f086c9141d54c35584ae1775c63583bf9b8c49"
       },
       "./l08_fudgecraft_movement/grid.ts": {
-        "version": "283ab56c75912818b9552b76f0688db3c21bced4d82f9a05da6babd3d722297a",
-        "signature": "9bec77a06c06ecbb6ab5968f7c9a693f7eb6b5fd9e2de8608dc0b6ff6fea39bc"
+        "version": "4723f1f88a11ffdd913627b74ac2681326e0c5112ce8a077324561bcf3a9b34b",
+        "signature": "b7a1db8a2c72969d47c8f60ad8e8e93a25b3d5e5f9decc1b2fd91e64899c8b0e"
       },
       "./l08_fudgecraft_movement/main.ts": {
-        "version": "fe97d212cd7cbcba8c06743a5e5e60bf441b5c8a8dc229741e7dd9dd79e0c94d",
-        "signature": "f0ac49ddfde1baab64159217b2a7710a19371970e243cc9cbbe0c0ef6ebd42c9"
+        "version": "7401327e53b0e7d464829e93c490f5088d88d1c894e408a14516912f502c1b61",
+        "signature": "1818d34814c3abd382ff13ed0ac6ce3f8e5d7750934f604f707ee22229662b75"
+      },
+      "./l09_fudgecraft_camera/camera.ts": {
+        "version": "c5415dc01293d32b8f40abb47601fae0f4b4daeb76783130c197803c17aeb3f6",
+        "signature": "6c71735f4cbfa723e3cc9f71434357e8c5bc87c761e91c18abde4a075cf5d6a0"
+      },
+      "./l09_fudgecraft_camera/control.ts": {
+        "version": "addb8a32d4d4a592e3ec51be1980332896d8cfcba005305f0dd6ea968f690c33",
+        "signature": "14c99f77e0929805f49bb0c90e172eb2c784d23db4e4413064069382da9c6e8a"
+      },
+      "./l09_fudgecraft_camera/cube.ts": {
+        "version": "78df228f32016e480da35a0c2257ab606cf738fc323a960fc3bc5d122cd88082",
+        "signature": "6659ccafd88a58c57a9860ad67f79ae9d8649564b76a36d36aba8216c3b55d9c"
+      },
+      "./l09_fudgecraft_camera/fragment.ts": {
+        "version": "f5f7e40dc07120a9f5545f902f70ee96cbb5aa19a1ca73982aa5d66c1bc68913",
+        "signature": "f18628a903bfc00b61f73cf7b36b8bcc6033fa450c47bc365691647de7810b24"
+      },
+      "./l09_fudgecraft_camera/grid.ts": {
+        "version": "0ae3f9d321308cf972fb738b0ad9c89fbc77584ddea78a2f79b2682b5d4386b4",
+        "signature": "9a7991a40fd0aafc8b1804a53ce334784d033d2ba85ab824ef1490173d986445"
+      },
+      "./l09_fudgecraft_camera/main.ts": {
+        "version": "62806e0f3a4cb64ec99461cae7e8d482e570b28c6f6be99f6ab780808980cc7c",
+        "signature": "26d27e3a4bb19476ee3448fa094b15a6737a5c45d8c1e15c44179b7a4f96eb04"
+      },
+      "./l09_fudgecraft_camera/test.ts": {
+        "version": "2434c19bfed533eeb9a4ef3d2eca8e9df60293648f6b04440913d0e23bb03e8e",
+        "signature": "8801990c85f2bc4f10b01acadf5fef8e73f3cb2e7eb0ee75f7c864d1cd70ef06"
+      },
+      "./l10_fudgecraft_colordetection/camera.ts": {
+        "version": "778475cacb9809b41d22a4fcc3ba4b938385f5c735daab7f16930b87bd2fe9d7",
+        "signature": "de0b10880a3d1b73a2c1a8623e94f6b50e838ac5421d52077296c62f3f6215c7"
+      },
+      "./l10_fudgecraft_colordetection/control.ts": {
+        "version": "7da93810236c9fda8eb5a7e942322608a95047a14a86527bad6bc3118602c9ab",
+        "signature": "6d93379780e5a0a39b849f33293d29430c57a1c42047318bbc7f2df19164b73c"
+      },
+      "./l10_fudgecraft_colordetection/cube.ts": {
+        "version": "1a647dab87e11d5d434d2b0fd93c88ede7ee0db94707b1864ca35bd3474cc6cd",
+        "signature": "4ba72000a488291aeba8736c01fd1c99f622ef4429d468c54af0dbd5047f8de9"
+      },
+      "./l10_fudgecraft_colordetection/fragment.ts": {
+        "version": "41249959c5cf2e715b1f6a5962f6c01cee549e027de1a57d132b22f84eab7dea",
+        "signature": "2bc4794da75a7fa7cf73bd0d917c7bb8893dcc9e3b13297c600ff95c7f591993"
+      },
+      "./l10_fudgecraft_colordetection/grid.ts": {
+        "version": "b2ad736446a263d55bfabd4282cd9b547b83156f5d8452a280130d314972e104",
+        "signature": "c21bd321d0f88dd2fa49c2602bbe3662e4c3ded97e9b2a5dc90225a20bfd1c85"
+      },
+      "./l10_fudgecraft_colordetection/main.ts": {
+        "version": "d2c5911feecba7bdb2ae9113ca1d507a0a033d9daf09ad9b694afd7705d70d9b",
+        "signature": "35162594e28f53691e709b839fd3b0572ca5112aecca46a8d593d2e7250d30cd"
       },
       "./node_modules/@types/node/globals.d.ts": {
         "version": "4d0e3b8334392a2e0adef9caf867118678fb8f38da90d8003184debd62d30f3b",
@@ -617,6 +693,30 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "./l08_fudgecraft_collision/control.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l08_fudgecraft_collision/cube.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l08_fudgecraft_collision/fragment.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l08_fudgecraft_collision/grid.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l08_fudgecraft_collision/main.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l08_fudgecraft_collision/test.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "./l08_fudgecraft_movement/cube.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
@@ -630,6 +730,58 @@
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "./l08_fudgecraft_movement/main.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l09_fudgecraft_camera/camera.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l09_fudgecraft_camera/control.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l09_fudgecraft_camera/cube.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l09_fudgecraft_camera/fragment.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l09_fudgecraft_camera/grid.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l09_fudgecraft_camera/main.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l09_fudgecraft_camera/test.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l10_fudgecraft_colordetection/camera.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l10_fudgecraft_colordetection/control.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l10_fudgecraft_colordetection/cube.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l10_fudgecraft_colordetection/fragment.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l10_fudgecraft_colordetection/grid.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l10_fudgecraft_colordetection/main.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1404,9 +1556,28 @@
       "./l07_fudgecraft_fragments/cube.ts",
       "./l07_fudgecraft_fragments/fragment.ts",
       "./l07_fudgecraft_fragments/main.ts",
+      "./l08_fudgecraft_collision/control.ts",
+      "./l08_fudgecraft_collision/cube.ts",
+      "./l08_fudgecraft_collision/fragment.ts",
+      "./l08_fudgecraft_collision/grid.ts",
+      "./l08_fudgecraft_collision/main.ts",
+      "./l08_fudgecraft_collision/test.ts",
       "./l08_fudgecraft_movement/cube.ts",
       "./l08_fudgecraft_movement/fragment.ts",
       "./l08_fudgecraft_movement/grid.ts",
+      "./l08_fudgecraft_movement/main.ts",
+      "./l09_fudgecraft_camera/camera.ts",
+      "./l09_fudgecraft_camera/control.ts",
+      "./l09_fudgecraft_camera/cube.ts",
+      "./l09_fudgecraft_camera/fragment.ts",
+      "./l09_fudgecraft_camera/grid.ts",
+      "./l09_fudgecraft_camera/main.ts",
+      "./l09_fudgecraft_camera/test.ts",
+      "./l10_fudgecraft_colordetection/camera.ts",
+      "./l10_fudgecraft_colordetection/control.ts",
+      "./l10_fudgecraft_colordetection/cube.ts",
+      "./l10_fudgecraft_colordetection/fragment.ts",
+      "./l10_fudgecraft_colordetection/main.ts",
       "./node_modules/@types/node/globals.d.ts",
       "./node_modules/@types/node/assert.d.ts",
       "./node_modules/@types/node/async_hooks.d.ts",
@@ -1453,7 +1624,20 @@
       "./node_modules/@types/node/ts3.2/index.d.ts",
       "./node_modules/@types/webgl2/index.d.ts",
       "./node_modules/@types/ws/index.d.ts",
-      "./l08_fudgecraft_movement/main.ts"
+      [
+        "./l10_fudgecraft_colordetection/grid.ts",
+        [
+          {
+            "file": "./l10_fudgecraft_colordetection/grid.ts",
+            "start": 3776,
+            "length": 24,
+            "messageText": "'getSameColoredNeighbours' is declared but its value is never read.",
+            "category": 1,
+            "code": 6133,
+            "reportsUnnecessary": true
+          }
+        ]
+      ]
     ]
   },
   "version": "3.6.3"

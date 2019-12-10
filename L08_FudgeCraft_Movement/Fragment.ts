@@ -1,6 +1,6 @@
 namespace L08_FudgeCraft_Movement {
     import f = FudgeCore;
-
+    
     export class Fragment extends f.Node {
         private static shapes: number[][][] = Fragment.getShapeArray();
         private static shapeToCubeType: Map<Number, CUBE_TYPE> = Fragment.getShapeToCubeType();
@@ -20,8 +20,6 @@ namespace L08_FudgeCraft_Movement {
 
         private static getShapeArray(): number[][][] {
             return [
-                // core
-                [[0, 0, 0]],
                 // I
                 [[0, -1, 0], [0, 0, 0], [0, 1, 0], [0, 2, 0]],
                 // O
@@ -46,14 +44,14 @@ namespace L08_FudgeCraft_Movement {
 
         private static getShapeToCubeType(): Map<Number, CUBE_TYPE> {
             return new Map<Number, CUBE_TYPE>([
-                [0, CUBE_TYPE.GRAY],
-                [1, CUBE_TYPE.CYAN],
-                [2, CUBE_TYPE.YELLOW],
-                [3, CUBE_TYPE.MAGENTA],
-                [4, CUBE_TYPE.RED],
-                [5, CUBE_TYPE.BLUE],
-                [6, CUBE_TYPE.ORANGE],
-                [7, CUBE_TYPE.GREEN]
+                // [0, CUBE_TYPE.GRAY],
+                [0, CUBE_TYPE.CYAN],
+                [1, CUBE_TYPE.YELLOW],
+                [2, CUBE_TYPE.MAGENTA],
+                [3, CUBE_TYPE.RED],
+                [4, CUBE_TYPE.BLUE],
+                [5, CUBE_TYPE.ORANGE],
+                [6, CUBE_TYPE.GREEN]
             ]);
         }
     }

@@ -1,6 +1,6 @@
 namespace L08_FudgeCraft_Movement {
     import f = FudgeCore;
-
+    
     export enum CUBE_TYPE {
         GREEN = "Green",
         RED = "Red",
@@ -19,7 +19,7 @@ namespace L08_FudgeCraft_Movement {
         private static materials: Materials = Cube.createMaterials();
 
         constructor(_type: CUBE_TYPE, _position: f.Vector3) {
-            super("Cube");
+            super("Cube." + _type);
 
             let cmpMesh: f.ComponentMesh = new f.ComponentMesh(Cube.mesh);
             this.addComponent(cmpMesh);
@@ -46,10 +46,17 @@ namespace L08_FudgeCraft_Movement {
             ]);
         }
 
-        public toString(): string {
-            let translation: f.Vector3 = f.Vector3.TRANSFORMATION(this.cmpTransform.local.translation, this.getParent().cmpTransform.local, true);
-            return `${Math.round(translation.x)}:${Math.round(translation.y)}:${Math.round(translation.z)}`;
-        }
+        // public toString(): string {
+            // return this.mtxWorld.translation.round().toString();
+            // let translation: f.Vector3 = ; // f.Vector3.TRANSFORMATION(this.cmpTransform.local.translation, this.getParent().cmpTransform.local, true);
+            // return `(${Math.round(translation.x)}, ${Math.round(translation.y)}, ${Math.round(translation.z)})`;
+        // }
 
+        public position(): f.Vector3 {
+            if (this.getParent().cmpTransform != null)
+                return f.Vector3.TRANSFORMATION(this.cmpTransform.local.translation, this.getParent().cmpTransform.local, true);
+            else
+                return this.cmpTransform.local.translation;
+        }
     }
 }

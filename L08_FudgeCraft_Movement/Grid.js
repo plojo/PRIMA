@@ -11,13 +11,26 @@ var L08_FudgeCraft_Movement;
             }
         }
         setCube(_cube) {
-            this.grid.set(_cube.toString(), _cube);
+            // let key: string = this.toKey(_cube.mtxWorld.translation.map(Math.round));
+            let key = this.toKey(_cube.position().map(Math.round));
+            console.log(key);
+            this.grid.set(key, _cube);
         }
         getCube(_position) {
-            return this.grid.get(_position);
+            return this.grid.get(this.toKey(_position));
         }
         hasCube(_position) {
-            return this.grid.has(_position);
+            console.log(_position);
+            return this.grid.has(this.toKey(_position));
+        }
+        deleteCube(_position) {
+            let key = this.toKey(_position);
+            let cube = this.grid.get(key);
+            this.grid.delete(key);
+            return cube;
+        }
+        toKey(_position) {
+            return _position.map(Math.round).toString();
         }
     }
     L08_FudgeCraft_Movement.Grid = Grid;

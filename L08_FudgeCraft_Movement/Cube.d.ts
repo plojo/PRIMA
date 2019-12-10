@@ -16,6 +16,6 @@ declare namespace L08_FudgeCraft_Movement {
         private static materials;
         constructor(_type: CUBE_TYPE, _position: f.Vector3);
         private static createMaterials;
-        toString(): string;
+        position(): f.Vector3;
     }
 }

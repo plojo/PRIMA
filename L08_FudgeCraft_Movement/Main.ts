@@ -1,10 +1,11 @@
 namespace L08_FudgeCraft_Movement {
-    import f = FudgeCore;
+    export import f = FudgeCore;
 
     window.addEventListener("load", hndLoad);
     let viewport: f.Viewport;
     let game: f.Node;
     let rotate: f.Vector3;
+    let translate: f.Vector3;
     let cmpCamera: f.ComponentCamera;
     let fragment: Fragment;
     let grid: Grid = new Grid();
@@ -19,27 +20,6 @@ namespace L08_FudgeCraft_Movement {
         cmpCamera.pivot.lookAt(f.Vector3.ZERO());
 
         game = new f.Node("FudgeCraft");
-        fragment = new Fragment(0);
-        game.appendChild(fragment);
-        grid.setFragment(fragment);
-
-        fragment = new Fragment(1);
-        fragment.cmpTransform.local.translateZ(-1);
-        fragment.cmpTransform.local.rotateZ(90);
-        game.appendChild(fragment);
-        grid.setFragment(fragment);
-
-        fragment = new Fragment(5);
-        fragment.cmpTransform.local.translateX(1);
-        fragment.cmpTransform.local.rotateY(180);
-        game.appendChild(fragment);
-        grid.setFragment(fragment);
-
-        fragment = new Fragment(4);
-        fragment.cmpTransform.local.translate(new f.Vector3(0, 1, -1));
-        fragment.cmpTransform.local.rotate(new f.Vector3(90, 0, 0));
-        game.appendChild(fragment);
-        rotate = fragment.cmpTransform.local.rotation;
 
         let cmpLight: f.ComponentLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 1, 0.8));
@@ -49,15 +29,41 @@ namespace L08_FudgeCraft_Movement {
         viewport.initialize("Viewport", game, cmpCamera, canvas);
         f.Debug.log("Viewport", viewport);
 
+        let cube: Cube = new Cube(CUBE_TYPE.GRAY, new f.Vector3(0, 0, 0));
+        game.appendChild(cube);
+        grid.setCube(cube);
+
+        fragment = new Fragment(0);
+        fragment.cmpTransform.local.translateZ(-1);
+        fragment.cmpTransform.local.rotateZ(90);
+        game.appendChild(fragment);
+        grid.setFragment(fragment);
+
+        fragment = new Fragment(4);
+        fragment.cmpTransform.local.translateX(1);
+        fragment.cmpTransform.local.rotateY(180);
+        game.appendChild(fragment);
+        grid.setFragment(fragment);
+
+        fragment = new Fragment(3);
+        fragment.cmpTransform.local.translate(new f.Vector3(0, 1, -1));
+        fragment.cmpTransform.local.rotate(new f.Vector3(90, 0, 0));
+        game.appendChild(fragment);
+
+        rotate = fragment.cmpTransform.local.rotation;
+        translate = fragment.cmpTransform.local.translation;
+
         viewport.draw();
 
         f.Debug.log("Game", game);
 
         window.addEventListener("keydown", hndKeyDown);
+        
     }
 
     function hndKeyDown(_event: KeyboardEvent): void {
         let tmpRotation: f.Vector3 = rotate.copy;
+        let tmpTranslation: f.Vector3 = translate.copy;
         switch (_event.code) {
             case f.KEYBOARD_CODE.ARROW_UP:
                 rotate.add(f.Vector3.X(-90));
@@ -79,12 +85,21 @@ namespace L08_FudgeCraft_Movement {
                 cmpCamera.pivot.translation = new f.Vector3(5, 15, 20);
                 cmpCamera.pivot.lookAt(f.Vector3.ZERO());
                 break;
+            case f.KEYBOARD_CODE.W:
+                translate.add(f.Vector3.Y(1));
+                break;
+            case f.KEYBOARD_CODE.S:
+                translate.add(f.Vector3.Y(-1));
+                break;
         }
         fragment.cmpTransform.local.rotation = rotate;
+        fragment.cmpTransform.local.translation = translate;
         for (let cube of fragment.getChildren()) {
-            if (grid.hasCube((<Cube>cube).toString())) {
+            if (grid.hasCube((<Cube>cube).position())) {
                 rotate = tmpRotation;
+                translate = tmpTranslation;
                 fragment.cmpTransform.local.rotation = tmpRotation;
+                fragment.cmpTransform.local.translation = tmpTranslation;
                 break;
             }
         }

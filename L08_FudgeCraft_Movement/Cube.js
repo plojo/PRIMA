@@ -16,7 +16,7 @@ var L08_FudgeCraft_Movement;
     })(CUBE_TYPE = L08_FudgeCraft_Movement.CUBE_TYPE || (L08_FudgeCraft_Movement.CUBE_TYPE = {}));
     class Cube extends f.Node {
         constructor(_type, _position) {
-            super("Cube");
+            super("Cube." + _type);
             let cmpMesh = new f.ComponentMesh(Cube.mesh);
             this.addComponent(cmpMesh);
             let cmpMaterial = new f.ComponentMaterial(Cube.materials.get(_type));
@@ -38,9 +38,16 @@ var L08_FudgeCraft_Movement;
                 [CUBE_TYPE.TRANSPARENT, new f.Material(CUBE_TYPE.TRANSPARENT, f.ShaderFlat, new f.CoatColored(new f.Color(0, 0, 0, 0)))]
             ]);
         }
-        toString() {
-            let translation = f.Vector3.TRANSFORMATION(this.cmpTransform.local.translation, this.getParent().cmpTransform.local, true);
-            return `${Math.round(translation.x)}:${Math.round(translation.y)}:${Math.round(translation.z)}`;
+        // public toString(): string {
+        // return this.mtxWorld.translation.round().toString();
+        // let translation: f.Vector3 = ; // f.Vector3.TRANSFORMATION(this.cmpTransform.local.translation, this.getParent().cmpTransform.local, true);
+        // return `(${Math.round(translation.x)}, ${Math.round(translation.y)}, ${Math.round(translation.z)})`;
+        // }
+        position() {
+            if (this.getParent().cmpTransform != null)
+                return f.Vector3.TRANSFORMATION(this.cmpTransform.local.translation, this.getParent().cmpTransform.local, true);
+            else
+                return this.cmpTransform.local.translation;
         }
     }
     Cube.mesh = new f.MeshCube();
