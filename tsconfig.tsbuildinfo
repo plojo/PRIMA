@@ -154,8 +154,8 @@
         "signature": "b209a815904a485328677714ef8c4ddd2dcf4040154fa204d25cbf31cd4ff0f3"
       },
       "./fudge/fudgecore.d.ts": {
-        "version": "225b0c58a9d950d997aef824c26052feff1bcefdd40dcc4673dbbc49620e76ac",
-        "signature": "225b0c58a9d950d997aef824c26052feff1bcefdd40dcc4673dbbc49620e76ac"
+        "version": "33a6df73c757076ca87858872c8096465eb136051e000c65b867d13015836a79",
+        "signature": "33a6df73c757076ca87858872c8096465eb136051e000c65b867d13015836a79"
       },
       "./fudgecraft/main.ts": {
         "version": "a9198ba2e529868918bcaf53deb6ef9f0d28d1336c5e854b86297a08982aba5d",
@@ -176,6 +176,10 @@
       "./l04_ponganimated/main.ts": {
         "version": "26f4c1c98d822260b41bf4a4e870d51b468225d4d24f92e11c5014c55bcb9ff1",
         "signature": "af07223ce5be5367fd3d27ba626a7fc93eff2060532ad12b434a1171a688a794"
+      },
+      "./l05_pongreflection/main.ts": {
+        "version": "0fd006d545d4473039f7997c150ccdad9b9ec8c85b7ddd899e36c42dd5263ddb",
+        "signature": "234a77fd7e206f5e2a9be12e76fe37b88a54c74885a965c0383244d388bb3ed4"
       },
       "./l06_pongfinal/main.ts": {
         "version": "883009ff17fa5be814be81c2a761107864ae061d410549ea03382ed5d908ae2d",
@@ -308,6 +312,22 @@
       "./l16_scrollercollide/main.ts": {
         "version": "1bbd6239d03350fdbdbc562275b3ec73f54dfaec620b17b551c3727baf46a5cd",
         "signature": "4fdd83576c299120ccdb37230931d824ad9750925e1009164d920565f4be823f"
+      },
+      "./mygame/floor.ts": {
+        "version": "90cb355bb12c3d5893c1a11bf2dd4bd2dced69e46db7b4c41c67f0df2f20859d",
+        "signature": "b75781056d4c5c7400e66f8946681225203acc0ac7cb25026cf4343c6174d144"
+      },
+      "./mygame/hare.ts": {
+        "version": "d10110f5779d5a320755121eb3bce4966f0cc6646c31e125526908fdace76d34",
+        "signature": "a873ca1feb09cbe22ced5d843d0505e578bf965c7fb27adf1417c62da9146079"
+      },
+      "./mygame/main.ts": {
+        "version": "bc3aaaf236e3a1471c5bb01ca9eef96f591d48b4236600266525e97da077b390",
+        "signature": "f2fb737f74e099f0b90192a5624d08349cbe419cabdf9b4fbd54eedef7fd3af6"
+      },
+      "./mygame/spritegenerator.ts": {
+        "version": "a5456262995d2ed8c75e500c7d9873c5f91f6ec12853bf5fe418d6faec7050bb",
+        "signature": "52bc847fc71cba94fcac70d94529c8b02231d956421eccc311b7cd794f1cc409"
       },
       "./node_modules/@types/node/globals.d.ts": {
         "version": "4d0e3b8334392a2e0adef9caf867118678fb8f38da90d8003184debd62d30f3b",
@@ -691,6 +711,10 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "./l05_pongreflection/main.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "./l06_pongfinal/main.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
@@ -821,6 +845,22 @@
       ],
       "./l16_scrollercollide/main.ts": [
         "./l13_scrollerexample/spritegenerator.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./mygame/floor.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./mygame/hare.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./mygame/main.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./mygame/spritegenerator.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1590,6 +1630,7 @@
       "./l02_firstfudge/main.ts",
       "./l03_pongpaddles/main.ts",
       "./l04_ponganimated/main.ts",
+      "./l05_pongreflection/main.ts",
       "./l06_pongfinal/main.ts",
       "./l07_fudgecraft_fragments/cube.ts",
       "./l07_fudgecraft_fragments/fragment.ts",
@@ -1623,6 +1664,10 @@
       "./l15_/main.ts",
       "./l16_scrollercollide/hare.ts",
       "./l16_scrollercollide/main.ts",
+      "./mygame/floor.ts",
+      "./mygame/hare.ts",
+      "./mygame/main.ts",
+      "./mygame/spritegenerator.ts",
       "./node_modules/@types/node/globals.d.ts",
       "./node_modules/@types/node/assert.d.ts",
       "./node_modules/@types/node/async_hooks.d.ts",
