@@ -14,6 +14,7 @@ namespace MyGame {
   
   
     function test(): void {
+      // ƒ.Time.game.setScale(0.1);
       let canvas: HTMLCanvasElement = document.querySelector("canvas");
       let crc2: CanvasRenderingContext2D = canvas.getContext("2d");
       let img: HTMLImageElement = document.querySelector("img");
@@ -29,10 +30,11 @@ namespace MyGame {
       game.appendChild(hare);
   
       let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
-      cmpCamera.pivot.translateZ(5);
+      cmpCamera.pivot.translateZ(9);
       cmpCamera.pivot.lookAt(ƒ.Vector3.ZERO());
       cmpCamera.backgroundColor = ƒ.Color.CSS("aliceblue");
-  
+      hare.addComponent(cmpCamera);
+
       let viewport: ƒ.Viewport = new ƒ.Viewport();
       viewport.initialize("Viewport", game, cmpCamera, canvas);
       viewport.draw();
@@ -41,7 +43,7 @@ namespace MyGame {
       document.addEventListener("keyup", handleKeyboard);
   
       ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
-      ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 10);
+      ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 60);
   
       function update(_event: ƒ.Eventƒ): void {
         processInput();
@@ -76,12 +78,27 @@ namespace MyGame {
       let level: ƒ.Node = new ƒ.Node("Level");
       let floor: Floor = new Floor();
       floor.cmpTransform.local.scaleY(0.2);
+      floor.cmpTransform.local.scaleX(5);
       level.appendChild(floor);
   
       floor = new Floor();
       floor.cmpTransform.local.scaleY(0.2);
-      floor.cmpTransform.local.scaleX(2);
+      floor.cmpTransform.local.scaleX(1);
       floor.cmpTransform.local.translateY(0.2);
+      floor.cmpTransform.local.translateX(1.5);
+      level.appendChild(floor);
+
+      floor = new Floor();
+      floor.cmpTransform.local.scaleY(0.2);
+      floor.cmpTransform.local.scaleX(1);
+      floor.cmpTransform.local.translateY(2);
+      floor.cmpTransform.local.translateX(0);
+      level.appendChild(floor);
+
+      floor = new Floor();
+      floor.cmpTransform.local.scaleY(0.2);
+      floor.cmpTransform.local.scaleX(1);
+      floor.cmpTransform.local.translateY(3);
       floor.cmpTransform.local.translateX(1.5);
       level.appendChild(floor);
   

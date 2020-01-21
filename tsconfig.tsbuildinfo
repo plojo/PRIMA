@@ -318,11 +318,11 @@
         "signature": "b75781056d4c5c7400e66f8946681225203acc0ac7cb25026cf4343c6174d144"
       },
       "./mygame/hare.ts": {
-        "version": "d10110f5779d5a320755121eb3bce4966f0cc6646c31e125526908fdace76d34",
-        "signature": "a873ca1feb09cbe22ced5d843d0505e578bf965c7fb27adf1417c62da9146079"
+        "version": "8679157abb8c8909be0fa5d4b42d9c13b1fa17dc0cf232cc899ef08d215cf4b2",
+        "signature": "081a22fe665463a92ced63a9719d4e2155196d30c133aec25dbfefc1e17d6e4f"
       },
       "./mygame/main.ts": {
-        "version": "bc3aaaf236e3a1471c5bb01ca9eef96f591d48b4236600266525e97da077b390",
+        "version": "d2d73afcdc4145316d58d7e567288eee6536bf87c90ad4346be25a607c3f0af2",
         "signature": "f2fb737f74e099f0b90192a5624d08349cbe419cabdf9b4fbd54eedef7fd3af6"
       },
       "./mygame/spritegenerator.ts": {
@@ -532,6 +532,7 @@
       "experimentalDecorators": true,
       "skipLibCheck": true,
       "project": "./tsconfig.json",
+      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
@@ -1666,7 +1667,6 @@
       "./l16_scrollercollide/main.ts",
       "./mygame/floor.ts",
       "./mygame/hare.ts",
-      "./mygame/main.ts",
       "./mygame/spritegenerator.ts",
       "./node_modules/@types/node/globals.d.ts",
       "./node_modules/@types/node/assert.d.ts",
@@ -1713,7 +1713,8 @@
       "./node_modules/@types/node/ts3.2/globals.d.ts",
       "./node_modules/@types/node/ts3.2/index.d.ts",
       "./node_modules/@types/webgl2/index.d.ts",
-      "./node_modules/@types/ws/index.d.ts"
+      "./node_modules/@types/ws/index.d.ts",
+      "./mygame/main.ts"
     ]
   },
   "version": "3.6.3"
