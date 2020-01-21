@@ -54,4 +54,3 @@ var L07_FudgeCraft_Fragments;
     Fragment.shapeToCubeType = Fragment.getShapeToCubeType();
     L07_FudgeCraft_Fragments.Fragment = Fragment;
 })(L07_FudgeCraft_Fragments || (L07_FudgeCraft_Fragments = {}));
-//# sourceMappingURL=Fragment.js.map

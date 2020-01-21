@@ -131,4 +131,3 @@ var L08_FudgeCraft_Collision;
     Fragment.shapeToCubeType = Fragment.getShapeToCubeType();
     L08_FudgeCraft_Collision.Fragment = Fragment;
 })(L08_FudgeCraft_Collision || (L08_FudgeCraft_Collision = {}));
-//# sourceMappingURL=Fragment.js.map

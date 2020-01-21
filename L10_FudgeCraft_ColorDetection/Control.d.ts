@@ -1,8 +1,8 @@
-declare namespace L09_FudgeCraft_ColorDetection {
-    import f = FudgeCore;
+declare namespace L10_FudgeCraft_DetectCombos {
+    import ƒ = FudgeCore;
     interface Transformation {
-        translation?: f.Vector3;
-        rotation?: f.Vector3;
+        translation?: ƒ.Vector3;
+        rotation?: ƒ.Vector3;
     }
     interface Transformations {
         [keycode: string]: Transformation;
@@ -11,14 +11,14 @@ declare namespace L09_FudgeCraft_ColorDetection {
         element: GridElement;
         cube: Cube;
     }
-    class Control extends f.Node {
+    class Control extends ƒ.Node {
         static transformations: Transformations;
-        fragment: Fragment;
+        private fragment;
         constructor();
         static defineControls(): Transformations;
         setFragment(_fragment: Fragment): void;
         move(_transformation: Transformation): void;
         checkCollisions(_transformation: Transformation): Collision[];
-        freeze(): void;
+        freeze(): GridElement[];
     }
 }

@@ -11,7 +11,7 @@ var L09_FudgeCraft_Camera;
             this.innerContainer = new f.Node("innerContainer");
             this.innerContainer.addComponent(new f.ComponentTransform());
             let cmpCamera = new f.ComponentCamera();
-            cmpCamera.backgroundColor = f.Color.WHITE;
+            cmpCamera.backgroundColor = f.Color.CSS("WHITE", 1);
             this.innerContainer.addComponent(cmpCamera);
             this.appendChild(this.innerContainer);
             this.setDistance(20);
@@ -50,4 +50,3 @@ var L09_FudgeCraft_Camera;
     }
     L09_FudgeCraft_Camera.CameraControl = CameraControl;
 })(L09_FudgeCraft_Camera || (L09_FudgeCraft_Camera = {}));
-//# sourceMappingURL=Camera.js.map

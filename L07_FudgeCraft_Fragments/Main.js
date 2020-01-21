@@ -36,7 +36,7 @@ var L07_FudgeCraft_Fragments;
         fragment = new L07_FudgeCraft_Fragments.Fragment(6);
         fragment.cmpTransform.local.translateX(8);
         game.appendChild(fragment);
-        let cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        let cmpLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE", 1)));
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 1, 0.8));
         game.addComponent(cmpLight);
         viewport = new f.Viewport();
@@ -76,4 +76,3 @@ var L07_FudgeCraft_Fragments;
         viewport.draw();
     }
 })(L07_FudgeCraft_Fragments || (L07_FudgeCraft_Fragments = {}));
-//# sourceMappingURL=Main.js.map

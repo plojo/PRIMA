@@ -65,4 +65,3 @@ var L09_FudgeCraft_Camera;
     Control.transformations = Control.defineControls();
     L09_FudgeCraft_Camera.Control = Control;
 })(L09_FudgeCraft_Camera || (L09_FudgeCraft_Camera = {}));
-//# sourceMappingURL=Control.js.map

@@ -21,7 +21,7 @@ namespace L08_FudgeCraft_Movement {
 
         game = new f.Node("FudgeCraft");
 
-        let cmpLight: f.ComponentLight = new f.ComponentLight(new f.LightDirectional(f.Color.WHITE));
+        let cmpLight: f.ComponentLight = new f.ComponentLight(new f.LightDirectional(f.Color.CSS("WHITE", 1)));
         cmpLight.pivot.lookAt(new f.Vector3(0.5, 1, 0.8));
         game.addComponent(cmpLight);
 

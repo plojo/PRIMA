@@ -111,4 +111,3 @@ var L04_PongAnimated;
         return new f.CoatColored(new f.Color(Math.random(), Math.random(), Math.random(), 1));
     }
 })(L04_PongAnimated || (L04_PongAnimated = {}));
-//# sourceMappingURL=Main.js.map

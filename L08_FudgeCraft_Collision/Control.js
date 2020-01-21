@@ -61,4 +61,3 @@ var L08_FudgeCraft_Collision;
     Control.transformations = Control.defineControls();
     L08_FudgeCraft_Collision.Control = Control;
 })(L08_FudgeCraft_Collision || (L08_FudgeCraft_Collision = {}));
-//# sourceMappingURL=Control.js.map

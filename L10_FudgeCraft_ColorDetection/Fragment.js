@@ -35,7 +35,7 @@
 //         }
 //     }
 // }
-var L09_FudgeCraft_ColorDetection;
+var L10_FudgeCraft_DetectCombos;
 // namespace L08_FudgeCraft_Collision {
 //     import ƒ = FudgeCore;
 //     export class Fragment extends ƒ.Node {
@@ -72,7 +72,7 @@ var L09_FudgeCraft_ColorDetection;
 //         }
 //     }
 // }
-(function (L09_FudgeCraft_ColorDetection) {
+(function (L10_FudgeCraft_DetectCombos) {
     var f = FudgeCore;
     class Fragment extends f.Node {
         // private static shapeToCubeType: Map<Number, CUBE_TYPE> = Fragment.getShapeToCubeType();
@@ -81,10 +81,10 @@ var L09_FudgeCraft_ColorDetection;
             let shape = Fragment.shapes[_shape];
             this.addComponent(new f.ComponentTransform());
             for (let position of shape) {
-                let type = Fragment.getRandomEnum(L09_FudgeCraft_ColorDetection.CUBE_TYPE); // Fragment.shapeToCubeType.get(_shape)
+                let type = Fragment.getRandomEnum(L10_FudgeCraft_DetectCombos.CUBE_TYPE); // Fragment.shapeToCubeType.get(_shape)
                 let vctPosition = f.Vector3.ZERO();
                 vctPosition.set(position[0], position[1], position[2]);
-                let cube = new L09_FudgeCraft_ColorDetection.Cube(type, vctPosition);
+                let cube = new L10_FudgeCraft_DetectCombos.Cube(type, vctPosition);
                 this.appendChild(cube);
             }
         }
@@ -119,6 +119,5 @@ var L09_FudgeCraft_ColorDetection;
         }
     }
     Fragment.shapes = Fragment.getShapeArray();
-    L09_FudgeCraft_ColorDetection.Fragment = Fragment;
-})(L09_FudgeCraft_ColorDetection || (L09_FudgeCraft_ColorDetection = {}));
-//# sourceMappingURL=Fragment.js.map
+    L10_FudgeCraft_DetectCombos.Fragment = Fragment;
+})(L10_FudgeCraft_DetectCombos || (L10_FudgeCraft_DetectCombos = {}));

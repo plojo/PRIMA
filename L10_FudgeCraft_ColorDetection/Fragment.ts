@@ -42,7 +42,7 @@
 //     }
 // }
 
-namespace L09_FudgeCraft_ColorDetection {
+namespace L10_FudgeCraft_DetectCombos {
     import f = FudgeCore;
     
     export class Fragment extends f.Node {

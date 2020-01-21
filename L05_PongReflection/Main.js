@@ -115,7 +115,7 @@ var L05_PongReflection;
         let pong = new f.Node("Pong");
         let meshQuad = new f.MeshQuad();
         let mtrSolidRandom = new f.Material("SolidRandom", f.ShaderUniColor, randomColoredCoat());
-        let mtrSolidBlack = new f.Material("SolidBlack", f.ShaderUniColor, new f.CoatColored(f.Color.WHITE));
+        let mtrSolidBlack = new f.Material("SolidBlack", f.ShaderUniColor, new f.CoatColored(f.Color.CSS("WHITE", 1)));
         pong.appendChild(createNode("BoundaryTop", meshQuad, mtrSolidBlack, new f.Vector3(0, yBoundary, 0), new f.Vector3(xBoundary * 2, 1, 1)));
         pong.appendChild(createNode("BoundaryBottom", meshQuad, mtrSolidBlack, new f.Vector3(0, -yBoundary, 0), new f.Vector3(xBoundary * 2, 1, 1)));
         pong.appendChild(createNode("BoundaryLeft", meshQuad, mtrSolidBlack, new f.Vector3(-xBoundary, 0, 0), new f.Vector3(1, yBoundary * 2, 1)));
@@ -145,4 +145,3 @@ var L05_PongReflection;
         return new f.CoatColored(new f.Color(Math.random(), Math.random(), Math.random(), 1));
     }
 })(L05_PongReflection || (L05_PongReflection = {}));
-//# sourceMappingURL=Main.js.map

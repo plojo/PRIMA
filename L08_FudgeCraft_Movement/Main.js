@@ -18,7 +18,7 @@ var L08_FudgeCraft_Movement;
         cmpCamera.pivot.translate(new L08_FudgeCraft_Movement.f.Vector3(5, 15, 20));
         cmpCamera.pivot.lookAt(L08_FudgeCraft_Movement.f.Vector3.ZERO());
         game = new L08_FudgeCraft_Movement.f.Node("FudgeCraft");
-        let cmpLight = new L08_FudgeCraft_Movement.f.ComponentLight(new L08_FudgeCraft_Movement.f.LightDirectional(L08_FudgeCraft_Movement.f.Color.WHITE));
+        let cmpLight = new L08_FudgeCraft_Movement.f.ComponentLight(new L08_FudgeCraft_Movement.f.LightDirectional(L08_FudgeCraft_Movement.f.Color.CSS("WHITE", 1)));
         cmpLight.pivot.lookAt(new L08_FudgeCraft_Movement.f.Vector3(0.5, 1, 0.8));
         game.addComponent(cmpLight);
         viewport = new L08_FudgeCraft_Movement.f.Viewport();
@@ -93,4 +93,3 @@ var L08_FudgeCraft_Movement;
         viewport.draw();
     }
 })(L08_FudgeCraft_Movement || (L08_FudgeCraft_Movement = {}));
-//# sourceMappingURL=Main.js.map

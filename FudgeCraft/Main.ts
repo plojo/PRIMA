@@ -49,7 +49,7 @@ namespace FudgeCraft {
 
         let game: f.Node = new f.Node("Game");
         let meshQuad: f.Mesh = new f.MeshQuad();
-        let mtrSolidBlack: f.Material = new f.Material("SolidWhite", f.ShaderUniColor, new f.CoatColored(f.Color.WHITE));
+        let mtrSolidBlack: f.Material = new f.Material("SolidWhite", f.ShaderUniColor, new f.CoatColored(f.Color.CSS("WHITE", 1)));
 
         game.appendChild(createNode("BoundaryTop", meshQuad, mtrSolidBlack, new f.Vector3(0, yBoundary, 0), new f.Vector3(xBoundary * 2, 1, 1)));
 

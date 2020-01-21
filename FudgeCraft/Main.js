@@ -35,7 +35,7 @@ var FudgeCraft;
         const yBoundary = 14;
         let game = new f.Node("Game");
         let meshQuad = new f.MeshQuad();
-        let mtrSolidBlack = new f.Material("SolidWhite", f.ShaderUniColor, new f.CoatColored(f.Color.WHITE));
+        let mtrSolidBlack = new f.Material("SolidWhite", f.ShaderUniColor, new f.CoatColored(f.Color.CSS("WHITE", 1)));
         game.appendChild(createNode("BoundaryTop", meshQuad, mtrSolidBlack, new f.Vector3(0, yBoundary, 0), new f.Vector3(xBoundary * 2, 1, 1)));
         return game;
     }
@@ -96,4 +96,3 @@ var FudgeCraft;
         }
     }
 })(FudgeCraft || (FudgeCraft = {}));
-//# sourceMappingURL=Main.js.map

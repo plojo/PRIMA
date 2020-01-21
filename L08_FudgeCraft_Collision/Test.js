@@ -20,4 +20,3 @@ var L08_FudgeCraft_Collision;
         log(`Test success: ${_success}`, _args);
     }
 })(L08_FudgeCraft_Collision || (L08_FudgeCraft_Collision = {}));
-//# sourceMappingURL=Test.js.map

@@ -12,10 +12,10 @@ var L09_FudgeCraft_Camera;
         const canvas = document.querySelector("canvas");
         L09_FudgeCraft_Camera.f.RenderManager.initialize(true);
         L09_FudgeCraft_Camera.f.Debug.log("Canvas", canvas);
-        let cmpLight = new L09_FudgeCraft_Camera.f.ComponentLight(new L09_FudgeCraft_Camera.f.LightDirectional(L09_FudgeCraft_Camera.f.Color.WHITE));
+        let cmpLight = new L09_FudgeCraft_Camera.f.ComponentLight(new L09_FudgeCraft_Camera.f.LightDirectional(L09_FudgeCraft_Camera.f.Color.CSS("WHITE", 1)));
         cmpLight.pivot.lookAt(new L09_FudgeCraft_Camera.f.Vector3(0.5, 1, 0.8));
         L09_FudgeCraft_Camera.game.addComponent(cmpLight);
-        let cmpLightAmbient = new L09_FudgeCraft_Camera.f.ComponentLight(new L09_FudgeCraft_Camera.f.LightAmbient(L09_FudgeCraft_Camera.f.Color.DARK_GREY));
+        let cmpLightAmbient = new L09_FudgeCraft_Camera.f.ComponentLight(new L09_FudgeCraft_Camera.f.LightAmbient(new L09_FudgeCraft_Camera.f.Color(0.25, 0.25, 0.25, 1)));
         L09_FudgeCraft_Camera.game.addComponent(cmpLightAmbient);
         viewport = new L09_FudgeCraft_Camera.f.Viewport();
         viewport.initialize("Viewport", L09_FudgeCraft_Camera.game, cameraControl.cmpCamera, canvas);
@@ -82,4 +82,3 @@ var L09_FudgeCraft_Camera;
     }
     L09_FudgeCraft_Camera.startRandomFragment = startRandomFragment;
 })(L09_FudgeCraft_Camera || (L09_FudgeCraft_Camera = {}));
-//# sourceMappingURL=Main.js.map

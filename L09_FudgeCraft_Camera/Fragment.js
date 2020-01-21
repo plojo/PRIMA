@@ -133,4 +133,3 @@ var L09_FudgeCraft_Camera;
     Fragment.shapeToCubeType = Fragment.getShapeToCubeType();
     L09_FudgeCraft_Camera.Fragment = Fragment;
 })(L09_FudgeCraft_Camera || (L09_FudgeCraft_Camera = {}));
-//# sourceMappingURL=Fragment.js.map

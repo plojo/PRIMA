@@ -11,4 +11,3 @@ var L01_HelloWorld;
         document.body.innerHTML = "Hi";
     } //TODO: make game
 })(L01_HelloWorld || (L01_HelloWorld = {}));
-//# sourceMappingURL=Test.js.map

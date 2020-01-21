@@ -154,11 +154,11 @@
         "signature": "b209a815904a485328677714ef8c4ddd2dcf4040154fa204d25cbf31cd4ff0f3"
       },
       "./fudge/fudgecore.d.ts": {
-        "version": "a73a6d9c7a8c3f3cb9f4fa257be6b345263a07fb26e08d36f505e5ea8cf28a8c",
-        "signature": "a73a6d9c7a8c3f3cb9f4fa257be6b345263a07fb26e08d36f505e5ea8cf28a8c"
+        "version": "225b0c58a9d950d997aef824c26052feff1bcefdd40dcc4673dbbc49620e76ac",
+        "signature": "225b0c58a9d950d997aef824c26052feff1bcefdd40dcc4673dbbc49620e76ac"
       },
       "./fudgecraft/main.ts": {
-        "version": "102366aa6b0ae9021f238f5d047d2ca23a16a7e5638daab2321b56229929e923",
+        "version": "a9198ba2e529868918bcaf53deb6ef9f0d28d1336c5e854b86297a08982aba5d",
         "signature": "e74dab5f63e59858157cf159e41d6d675f9228405ac90ea8a7b673f014c325ef"
       },
       "./l01_helloworld/test.ts": {
@@ -177,16 +177,12 @@
         "version": "26f4c1c98d822260b41bf4a4e870d51b468225d4d24f92e11c5014c55bcb9ff1",
         "signature": "af07223ce5be5367fd3d27ba626a7fc93eff2060532ad12b434a1171a688a794"
       },
-      "./l05_pongreflection/main.ts": {
-        "version": "8125f69625579a7100671755338ae81eda6130fb68fc0ab0e0bd4d8b97a6b10a",
-        "signature": "234a77fd7e206f5e2a9be12e76fe37b88a54c74885a965c0383244d388bb3ed4"
-      },
       "./l06_pongfinal/main.ts": {
-        "version": "ef82575ed90948a063793664c8ff73c06b3ae8e4f0de34a9faf777de947724a1",
+        "version": "883009ff17fa5be814be81c2a761107864ae061d410549ea03382ed5d908ae2d",
         "signature": "7098071dd1473649ac1cbc12229f1ad02b439eaf619edf1abf3c8dff554b1bf1"
       },
       "./l07_fudgecraft_fragments/cube.ts": {
-        "version": "7f0135c0cfb79731451bfbb7df21401b3260de50d0031b47c127ab98337a0468",
+        "version": "7a2eac1159f4087bc3592783879b211ed8b263640bdac0c556e7416e0162b697",
         "signature": "75cfbd4a26511d5bbc92a38a9397c704a52d0d5a946622422fbab7f046dc2c4c"
       },
       "./l07_fudgecraft_fragments/fragment.ts": {
@@ -194,7 +190,7 @@
         "signature": "1ceca629d3e3511c720fae50a79291d7402020383da2fa0fd9926cbf7ee6320c"
       },
       "./l07_fudgecraft_fragments/main.ts": {
-        "version": "b9b876e157c74e65dabeb37849930ea8a96568eda2fb9cc2997c642103fe1cd5",
+        "version": "5d86b4c3718fae66d24062ca3aa3c1271218868c889d914d10c87745c7d76888",
         "signature": "b544a145eba8a4b070914a264977313b45414aac72d213daf54994d7f1ee5692"
       },
       "./l08_fudgecraft_collision/control.ts": {
@@ -202,7 +198,7 @@
         "signature": "59ab5307d5740650872484e367e5b46e9dc7d0c870615ca1422433d9854a1d4d"
       },
       "./l08_fudgecraft_collision/cube.ts": {
-        "version": "beb9fd7e1c2ad88289ee47f04fb971a9f0fc65d3ecbb94c774b9923c76898b69",
+        "version": "b95bcfcd9b7427875cce5a94103362d0960269a58012f24dc303acf3b42a45ce",
         "signature": "fa2dd9947b95a4b2d7c5fedbb4559196e34a22eaff000dc28400f5ce13f583a2"
       },
       "./l08_fudgecraft_collision/fragment.ts": {
@@ -214,7 +210,7 @@
         "signature": "2ba6600d0852d4864484d12628990541150bb9623a80af1febfd4da9a133b936"
       },
       "./l08_fudgecraft_collision/main.ts": {
-        "version": "128d585d68534993c286b0ec056aba08688a91bb5a7506c9a0f2d02187d833e7",
+        "version": "14d81cda86c6ded6f26647c4715c4e5068c227adbdbe28423468ce280215d7a2",
         "signature": "a638b446371065c1502c4bdd9e18293a08a89a5d28b8d45d12370e829e87a0d9"
       },
       "./l08_fudgecraft_collision/test.ts": {
@@ -222,7 +218,7 @@
         "signature": "4e9855736da024137edd3f3a0c9bd30292f23ad8c126dad38bbb15adfdc87846"
       },
       "./l08_fudgecraft_movement/cube.ts": {
-        "version": "ca989ff2a3e92ef20cdf5379ab46d833db99b6093467221f9c9acc39eea7e883",
+        "version": "6490114f5bb123a1f93f8678143629888fa9ad412072273050ee99bc5e74744d",
         "signature": "e72560eb827df97b370e2061967896fc1a319883c5bd7ea18544a879024ee39a"
       },
       "./l08_fudgecraft_movement/fragment.ts": {
@@ -234,11 +230,11 @@
         "signature": "b7a1db8a2c72969d47c8f60ad8e8e93a25b3d5e5f9decc1b2fd91e64899c8b0e"
       },
       "./l08_fudgecraft_movement/main.ts": {
-        "version": "7401327e53b0e7d464829e93c490f5088d88d1c894e408a14516912f502c1b61",
+        "version": "f377b1d0d9a81b9ba917d59b41d103a9b9c9cfbc3e69cc304693e22480bc1fe1",
         "signature": "1818d34814c3abd382ff13ed0ac6ce3f8e5d7750934f604f707ee22229662b75"
       },
       "./l09_fudgecraft_camera/camera.ts": {
-        "version": "c5415dc01293d32b8f40abb47601fae0f4b4daeb76783130c197803c17aeb3f6",
+        "version": "199931efb65784d4e49c221c0aeb5f593167c2011485703d4209acc235093e88",
         "signature": "6c71735f4cbfa723e3cc9f71434357e8c5bc87c761e91c18abde4a075cf5d6a0"
       },
       "./l09_fudgecraft_camera/control.ts": {
@@ -246,7 +242,7 @@
         "signature": "14c99f77e0929805f49bb0c90e172eb2c784d23db4e4413064069382da9c6e8a"
       },
       "./l09_fudgecraft_camera/cube.ts": {
-        "version": "78df228f32016e480da35a0c2257ab606cf738fc323a960fc3bc5d122cd88082",
+        "version": "2813305863ee92fb6fc104e54b6b55e988b12c7e901ab34a9d12b54c2f545af3",
         "signature": "6659ccafd88a58c57a9860ad67f79ae9d8649564b76a36d36aba8216c3b55d9c"
       },
       "./l09_fudgecraft_camera/fragment.ts": {
@@ -258,7 +254,7 @@
         "signature": "9a7991a40fd0aafc8b1804a53ce334784d033d2ba85ab824ef1490173d986445"
       },
       "./l09_fudgecraft_camera/main.ts": {
-        "version": "62806e0f3a4cb64ec99461cae7e8d482e570b28c6f6be99f6ab780808980cc7c",
+        "version": "ace71853175b4c089efc7c660fc9e2c7adb29f498cac3688c682d724476585f1",
         "signature": "26d27e3a4bb19476ee3448fa094b15a6737a5c45d8c1e15c44179b7a4f96eb04"
       },
       "./l09_fudgecraft_camera/test.ts": {
@@ -266,28 +262,52 @@
         "signature": "8801990c85f2bc4f10b01acadf5fef8e73f3cb2e7eb0ee75f7c864d1cd70ef06"
       },
       "./l10_fudgecraft_colordetection/camera.ts": {
-        "version": "778475cacb9809b41d22a4fcc3ba4b938385f5c735daab7f16930b87bd2fe9d7",
-        "signature": "de0b10880a3d1b73a2c1a8623e94f6b50e838ac5421d52077296c62f3f6215c7"
+        "version": "a2a1c626cab01a7680c24f7647fcf567d688dd7aff0d558182ab41df19571df4",
+        "signature": "222d5642590b85f4343f1524f91d915bc41f68c5eac282e0870bc6d743334610"
+      },
+      "./l10_fudgecraft_colordetection/combo.ts": {
+        "version": "1484817315218408dc2677b0bf19017f8ebce5bab77461c65b5794b11cedba23",
+        "signature": "d54d6b1667fc927648fcfa9879d79484a03ac40a973047d0a4e0befa2280720b"
       },
       "./l10_fudgecraft_colordetection/control.ts": {
-        "version": "7da93810236c9fda8eb5a7e942322608a95047a14a86527bad6bc3118602c9ab",
-        "signature": "6d93379780e5a0a39b849f33293d29430c57a1c42047318bbc7f2df19164b73c"
+        "version": "9136409827f87cf315ee5c4cc19c0cc1016b130c85b4fea7930073eb55a1ddd5",
+        "signature": "769e074d508fe061fd4bb05b30b0dc7e2670324b16eb467f063235708395a3dc"
       },
       "./l10_fudgecraft_colordetection/cube.ts": {
-        "version": "1a647dab87e11d5d434d2b0fd93c88ede7ee0db94707b1864ca35bd3474cc6cd",
-        "signature": "4ba72000a488291aeba8736c01fd1c99f622ef4429d468c54af0dbd5047f8de9"
+        "version": "86235c434943d2bbeaf8fcf74d2159f34efeff9e00dc223258d1178e51b4c65b",
+        "signature": "4ff965859556b04d88f8255d3513978e12f287ce3649ed505776a33e0dd111fe"
       },
       "./l10_fudgecraft_colordetection/fragment.ts": {
-        "version": "41249959c5cf2e715b1f6a5962f6c01cee549e027de1a57d132b22f84eab7dea",
-        "signature": "2bc4794da75a7fa7cf73bd0d917c7bb8893dcc9e3b13297c600ff95c7f591993"
+        "version": "c149012b64149d92348fd24d2638fe8710af880ca5875481eff806f330087da5",
+        "signature": "00d40a818fe6a414650f606c2a23392fc0a4dbc528d73a8938f8056039373c32"
       },
       "./l10_fudgecraft_colordetection/grid.ts": {
-        "version": "b2ad736446a263d55bfabd4282cd9b547b83156f5d8452a280130d314972e104",
-        "signature": "c21bd321d0f88dd2fa49c2602bbe3662e4c3ded97e9b2a5dc90225a20bfd1c85"
+        "version": "13c4cfac49a9e19f4c50b4b207b932408f1481116ec46ab21e294b7af8258045",
+        "signature": "0a09549934512fef77fe8d8a1c61b87ab8639e9943f942d225a0503cb556af28"
       },
       "./l10_fudgecraft_colordetection/main.ts": {
-        "version": "d2c5911feecba7bdb2ae9113ca1d507a0a033d9daf09ad9b694afd7705d70d9b",
-        "signature": "35162594e28f53691e709b839fd3b0572ca5112aecca46a8d593d2e7250d30cd"
+        "version": "4b2a534cc00ed80b6e64e23377994f90952c67f222373565480e1ab5ef8d03b9",
+        "signature": "d64180650e7e015bbb82e00f8548907ec28873d4ed9e09ec6554332850a0f741"
+      },
+      "./l13_scrollerexample/main.ts": {
+        "version": "daad72500acde2add9478c25790cb925d8be169c919dcb412bc90b547b348651",
+        "signature": "67a36e18dd06dbaa423c97aabca2f0739e3beceee43d66a516775a7fb372821b"
+      },
+      "./l13_scrollerexample/spritegenerator.ts": {
+        "version": "dae1a8cc5ef9d418acec72f41da77a764ceb0b13f80253c199e54082dd9d0710",
+        "signature": "2a6e9686742f7fb4bbd861fb48abadb53e5e4238bd0ebff5d173764ef7d04f65"
+      },
+      "./l15_/main.ts": {
+        "version": "81dbe1f0a396f53dedab07511831db93fbc8eb350319f1cb223c601e6de92d7b",
+        "signature": "48511dde1f25a462957afd1ee7b62a86e7a1419580aebc67a9330b0afa1a18d0"
+      },
+      "./l16_scrollercollide/hare.ts": {
+        "version": "cbe0ea6391588f723388130f52eacc5743919c27a27b02f84d4acd2783f199ec",
+        "signature": "2342e4f9cdd9ff873cc4c66c9f7e3097de99906d237c92ad48c51cd981d5ae0a"
+      },
+      "./l16_scrollercollide/main.ts": {
+        "version": "1bbd6239d03350fdbdbc562275b3ec73f54dfaec620b17b551c3727baf46a5cd",
+        "signature": "4fdd83576c299120ccdb37230931d824ad9750925e1009164d920565f4be823f"
       },
       "./node_modules/@types/node/globals.d.ts": {
         "version": "4d0e3b8334392a2e0adef9caf867118678fb8f38da90d8003184debd62d30f3b",
@@ -478,7 +498,6 @@
       "target": 99,
       "module": 4,
       "declaration": true,
-      "sourceMap": true,
       "composite": true,
       "removeComments": false,
       "strict": false,
@@ -493,7 +512,6 @@
       "experimentalDecorators": true,
       "skipLibCheck": true,
       "project": "./tsconfig.json",
-      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
@@ -673,10 +691,6 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "./l05_pongreflection/main.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "./l06_pongfinal/main.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
@@ -765,6 +779,10 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "./l10_fudgecraft_colordetection/combo.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "./l10_fudgecraft_colordetection/control.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
@@ -782,6 +800,27 @@
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "./l10_fudgecraft_colordetection/main.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l13_scrollerexample/main.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l13_scrollerexample/spritegenerator.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l15_/main.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l16_scrollercollide/hare.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./l16_scrollercollide/main.ts": [
+        "./l13_scrollerexample/spritegenerator.ts",
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1551,7 +1590,6 @@
       "./l02_firstfudge/main.ts",
       "./l03_pongpaddles/main.ts",
       "./l04_ponganimated/main.ts",
-      "./l05_pongreflection/main.ts",
       "./l06_pongfinal/main.ts",
       "./l07_fudgecraft_fragments/cube.ts",
       "./l07_fudgecraft_fragments/fragment.ts",
@@ -1574,10 +1612,17 @@
       "./l09_fudgecraft_camera/main.ts",
       "./l09_fudgecraft_camera/test.ts",
       "./l10_fudgecraft_colordetection/camera.ts",
+      "./l10_fudgecraft_colordetection/combo.ts",
       "./l10_fudgecraft_colordetection/control.ts",
       "./l10_fudgecraft_colordetection/cube.ts",
       "./l10_fudgecraft_colordetection/fragment.ts",
+      "./l10_fudgecraft_colordetection/grid.ts",
       "./l10_fudgecraft_colordetection/main.ts",
+      "./l13_scrollerexample/main.ts",
+      "./l13_scrollerexample/spritegenerator.ts",
+      "./l15_/main.ts",
+      "./l16_scrollercollide/hare.ts",
+      "./l16_scrollercollide/main.ts",
       "./node_modules/@types/node/globals.d.ts",
       "./node_modules/@types/node/assert.d.ts",
       "./node_modules/@types/node/async_hooks.d.ts",
@@ -1623,21 +1668,7 @@
       "./node_modules/@types/node/ts3.2/globals.d.ts",
       "./node_modules/@types/node/ts3.2/index.d.ts",
       "./node_modules/@types/webgl2/index.d.ts",
-      "./node_modules/@types/ws/index.d.ts",
-      [
-        "./l10_fudgecraft_colordetection/grid.ts",
-        [
-          {
-            "file": "./l10_fudgecraft_colordetection/grid.ts",
-            "start": 3776,
-            "length": 24,
-            "messageText": "'getSameColoredNeighbours' is declared but its value is never read.",
-            "category": 1,
-            "code": 6133,
-            "reportsUnnecessary": true
-          }
-        ]
-      ]
+      "./node_modules/@types/ws/index.d.ts"
     ]
   },
   "version": "3.6.3"

@@ -17,7 +17,7 @@ namespace L09_FudgeCraft_Camera {
             this.innerContainer.addComponent(new f.ComponentTransform());
 
             let cmpCamera: f.ComponentCamera = new f.ComponentCamera();
-            cmpCamera.backgroundColor = f.Color.WHITE;
+            cmpCamera.backgroundColor = f.Color.CSS("WHITE", 1);
             this.innerContainer.addComponent(cmpCamera);
             this.appendChild(this.innerContainer);
             this.setDistance(20);

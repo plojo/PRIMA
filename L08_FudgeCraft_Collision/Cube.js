@@ -26,13 +26,14 @@ var L08_FudgeCraft_Collision;
             this.addComponent(cmpTransform);
         }
         static createMaterials() {
+            let alpha = 0.9;
             return new Map([
-                [CUBE_TYPE.RED, new f.Material(CUBE_TYPE.RED, f.ShaderFlat, new f.CoatColored(f.Color.RED))],
-                [CUBE_TYPE.GREEN, new f.Material(CUBE_TYPE.GREEN, f.ShaderFlat, new f.CoatColored(f.Color.GREEN))],
-                [CUBE_TYPE.BLUE, new f.Material(CUBE_TYPE.BLUE, f.ShaderFlat, new f.CoatColored(f.Color.BLUE))],
-                [CUBE_TYPE.MAGENTA, new f.Material(CUBE_TYPE.MAGENTA, f.ShaderFlat, new f.CoatColored(f.Color.MAGENTA))],
-                [CUBE_TYPE.YELLOW, new f.Material(CUBE_TYPE.YELLOW, f.ShaderFlat, new f.CoatColored(f.Color.YELLOW))],
-                [CUBE_TYPE.CYAN, new f.Material(CUBE_TYPE.CYAN, f.ShaderFlat, new f.CoatColored(f.Color.CYAN))],
+                [CUBE_TYPE.RED, new f.Material(CUBE_TYPE.RED, f.ShaderFlat, new f.CoatColored(f.Color.CSS("RED", alpha)))],
+                [CUBE_TYPE.GREEN, new f.Material(CUBE_TYPE.GREEN, f.ShaderFlat, new f.CoatColored(f.Color.CSS("LIME", alpha)))],
+                [CUBE_TYPE.BLUE, new f.Material(CUBE_TYPE.BLUE, f.ShaderFlat, new f.CoatColored(f.Color.CSS("BLUE", alpha)))],
+                [CUBE_TYPE.MAGENTA, new f.Material(CUBE_TYPE.MAGENTA, f.ShaderFlat, new f.CoatColored(f.Color.CSS("MAGENTA", alpha)))],
+                [CUBE_TYPE.YELLOW, new f.Material(CUBE_TYPE.YELLOW, f.ShaderFlat, new f.CoatColored(f.Color.CSS("YELLOW", alpha)))],
+                [CUBE_TYPE.CYAN, new f.Material(CUBE_TYPE.CYAN, f.ShaderFlat, new f.CoatColored(f.Color.CSS("CYAN", alpha)))],
                 [CUBE_TYPE.ORANGE, new f.Material(CUBE_TYPE.ORANGE, f.ShaderFlat, new f.CoatColored(new f.Color(1, 0.65, 0)))],
                 [CUBE_TYPE.GRAY, new f.Material(CUBE_TYPE.GRAY, f.ShaderFlat, new f.CoatColored(new f.Color(0.5, 0.5, 0.5)))],
                 [CUBE_TYPE.TRANSPARENT, new f.Material(CUBE_TYPE.TRANSPARENT, f.ShaderFlat, new f.CoatColored(new f.Color(0, 0, 0, 0)))]
@@ -43,4 +44,3 @@ var L08_FudgeCraft_Collision;
     Cube.materials = Cube.createMaterials();
     L08_FudgeCraft_Collision.Cube = Cube;
 })(L08_FudgeCraft_Collision || (L08_FudgeCraft_Collision = {}));
-//# sourceMappingURL=Cube.js.map

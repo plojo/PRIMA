@@ -166,7 +166,7 @@ namespace L06_PongFinal {
         let pong: f.Node = new f.Node("Pong");
         let meshQuad: f.Mesh = new f.MeshQuad();
         let mtrSolidRandom: f.Material = new f.Material("SolidRandom", f.ShaderUniColor, randomColoredCoat());
-        let mtrSolidBlack: f.Material = new f.Material("SolidBlack", f.ShaderUniColor, new f.CoatColored(f.Color.WHITE));
+        let mtrSolidBlack: f.Material = new f.Material("SolidBlack", f.ShaderUniColor, new f.CoatColored(f.Color.CSS("WHITE", 1)));
 
         pong.appendChild(createNode("BoundaryTop", meshQuad, mtrSolidBlack, new f.Vector3(0, yBoundary, 0), new f.Vector3(xBoundary * 2, 1, 1)));
         pong.appendChild(createNode("BoundaryBottom", meshQuad, mtrSolidBlack, new f.Vector3(0, -yBoundary, 0), new f.Vector3(xBoundary * 2, 1, 1)));

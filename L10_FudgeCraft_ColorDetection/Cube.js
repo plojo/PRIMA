@@ -1,6 +1,6 @@
 "use strict";
-var L09_FudgeCraft_ColorDetection;
-(function (L09_FudgeCraft_ColorDetection) {
+var L10_FudgeCraft_DetectCombos;
+(function (L10_FudgeCraft_DetectCombos) {
     var f = FudgeCore;
     let CUBE_TYPE;
     (function (CUBE_TYPE) {
@@ -13,7 +13,7 @@ var L09_FudgeCraft_ColorDetection;
         CUBE_TYPE["ORANGE"] = "Orange";
         CUBE_TYPE["GRAY"] = "Gray";
         CUBE_TYPE["TRANSPARENT"] = "Transparent";
-    })(CUBE_TYPE = L09_FudgeCraft_ColorDetection.CUBE_TYPE || (L09_FudgeCraft_ColorDetection.CUBE_TYPE = {}));
+    })(CUBE_TYPE = L10_FudgeCraft_DetectCombos.CUBE_TYPE || (L10_FudgeCraft_DetectCombos.CUBE_TYPE = {}));
     class Cube extends f.Node {
         constructor(_type, _position) {
             super("Cube." + _type);
@@ -26,13 +26,14 @@ var L09_FudgeCraft_ColorDetection;
             this.addComponent(cmpTransform);
         }
         static createMaterials() {
+            let alpha = 0.9;
             return new Map([
-                [CUBE_TYPE.RED, new f.Material(CUBE_TYPE.RED, f.ShaderFlat, new f.CoatColored(f.Color.RED))],
-                [CUBE_TYPE.GREEN, new f.Material(CUBE_TYPE.GREEN, f.ShaderFlat, new f.CoatColored(f.Color.GREEN))],
-                [CUBE_TYPE.BLUE, new f.Material(CUBE_TYPE.BLUE, f.ShaderFlat, new f.CoatColored(f.Color.BLUE))],
-                [CUBE_TYPE.MAGENTA, new f.Material(CUBE_TYPE.MAGENTA, f.ShaderFlat, new f.CoatColored(f.Color.MAGENTA))],
-                [CUBE_TYPE.YELLOW, new f.Material(CUBE_TYPE.YELLOW, f.ShaderFlat, new f.CoatColored(f.Color.YELLOW))],
-                [CUBE_TYPE.CYAN, new f.Material(CUBE_TYPE.CYAN, f.ShaderFlat, new f.CoatColored(f.Color.CYAN))],
+                [CUBE_TYPE.RED, new f.Material(CUBE_TYPE.RED, f.ShaderFlat, new f.CoatColored(f.Color.CSS("RED", alpha)))],
+                [CUBE_TYPE.GREEN, new f.Material(CUBE_TYPE.GREEN, f.ShaderFlat, new f.CoatColored(f.Color.CSS("LIME", alpha)))],
+                [CUBE_TYPE.BLUE, new f.Material(CUBE_TYPE.BLUE, f.ShaderFlat, new f.CoatColored(f.Color.CSS("BLUE", alpha)))],
+                [CUBE_TYPE.MAGENTA, new f.Material(CUBE_TYPE.MAGENTA, f.ShaderFlat, new f.CoatColored(f.Color.CSS("MAGENTA", alpha)))],
+                [CUBE_TYPE.YELLOW, new f.Material(CUBE_TYPE.YELLOW, f.ShaderFlat, new f.CoatColored(f.Color.CSS("YELLOW", alpha)))],
+                [CUBE_TYPE.CYAN, new f.Material(CUBE_TYPE.CYAN, f.ShaderFlat, new f.CoatColored(f.Color.CSS("CYAN", alpha)))],
                 [CUBE_TYPE.ORANGE, new f.Material(CUBE_TYPE.ORANGE, f.ShaderFlat, new f.CoatColored(new f.Color(1, 0.65, 0)))],
                 [CUBE_TYPE.GRAY, new f.Material(CUBE_TYPE.GRAY, f.ShaderFlat, new f.CoatColored(new f.Color(0.5, 0.5, 0.5)))],
                 [CUBE_TYPE.TRANSPARENT, new f.Material(CUBE_TYPE.TRANSPARENT, f.ShaderFlat, new f.CoatColored(new f.Color(0, 0, 0, 0)))]
@@ -41,6 +42,5 @@ var L09_FudgeCraft_ColorDetection;
     }
     Cube.mesh = new f.MeshCube();
     Cube.materials = Cube.createMaterials();
-    L09_FudgeCraft_ColorDetection.Cube = Cube;
-})(L09_FudgeCraft_ColorDetection || (L09_FudgeCraft_ColorDetection = {}));
-//# sourceMappingURL=Cube.js.map
+    L10_FudgeCraft_DetectCombos.Cube = Cube;
+})(L10_FudgeCraft_DetectCombos || (L10_FudgeCraft_DetectCombos = {}));

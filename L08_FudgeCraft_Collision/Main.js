@@ -14,11 +14,11 @@ var L08_FudgeCraft_Collision;
         let cmpCamera = new L08_FudgeCraft_Collision.ƒ.ComponentCamera();
         cmpCamera.pivot.translate(new L08_FudgeCraft_Collision.ƒ.Vector3(4, 6, 20));
         cmpCamera.pivot.lookAt(L08_FudgeCraft_Collision.ƒ.Vector3.ZERO());
-        cmpCamera.backgroundColor = L08_FudgeCraft_Collision.ƒ.Color.WHITE;
-        let cmpLight = new L08_FudgeCraft_Collision.ƒ.ComponentLight(new L08_FudgeCraft_Collision.ƒ.LightDirectional(L08_FudgeCraft_Collision.ƒ.Color.WHITE));
+        cmpCamera.backgroundColor = L08_FudgeCraft_Collision.ƒ.Color.CSS("WHITE", 1);
+        let cmpLight = new L08_FudgeCraft_Collision.ƒ.ComponentLight(new L08_FudgeCraft_Collision.ƒ.LightDirectional(L08_FudgeCraft_Collision.ƒ.Color.CSS("WHITE", 1)));
         cmpLight.pivot.lookAt(new L08_FudgeCraft_Collision.ƒ.Vector3(0.5, 1, 0.8));
         L08_FudgeCraft_Collision.game.addComponent(cmpLight);
-        let cmpLightAmbient = new L08_FudgeCraft_Collision.ƒ.ComponentLight(new L08_FudgeCraft_Collision.ƒ.LightAmbient(L08_FudgeCraft_Collision.ƒ.Color.DARK_GREY));
+        let cmpLightAmbient = new L08_FudgeCraft_Collision.ƒ.ComponentLight(new L08_FudgeCraft_Collision.ƒ.LightAmbient(new L08_FudgeCraft_Collision.ƒ.Color(0.25, 0.25, 0.25, 1)));
         L08_FudgeCraft_Collision.game.addComponent(cmpLightAmbient);
         viewport = new L08_FudgeCraft_Collision.ƒ.Viewport();
         viewport.initialize("Viewport", L08_FudgeCraft_Collision.game, cmpCamera, canvas);
@@ -71,4 +71,3 @@ var L08_FudgeCraft_Collision;
     }
     L08_FudgeCraft_Collision.startRandomFragment = startRandomFragment;
 })(L08_FudgeCraft_Collision || (L08_FudgeCraft_Collision = {}));
-//# sourceMappingURL=Main.js.map

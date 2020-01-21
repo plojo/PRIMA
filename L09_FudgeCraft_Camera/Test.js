@@ -20,4 +20,3 @@ var L09_FudgeCraft_Camera;
         log(`Test success: ${_success}`, _args);
     }
 })(L09_FudgeCraft_Camera || (L09_FudgeCraft_Camera = {}));
-//# sourceMappingURL=Test.js.map
