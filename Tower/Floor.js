@@ -3,14 +3,15 @@ var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
     class Floor extends ƒ.Node {
-        constructor() {
+        constructor(_cssColor) {
             super("Floor");
             this.addComponent(new ƒ.ComponentTransform());
-            this.addComponent(new ƒ.ComponentMaterial(Floor.material));
+            this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material("Floor", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS(_cssColor, 0.5)))));
             let cmpMesh = new ƒ.ComponentMesh(Floor.mesh);
             //cmpMesh.pivot.translateY(-0.5);
             cmpMesh.pivot = Floor.pivot;
             this.addComponent(cmpMesh);
+            this.appendChild(new ƒ.Node("Rotation"));
         }
         getRectWorld() {
             let rect = ƒ.Rectangle.GET(0, 0, 100, 100);

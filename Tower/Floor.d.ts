@@ -4,7 +4,7 @@ declare namespace MyGame {
         private static mesh;
         private static material;
         private static readonly pivot;
-        constructor();
+        constructor(_cssColor: string);
         getRectWorld(): ƒ.Rectangle;
     }
 }
