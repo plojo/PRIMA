@@ -30,7 +30,7 @@ namespace MyGame {
       game.appendChild(hare);
   
       let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
-      cmpCamera.pivot.translateZ(9);
+      cmpCamera.pivot.translateZ(6);
       cmpCamera.pivot.lookAt(ƒ.Vector3.ZERO());
       cmpCamera.backgroundColor = ƒ.Color.CSS("aliceblue");
       hare.addComponent(cmpCamera);
@@ -76,26 +76,27 @@ namespace MyGame {
   
     function createLevel(): ƒ.Node {
       let level: ƒ.Node = new ƒ.Node("Level");
-      let floor: Floor = new Floor();
+      let floor: Floor = new Floor("red");
       floor.cmpTransform.local.scaleY(0.2);
       floor.cmpTransform.local.scaleX(5);
       level.appendChild(floor);
   
-      floor = new Floor();
-      floor.cmpTransform.local.scaleY(0.2);
+      floor = new Floor("blue");
+      // floor.getComponent(ƒ.ComponentMesh).pivot.scaleY(1);
+      floor.cmpTransform.local.scaleY(1);
       floor.cmpTransform.local.scaleX(1);
-      floor.cmpTransform.local.translateY(0.2);
+      floor.cmpTransform.local.translateY(1);
       floor.cmpTransform.local.translateX(1.5);
       level.appendChild(floor);
 
-      floor = new Floor();
+      floor = new Floor("red");
       floor.cmpTransform.local.scaleY(0.2);
       floor.cmpTransform.local.scaleX(1);
       floor.cmpTransform.local.translateY(2);
       floor.cmpTransform.local.translateX(0);
       level.appendChild(floor);
 
-      floor = new Floor();
+      floor = new Floor("blue");
       floor.cmpTransform.local.scaleY(0.2);
       floor.cmpTransform.local.scaleX(1);
       floor.cmpTransform.local.translateY(3);
