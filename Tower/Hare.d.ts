@@ -19,13 +19,18 @@ declare namespace MyGame {
         private spriteFrameInterval;
         private cyclicAnimationTimer;
         private singleAnimationPlaying;
+        private posLast;
         constructor(_name?: string);
         static generateSprites(_txtImage: ƒ.TextureImage): void;
         show(_action: ACTION): void;
         act(_action: ACTION, _direction?: DIRECTION): void;
         private update;
-        private checkCollision;
+        private checkCollisionTopBottom;
+        private checkCollisionLeftRight;
         private grounded;
         private readonly sprites;
+        private readonly hitBoxes;
+        private readonly hitBoxLeftRight;
+        private readonly hitBoxTopBottom;
     }
 }
