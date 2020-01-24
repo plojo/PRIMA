@@ -313,16 +313,16 @@
         "version": "1bbd6239d03350fdbdbc562275b3ec73f54dfaec620b17b551c3727baf46a5cd",
         "signature": "4fdd83576c299120ccdb37230931d824ad9750925e1009164d920565f4be823f"
       },
+      "./tower/character.ts": {
+        "version": "1b433e2da7582ddb1a8d5118ecc0cd8352c3a1abed6d5404c78448463532db68",
+        "signature": "e4c7bfdb7e474ea4f5fea8a052ce567183ed03d7c4927f3f6d351f33eea1e969"
+      },
       "./tower/collidable.ts": {
         "version": "bcb65d49edf2e8b6daf7d0ebdb7e3c6d62b8b1419cbb28fef607136600b2eadc",
         "signature": "5f90a1c0b7770e10d874273cd15bc965cb5d581065a28c406a358afb9bc00574"
       },
-      "./tower/hare.ts": {
-        "version": "55424ee1870ed47d2e854bb0dc6e6737d85a52f658ed0667cb62699d03ad61f4",
-        "signature": "b01f7d1e459c2e11a1d6aae2f874736dfb73f9f4c3a848fd97d362f47466bfb5"
-      },
       "./tower/main.ts": {
-        "version": "c976b3ac6b48f17cb4edaa7faf1c16eb6346d32fcc54a93dd1d3075c078a9cef",
+        "version": "decc508a9684c9ed07c994d1e053fc4ef54ee45c77ab2f57870676e90c7e3227",
         "signature": "f2fb737f74e099f0b90192a5624d08349cbe419cabdf9b4fbd54eedef7fd3af6"
       },
       "./tower/spritegenerator.ts": {
@@ -853,11 +853,11 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "./tower/collidable.ts": [
+      "./tower/character.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "./tower/hare.ts": [
+      "./tower/collidable.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1673,8 +1673,9 @@
       "./l15_/main.ts",
       "./l16_scrollercollide/hare.ts",
       "./l16_scrollercollide/main.ts",
+      "./tower/character.ts",
       "./tower/collidable.ts",
-      "./tower/hare.ts",
+      "./tower/main.ts",
       "./tower/spritegenerator.ts",
       "./tower/tile.ts",
       "./node_modules/@types/node/globals.d.ts",
@@ -1722,8 +1723,7 @@
       "./node_modules/@types/node/ts3.2/globals.d.ts",
       "./node_modules/@types/node/ts3.2/index.d.ts",
       "./node_modules/@types/webgl2/index.d.ts",
-      "./node_modules/@types/ws/index.d.ts",
-      "./tower/main.ts"
+      "./node_modules/@types/ws/index.d.ts"
     ]
   },
   "version": "3.6.3"

@@ -11,7 +11,7 @@ declare namespace MyGame {
         LEFT = 0,
         RIGHT = 1
     }
-    class Hare extends ƒ.Node {
+    class Character extends ƒ.Node {
         private static sprites;
         private static speedMax;
         private static gravity;
@@ -28,6 +28,7 @@ declare namespace MyGame {
         show(_action: ACTION): void;
         act(_action: ACTION, _direction?: DIRECTION): void;
         private update;
+        private updateSpeed;
         private checkCollision;
         private resolveCollisionVertical;
         private resolveCollisionHorizontal;

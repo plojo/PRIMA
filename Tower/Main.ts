@@ -10,7 +10,7 @@ namespace MyGame {
   
     export let game: ƒ.Node;
     export let level: ƒ.Node;
-    let hare: Hare;
+    let hare: Character;
   
   
     function test(): void {
@@ -20,11 +20,11 @@ namespace MyGame {
       let img: HTMLImageElement = document.querySelector("img");
       let txtHare: ƒ.TextureImage = new ƒ.TextureImage();
       txtHare.image = img;
-      Hare.generateSprites(txtHare);
+      Character.generateSprites(txtHare);
   
       ƒ.RenderManager.initialize(true, false);
       game = new ƒ.Node("Game");
-      hare = new Hare("Hare");
+      hare = new Character("Hare");
       level = createLevel();
       game.appendChild(level);
       game.appendChild(hare);

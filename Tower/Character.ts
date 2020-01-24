@@ -12,7 +12,7 @@ namespace MyGame {
     LEFT, RIGHT
   }
 
-  export class Hare extends ƒ.Node {
+  export class Character extends ƒ.Node {
     private static sprites: Sprite[];
     private static speedMax: ƒ.Vector2 = new ƒ.Vector2(3, 15); // units per second
     private static gravity: ƒ.Vector2 = ƒ.Vector2.Y(-10); //units per square second
@@ -53,7 +53,7 @@ namespace MyGame {
       hitBox.cmpTransform.local.translateY(0.1);
       hitBoxes.appendChild(hitBox);
 
-      for (let sprite of Hare.sprites) {
+      for (let sprite of Character.sprites) {
         let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
         nodeSprite.activate(false);
 
@@ -83,27 +83,27 @@ namespace MyGame {
     }
 
     public static generateSprites(_txtImage: ƒ.TextureImage): void {
-      Hare.sprites = [];
+      Character.sprites = [];
 
       let sprite: Sprite = new Sprite(ACTION.IDLE);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-      Hare.sprites.push(sprite);
+      Character.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.WALK);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 90, 60, 80), 6, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-      Hare.sprites.push(sprite);
+      Character.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.JUMPSQUAT);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(60, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-      Hare.sprites.push(sprite);
+      Character.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.JUMP);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(120, 180, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-      Hare.sprites.push(sprite);
+      Character.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.FALL);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(360, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-      Hare.sprites.push(sprite);
+      Character.sprites.push(sprite);
     }
 
     public show(_action: ACTION): void {
@@ -156,33 +156,39 @@ namespace MyGame {
         this.cyclicAnimationTimer = 0;
       }
 
-      if (this.grounded()) {
-        if (this.direction == 0) {
-          this.speed.x -= this.speed.x * Hare.friction.x * timeFrame;
-          if (Math.abs(this.speed.x) < 0.001)
-            this.speed.x = 0;
-        } else {
-          this.speed.x = Hare.speedMax.x * this.direction;
-          // this.speed.x += Hare.acceleration.x * this.direction * timeFrame;
-        }
-      } else {
-        this.speed.x += Hare.acceleration.x * this.direction * timeFrame;
-      }
+      this.updateSpeed(timeFrame);
 
-      let absMinSigned: (a: number, b: number) => number = 
-        (a: number, b: number): number => { return Math.sign(a) * Math.min(Math.abs(a), Math.abs(b)); };
-      this.speed.x = absMinSigned(this.speed.x, Hare.speedMax.x);
-      this.speed.y += Hare.gravity.y * timeFrame;
-      this.speed.y = absMinSigned(this.speed.y, Hare.speedMax.y);
-      // console.log(this.speed.toString());
-
+      this.posLast = this.cmpTransform.local.translation;
       let distance: ƒ.Vector3 = ƒ.Vector3.SCALE(this.speed, timeFrame);
-      this.posLast = this.cmpTransform.local.translation.copy;
       this.cmpTransform.local.translate(distance);
       // console.log("last " + this.posLast);
       // console.log("target " + this.cmpTransform.local.translation);
 
       this.checkCollision();
+    }
+
+    private updateSpeed(_timeFrame: number): void {
+      if (this.grounded()) {
+        if (this.direction == 0) {
+          this.speed.x -= this.speed.x * Character.friction.x * _timeFrame;
+          if (Math.abs(this.speed.x) < 0.001)
+            this.speed.x = 0;
+        } else {
+          this.speed.x = Character.speedMax.x * this.direction;
+          // this.speed.x += Hare.acceleration.x * this.direction * timeFrame;
+        }
+      } else {
+        this.speed.x += Character.acceleration.x * this.direction * _timeFrame;
+      }
+      this.speed.y += Character.gravity.y * _timeFrame;
+      
+      this.speed.x = absMinSigned(this.speed.x, Character.speedMax.x);
+      this.speed.y = absMinSigned(this.speed.y, Character.speedMax.y);
+
+      function absMinSigned(x: number, y: number): number {
+        return Math.sign(x) * Math.min(Math.abs(x), Math.abs(y));
+      }
+      // console.log(this.speed.toString());
     }
 
     private checkCollision(): void {

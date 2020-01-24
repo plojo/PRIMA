@@ -15,7 +15,7 @@ var MyGame;
         DIRECTION[DIRECTION["LEFT"] = 0] = "LEFT";
         DIRECTION[DIRECTION["RIGHT"] = 1] = "RIGHT";
     })(DIRECTION = MyGame.DIRECTION || (MyGame.DIRECTION = {}));
-    class Hare extends ƒ.Node {
+    class Character extends ƒ.Node {
         constructor(_name = "Hare") {
             super(_name);
             this.speed = ƒ.Vector3.ZERO();
@@ -30,27 +30,9 @@ var MyGame;
                     this.broadcastEvent(new CustomEvent("showNext"));
                     this.cyclicAnimationTimer = 0;
                 }
-                if (this.grounded()) {
-                    if (this.direction == 0) {
-                        this.speed.x -= this.speed.x * Hare.friction.x * timeFrame;
-                        if (Math.abs(this.speed.x) < 0.001)
-                            this.speed.x = 0;
-                    }
-                    else {
-                        this.speed.x = Hare.speedMax.x * this.direction;
-                        // this.speed.x += Hare.acceleration.x * this.direction * timeFrame;
-                    }
-                }
-                else {
-                    this.speed.x += Hare.acceleration.x * this.direction * timeFrame;
-                }
-                let absMinSigned = (a, b) => { return Math.sign(a) * Math.min(Math.abs(a), Math.abs(b)); };
-                this.speed.x = absMinSigned(this.speed.x, Hare.speedMax.x);
-                this.speed.y += Hare.gravity.y * timeFrame;
-                this.speed.y = absMinSigned(this.speed.y, Hare.speedMax.y);
-                // console.log(this.speed.toString());
+                this.updateSpeed(timeFrame);
+                this.posLast = this.cmpTransform.local.translation;
                 let distance = ƒ.Vector3.SCALE(this.speed, timeFrame);
-                this.posLast = this.cmpTransform.local.translation.copy;
                 this.cmpTransform.local.translate(distance);
                 // console.log("last " + this.posLast);
                 // console.log("target " + this.cmpTransform.local.translation);
@@ -76,7 +58,7 @@ var MyGame;
             hitBox.cmpTransform.local.scaleX(0.5);
             hitBox.cmpTransform.local.translateY(0.1);
             hitBoxes.appendChild(hitBox);
-            for (let sprite of Hare.sprites) {
+            for (let sprite of Character.sprites) {
                 let nodeSprite = new MyGame.NodeSprite(sprite.name, sprite);
                 nodeSprite.activate(false);
                 nodeSprite.addEventListener("showNext", (_event) => {
@@ -93,22 +75,22 @@ var MyGame;
             ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
         }
         static generateSprites(_txtImage) {
-            Hare.sprites = [];
+            Character.sprites = [];
             let sprite = new MyGame.Sprite(ACTION.IDLE);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-            Hare.sprites.push(sprite);
+            Character.sprites.push(sprite);
             sprite = new MyGame.Sprite(ACTION.WALK);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 90, 60, 80), 6, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-            Hare.sprites.push(sprite);
+            Character.sprites.push(sprite);
             sprite = new MyGame.Sprite(ACTION.JUMPSQUAT);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(60, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-            Hare.sprites.push(sprite);
+            Character.sprites.push(sprite);
             sprite = new MyGame.Sprite(ACTION.JUMP);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(120, 180, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-            Hare.sprites.push(sprite);
+            Character.sprites.push(sprite);
             sprite = new MyGame.Sprite(ACTION.FALL);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(360, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-            Hare.sprites.push(sprite);
+            Character.sprites.push(sprite);
         }
         show(_action) {
             for (let child of this.sprites.getChildren())
@@ -150,6 +132,29 @@ var MyGame;
                     this.show(ACTION.FALL);
                 }
             }
+        }
+        updateSpeed(_timeFrame) {
+            if (this.grounded()) {
+                if (this.direction == 0) {
+                    this.speed.x -= this.speed.x * Character.friction.x * _timeFrame;
+                    if (Math.abs(this.speed.x) < 0.001)
+                        this.speed.x = 0;
+                }
+                else {
+                    this.speed.x = Character.speedMax.x * this.direction;
+                    // this.speed.x += Hare.acceleration.x * this.direction * timeFrame;
+                }
+            }
+            else {
+                this.speed.x += Character.acceleration.x * this.direction * _timeFrame;
+            }
+            this.speed.y += Character.gravity.y * _timeFrame;
+            this.speed.x = absMinSigned(this.speed.x, Character.speedMax.x);
+            this.speed.y = absMinSigned(this.speed.y, Character.speedMax.y);
+            function absMinSigned(x, y) {
+                return Math.sign(x) * Math.min(Math.abs(x), Math.abs(y));
+            }
+            // console.log(this.speed.toString());
         }
         checkCollision() {
             for (let tile of MyGame.level.getChildren()) {
@@ -209,9 +214,9 @@ var MyGame;
             return this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
         }
     }
-    Hare.speedMax = new ƒ.Vector2(3, 15); // units per second
-    Hare.gravity = ƒ.Vector2.Y(-10); //units per square second
-    Hare.friction = ƒ.Vector2.X(15); //units per square second
-    Hare.acceleration = ƒ.Vector2.X(4.5); //units per square second, used to calculate mid air movement
-    MyGame.Hare = Hare;
+    Character.speedMax = new ƒ.Vector2(3, 15); // units per second
+    Character.gravity = ƒ.Vector2.Y(-10); //units per square second
+    Character.friction = ƒ.Vector2.X(15); //units per square second
+    Character.acceleration = ƒ.Vector2.X(4.5); //units per square second, used to calculate mid air movement
+    MyGame.Character = Character;
 })(MyGame || (MyGame = {}));
