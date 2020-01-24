@@ -314,24 +314,24 @@
         "signature": "4fdd83576c299120ccdb37230931d824ad9750925e1009164d920565f4be823f"
       },
       "./tower/collidable.ts": {
-        "version": "6a5ebb455d7b4e69a403b56079adf983bc79754a2ac4226f42dcb8ac2a184db6",
-        "signature": "5c0576b8e96c0b56f0172056fd3309fca912b2aad771887182854ed5c39c07fb"
-      },
-      "./tower/floor.ts": {
-        "version": "38d9bb2afd11a3b686841732cf61f3ea7340859eb2f5f185adaaffd267aebee6",
-        "signature": "dba382e81ba08d5ad134ea098537fefb9a224105c77ea0798a834b62acecfb16"
+        "version": "bcb65d49edf2e8b6daf7d0ebdb7e3c6d62b8b1419cbb28fef607136600b2eadc",
+        "signature": "5f90a1c0b7770e10d874273cd15bc965cb5d581065a28c406a358afb9bc00574"
       },
       "./tower/hare.ts": {
-        "version": "869d78b0c59fb187a8b8111d2cf95943ce91907c96d3325370eb8038b73efd5d",
+        "version": "cec3fc0b7c8692db9ab2ac8a60123ae9c9c9e2c7fdaa2d54a8190d236b231b8b",
         "signature": "a19ed4905f9870b849bee4ca3c6189e383fdd6ef90754d215e52f943fcd06ebb"
       },
       "./tower/main.ts": {
-        "version": "440a8ad819022e98dfafe355bff7d1dfe55c1f72cb37c7d8a2e2c24decdbcf98",
+        "version": "ba0430432364fdc0b2d2a56b760db138eff4169e0774473422522509d82ee773",
         "signature": "f2fb737f74e099f0b90192a5624d08349cbe419cabdf9b4fbd54eedef7fd3af6"
       },
       "./tower/spritegenerator.ts": {
         "version": "a5456262995d2ed8c75e500c7d9873c5f91f6ec12853bf5fe418d6faec7050bb",
         "signature": "52bc847fc71cba94fcac70d94529c8b02231d956421eccc311b7cd794f1cc409"
+      },
+      "./tower/tile.ts": {
+        "version": "9210b6655017c036b87021bfc7acfbbd5b38d6197d44e19e73fe18f18a4c2c47",
+        "signature": "a9006dbffddaa5a6b97affe17df484b99f1a2df8174d629af6aecb2b52f64249"
       },
       "./node_modules/@types/node/globals.d.ts": {
         "version": "4d0e3b8334392a2e0adef9caf867118678fb8f38da90d8003184debd62d30f3b",
@@ -857,10 +857,6 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "./tower/floor.ts": [
-        "./node_modules/@types/node/util.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "./tower/hare.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
@@ -870,6 +866,10 @@
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "./tower/spritegenerator.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./tower/tile.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1674,23 +1674,32 @@
       "./l16_scrollercollide/hare.ts",
       "./l16_scrollercollide/main.ts",
       "./tower/collidable.ts",
-      [
-        "./tower/floor.ts",
-        [
-          {
-            "file": "./tower/floor.ts",
-            "start": 166,
-            "length": 8,
-            "messageText": "'material' is declared but its value is never read.",
-            "category": 1,
-            "code": 6133,
-            "reportsUnnecessary": true
-          }
-        ]
-      ],
       "./tower/hare.ts",
       "./tower/main.ts",
       "./tower/spritegenerator.ts",
+      [
+        "./tower/tile.ts",
+        [
+          {
+            "file": "./tower/tile.ts",
+            "start": 62,
+            "length": 4,
+            "messageText": "Duplicate identifier 'Tile'.",
+            "category": 1,
+            "code": 2300,
+            "relatedInformation": [
+              {
+                "file": "./tower/floor.d.ts",
+                "start": 38,
+                "length": 4,
+                "messageText": "'Tile' was also declared here.",
+                "category": 3,
+                "code": 6203
+              }
+            ]
+          }
+        ]
+      ],
       "./node_modules/@types/node/globals.d.ts",
       "./node_modules/@types/node/assert.d.ts",
       "./node_modules/@types/node/async_hooks.d.ts",

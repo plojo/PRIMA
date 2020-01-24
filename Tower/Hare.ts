@@ -36,12 +36,12 @@ namespace MyGame {
       hitBoxes.addComponent(new ƒ.ComponentTransform());
       this.appendChild(hitBoxes);
 
-      let hitBox: Collidable = new Collidable("HitBoxVertical", "lime");
+      let hitBox: Collidable = new Tile("HitBoxVertical");
       hitBox.cmpTransform.local.scaleY(-1);
       hitBox.cmpTransform.local.scaleX(0.3);
       hitBoxes.appendChild(hitBox);
 
-      hitBox = new Collidable("HitBoxHorizontal", "pink");
+      hitBox = new Tile("HitBoxHorizontal");
       hitBox.cmpTransform.local.scaleY(-0.8);
       hitBox.cmpTransform.local.scaleX(0.5);
       hitBox.cmpTransform.local.translateY(0.1);
@@ -174,7 +174,7 @@ namespace MyGame {
     private checkCollision(): void {
       for (let tile of level.getChildren()) {
         ƒ.RenderManager.update();
-        let tileHitBox: ƒ.Rectangle = (<Floor>tile).getRectWorld();
+        let tileHitBox: ƒ.Rectangle = (<Tile>tile).getRectWorld();
         let playerHitBox: ƒ.Rectangle = this.hitBoxVertical.getRectWorld();
         let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
         

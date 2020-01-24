@@ -3,16 +3,9 @@ var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
     class Collidable extends ƒ.Node {
-        constructor(_name, _cssColor) {
+        constructor(_name) {
             super(_name);
             this.addComponent(new ƒ.ComponentTransform());
-            this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material("Material", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS(_cssColor, 0.5)))));
-            // let rotator: ƒ.Node = new ƒ.Node("Rotator");
-            // rotator.addComponent(new ƒ.ComponentTransform());
-            // this.appendChild(rotator); 
-            let cmpMesh = new ƒ.ComponentMesh(Collidable.mesh);
-            cmpMesh.pivot = Collidable.pivot;
-            this.addComponent(cmpMesh);
         }
         getRectWorld() {
             let rect = ƒ.Rectangle.GET(0, 0, 100, 100);
@@ -27,8 +20,6 @@ var MyGame;
             return rect;
         }
     }
-    Collidable.mesh = new ƒ.MeshSprite();
-    // private static material: ƒ.Material = new ƒ.Material("Floor", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("red", 0.5)));
     Collidable.pivot = ƒ.Matrix4x4.TRANSLATION(ƒ.Vector3.Y(-0.5));
     MyGame.Collidable = Collidable;
 })(MyGame || (MyGame = {}));
