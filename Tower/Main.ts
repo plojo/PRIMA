@@ -78,7 +78,7 @@ namespace MyGame {
       let level: ƒ.Node = new ƒ.Node("Level");
       let floor: Tile = new Tile("red");
       floor.cmpTransform.local.scaleY(0.2);
-      floor.cmpTransform.local.scaleX(5);
+      floor.cmpTransform.local.scaleX(100);
       level.appendChild(floor);
   
       floor = new Tile("blue");
@@ -99,14 +99,14 @@ namespace MyGame {
       floor.cmpTransform.local.scaleY(0.2);
       floor.cmpTransform.local.scaleX(1);
       floor.cmpTransform.local.translateY(3);
-      floor.cmpTransform.local.translateX(1.41);
+      floor.cmpTransform.local.translateX(1.45);
       level.appendChild(floor);
 
       floor = new Tile("green");
       floor.cmpTransform.local.scaleY(1);
       floor.cmpTransform.local.scaleX(1);
       floor.cmpTransform.local.translateY(0.09);
-      floor.cmpTransform.local.translateX(1.5);
+      floor.cmpTransform.local.translateX(1.42);
       level.appendChild(floor);
   
       floor = new Tile("green");

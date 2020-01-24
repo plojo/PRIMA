@@ -15,6 +15,7 @@ declare namespace MyGame {
         private static sprites;
         private static speedMax;
         private static gravity;
+        private static friction;
         private static acceleration;
         speed: ƒ.Vector3;
         private spriteFrameInterval;

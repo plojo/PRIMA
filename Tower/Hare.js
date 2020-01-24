@@ -30,19 +30,31 @@ var MyGame;
                     this.broadcastEvent(new CustomEvent("showNext"));
                     this.cyclicAnimationTimer = 0;
                 }
-                this.speed.x += Hare.acceleration.x * this.direction * timeFrame;
-                this.speed.x = Math.sign(this.speed.x) * Math.min(Math.abs(this.speed.x), Math.abs(Hare.speedMax.x));
-                // console.log(this.speed.x);
+                if (this.grounded()) {
+                    if (this.direction == 0) {
+                        this.speed.x -= this.speed.x * Hare.friction.x * timeFrame;
+                        if (Math.abs(this.speed.x) < 0.001)
+                            this.speed.x = 0;
+                    }
+                    else {
+                        this.speed.x = Hare.speedMax.x * this.direction;
+                        // this.speed.x += Hare.acceleration.x * this.direction * timeFrame;
+                    }
+                }
+                else {
+                    this.speed.x += Hare.acceleration.x * this.direction * timeFrame;
+                }
+                let absMinSigned = (a, b) => { return Math.sign(a) * Math.min(Math.abs(a), Math.abs(b)); };
+                this.speed.x = absMinSigned(this.speed.x, Hare.speedMax.x);
                 this.speed.y += Hare.gravity.y * timeFrame;
-                this.speed.y = Math.min(this.speed.y, Hare.speedMax.y);
+                this.speed.y = absMinSigned(this.speed.y, Hare.speedMax.y);
+                // console.log(this.speed.toString());
                 let distance = ƒ.Vector3.SCALE(this.speed, timeFrame);
                 this.posLast = this.cmpTransform.local.translation.copy;
                 this.cmpTransform.local.translate(distance);
                 // console.log("last " + this.posLast);
                 // console.log("target " + this.cmpTransform.local.translation);
                 this.checkCollision();
-                // this.checkCollisionTopBottom();
-                // this.checkCollisionLeftRight();
             };
             this.addComponent(new ƒ.ComponentTransform());
             let sprites = new ƒ.Node("Sprites");
@@ -51,11 +63,15 @@ var MyGame;
             let hitBoxes = new ƒ.Node("HitBoxes");
             hitBoxes.addComponent(new ƒ.ComponentTransform());
             this.appendChild(hitBoxes);
-            let hitBox = new MyGame.Tile("HitBoxVertical");
+            // let hitBox: Collidable = new Collidable("HitBoxVertical");
+            let hitBox = new MyGame.Tile("lime");
+            hitBox.name = "HitBoxVertical";
             hitBox.cmpTransform.local.scaleY(-1);
             hitBox.cmpTransform.local.scaleX(0.3);
             hitBoxes.appendChild(hitBox);
-            hitBox = new MyGame.Tile("HitBoxHorizontal");
+            // hitBox = new Collidable("HitBoxHorizontal");
+            hitBox = new MyGame.Tile("pink");
+            hitBox.name = "HitBoxHorizontal";
             hitBox.cmpTransform.local.scaleY(-0.8);
             hitBox.cmpTransform.local.scaleX(0.5);
             hitBox.cmpTransform.local.translateY(0.1);
@@ -101,7 +117,6 @@ var MyGame;
         act(_action, _direction) {
             switch (_action) {
                 case ACTION.IDLE:
-                    // this.speed.x = 0;
                     this.direction = 0;
                     break;
                 case ACTION.WALK:
@@ -109,7 +124,7 @@ var MyGame;
                     this.sprites.cmpTransform.local.rotation = ƒ.Vector3.Y(90 - 90 * this.direction);
                     // let direction: number = (_direction == DIRECTION.RIGHT ? 1 : -1);
                     // this.speed.x = Hare.speedMax.x * direction;
-                    // this.sprites.cmpTransform.local.rotation = ƒ.Vector3.Y(90 - 90 * direction);
+                    // this.cmpTransform.local.rotation = ƒ.Vector3.Y(90 - 90 * direction);
                     break;
                 case ACTION.JUMP:
                     if (this.grounded()) {
@@ -143,13 +158,17 @@ var MyGame;
                 let playerHitBox = this.hitBoxVertical.getRectWorld();
                 let translation = this.cmpTransform.local.translation;
                 if (playerHitBox.collides(tileHitBox)) {
+                    // console.log("ver");
                     this.resolveCollisionVertical(translation, playerHitBox, tileHitBox);
                     this.speed.y = 0;
                 }
-                playerHitBox = this.hitBoxHorizontal.getRectWorld();
-                if (playerHitBox.collides(tileHitBox)) {
-                    this.resolveCollisionHorizontal(translation, playerHitBox, tileHitBox);
-                    this.speed.x = 0;
+                else {
+                    playerHitBox = this.hitBoxHorizontal.getRectWorld();
+                    if (playerHitBox.collides(tileHitBox)) {
+                        // console.log("hor");
+                        this.resolveCollisionHorizontal(translation, playerHitBox, tileHitBox);
+                        this.speed.x = 0;
+                    }
                 }
                 this.cmpTransform.local.translation = translation;
             }
@@ -190,8 +209,9 @@ var MyGame;
             return this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
         }
     }
-    Hare.speedMax = new ƒ.Vector2(3, 5); // units per second
+    Hare.speedMax = new ƒ.Vector2(3, 15); // units per second
     Hare.gravity = ƒ.Vector2.Y(-10); //units per square second
-    Hare.acceleration = ƒ.Vector2.X(15); //units per square second
+    Hare.friction = ƒ.Vector2.X(15); //units per square second
+    Hare.acceleration = ƒ.Vector2.X(4.5); //units per square second, used to calculate mid air movement
     MyGame.Hare = Hare;
 })(MyGame || (MyGame = {}));
