@@ -322,7 +322,7 @@
         "signature": "dba382e81ba08d5ad134ea098537fefb9a224105c77ea0798a834b62acecfb16"
       },
       "./tower/hare.ts": {
-        "version": "fd20320408586678afeaa8b40b31cab05954d9c45eb86fa77c7ecd7951e9a3a3",
+        "version": "07c1f3e85b2f5832f5bf1f48e4be583ebd9a22659cb92ea7756ec8c2e05721d2",
         "signature": "e7e30c474cf13ce84188dea2bd45123fa91e3e7ba7a114936f0fe42fbd6010f0"
       },
       "./tower/main.ts": {
@@ -1689,7 +1689,6 @@
         ]
       ],
       "./tower/hare.ts",
-      "./tower/main.ts",
       "./tower/spritegenerator.ts",
       "./node_modules/@types/node/globals.d.ts",
       "./node_modules/@types/node/assert.d.ts",
@@ -1736,7 +1735,8 @@
       "./node_modules/@types/node/ts3.2/globals.d.ts",
       "./node_modules/@types/node/ts3.2/index.d.ts",
       "./node_modules/@types/webgl2/index.d.ts",
-      "./node_modules/@types/ws/index.d.ts"
+      "./node_modules/@types/ws/index.d.ts",
+      "./tower/main.ts"
     ]
   },
   "version": "3.6.3"

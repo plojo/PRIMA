@@ -139,14 +139,15 @@ namespace MyGame {
     }
 
     private update = (_event: ƒ.Eventƒ): void => {
-      let timeFrame: number = ƒ.Loop.timeFrameGame / 1000; // seconds
+      let timeFrame: number = Math.min(0.02 , ƒ.Loop.timeFrameGame / 1000); // seconds
+      console.log(timeFrame);
       this.cyclicAnimationTimer += timeFrame;
       if (this.cyclicAnimationTimer >= this.spriteFrameInterval) {
         this.broadcastEvent(new CustomEvent("showNext"));
         this.cyclicAnimationTimer = 0;
       }
 
-      this.speed.y += Hare.gravity.y * timeFrame;
+      this.speed.y += Math.min(Hare.gravity.y, Hare.speedMax.y) * timeFrame;
       let distance: ƒ.Vector3 = ƒ.Vector3.SCALE(this.speed, timeFrame);
 
       this.posLast = this.cmpTransform.local.translation.copy;
@@ -181,10 +182,13 @@ namespace MyGame {
         let playerHitBox: ƒ.Rectangle = this.hitBoxTopBottom.getRectWorld();
         let hit: boolean = playerHitBox.collides(tileHitBox);
         if (hit) {
+          console.log("Vertical");
           let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
           if (this.posLast.y >= tileHitBox.bottom) {
+            console.log("move up");
             translation.y = tileHitBox.bottom;
           } else {
+            console.log("move down");
             translation.y = tileHitBox.top - playerHitBox.height;
           }
           this.cmpTransform.local.translation = translation;
@@ -200,10 +204,13 @@ namespace MyGame {
         let playerHitBox: ƒ.Rectangle = this.hitBoxLeftRight.getRectWorld();
         let hit: boolean = playerHitBox.collides(tileHitBox);
         if (hit) {
+          console.log("Horizontal");
           let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
           if (this.posLast.x <= tileHitBox.left) {
+            console.log("move left");
             translation.x = tileHitBox.left - playerHitBox.width / 2;
           } else {
+            console.log("move right");
             translation.x = tileHitBox.right + playerHitBox.width / 2;
           }
           console.log(translation.toString());
