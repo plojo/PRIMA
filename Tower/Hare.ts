@@ -16,11 +16,13 @@ namespace MyGame {
     private static sprites: Sprite[];
     private static speedMax: ƒ.Vector2 = new ƒ.Vector2(3, 5); // units per second
     private static gravity: ƒ.Vector2 = ƒ.Vector2.Y(-10); //units per square second
+    private static acceleration: ƒ.Vector2 = ƒ.Vector2.X(15); //units per square second
     public speed: ƒ.Vector3 = ƒ.Vector3.ZERO();
     private spriteFrameInterval: number = 0.1; // seconds
     private cyclicAnimationTimer: number = 0;
     private singleAnimationPlaying: boolean = false;
     private posLast: ƒ.Vector3;
+    private direction: number = 0;
 
     constructor(_name: string = "Hare") {
       super(_name);
@@ -34,15 +36,15 @@ namespace MyGame {
       hitBoxes.addComponent(new ƒ.ComponentTransform());
       this.appendChild(hitBoxes);
 
-      let hitBox: Collidable = new Collidable("HitBoxLeftRight", "pink");
+      let hitBox: Collidable = new Collidable("HitBoxVertical", "lime");
+      hitBox.cmpTransform.local.scaleY(-1);
+      hitBox.cmpTransform.local.scaleX(0.3);
+      hitBoxes.appendChild(hitBox);
+
+      hitBox = new Collidable("HitBoxHorizontal", "pink");
       hitBox.cmpTransform.local.scaleY(-0.8);
       hitBox.cmpTransform.local.scaleX(0.5);
       hitBox.cmpTransform.local.translateY(0.1);
-      hitBoxes.appendChild(hitBox);
-
-      hitBox = new Collidable("HitBoxTopBottom", "lime");
-      hitBox.cmpTransform.local.scaleY(-1);
-      hitBox.cmpTransform.local.scaleX(0.3);
       hitBoxes.appendChild(hitBox);
 
       for (let sprite of Hare.sprites) {
@@ -106,12 +108,15 @@ namespace MyGame {
     public act(_action: ACTION, _direction?: DIRECTION): void {
       switch (_action) {
         case ACTION.IDLE:
-          this.speed.x = 0;
+          // this.speed.x = 0;
+          this.direction = 0;
           break;
         case ACTION.WALK:
-          let direction: number = (_direction == DIRECTION.RIGHT ? 1 : -1);
-          this.speed.x = Hare.speedMax.x * direction;
-          this.sprites.cmpTransform.local.rotation = ƒ.Vector3.Y(90 - 90 * direction);
+          this.direction = (_direction == DIRECTION.RIGHT ? 1 : -1);
+          this.sprites.cmpTransform.local.rotation = ƒ.Vector3.Y(90 - 90 * this.direction);
+          // let direction: number = (_direction == DIRECTION.RIGHT ? 1 : -1);
+          // this.speed.x = Hare.speedMax.x * direction;
+          // this.sprites.cmpTransform.local.rotation = ƒ.Vector3.Y(90 - 90 * direction);
           break;
         case ACTION.JUMP:
           if (this.grounded()) {
@@ -139,185 +144,72 @@ namespace MyGame {
     }
 
     private update = (_event: ƒ.Eventƒ): void => {
-      let timeFrame: number = Math.min(0.02 , ƒ.Loop.timeFrameGame / 1000); // seconds
-      console.log(timeFrame);
+      let timeFrame: number = Math.min(0.02, ƒ.Loop.timeFrameGame / 1000); // seconds
       this.cyclicAnimationTimer += timeFrame;
       if (this.cyclicAnimationTimer >= this.spriteFrameInterval) {
         this.broadcastEvent(new CustomEvent("showNext"));
         this.cyclicAnimationTimer = 0;
       }
 
-      this.speed.y += Math.min(Hare.gravity.y, Hare.speedMax.y) * timeFrame;
+      this.speed.x += Hare.acceleration.x * this.direction * timeFrame;
+      this.speed.x = Math.sign(this.speed.x) * Math.min(Math.abs(this.speed.x), Math.abs(Hare.speedMax.x));
+      // console.log(this.speed.x);
+      this.speed.y += Hare.gravity.y * timeFrame;
+      this.speed.y = Math.min(this.speed.y, Hare.speedMax.y);
+
+
       let distance: ƒ.Vector3 = ƒ.Vector3.SCALE(this.speed, timeFrame);
 
       this.posLast = this.cmpTransform.local.translation.copy;
       this.cmpTransform.local.translate(distance);
-      console.log("last " + this.posLast);
-      console.log("target " + this.cmpTransform.local.translation);
+      // console.log("last " + this.posLast);
+      // console.log("target " + this.cmpTransform.local.translation);
 
 
-      // this.checkCollision();
-      // this.checkCollisionBody(save);
-      this.checkCollisionTopBottom();
-      this.checkCollisionLeftRight();
+      this.checkCollision();
+      // this.checkCollisionTopBottom();
+      // this.checkCollisionLeftRight();
     }
 
-    // private checkCollision(): void {
-    //   for (let floor of level.getChildren()) {
-    //     let rect: ƒ.Rectangle = (<Floor>floor).getRectWorld();
-    //     let hit: boolean = rect.isInside(this.cmpTransform.local.translation.toVector2());
-    //     if (hit) {
-    //       let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
-    //       translation.y = rect.y;
-    //       this.cmpTransform.local.translation = translation;
-    //       this.speed.y = 0;
-    //     }
-    //   }
-    // }
-
-    private checkCollisionTopBottom(): void {
+    private checkCollision(): void {
       for (let tile of level.getChildren()) {
         ƒ.RenderManager.update();
         let tileHitBox: ƒ.Rectangle = (<Floor>tile).getRectWorld();
-        let playerHitBox: ƒ.Rectangle = this.hitBoxTopBottom.getRectWorld();
-        let hit: boolean = playerHitBox.collides(tileHitBox);
-        if (hit) {
-          console.log("Vertical");
-          let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
-          if (this.posLast.y >= tileHitBox.bottom) {
-            console.log("move up");
-            translation.y = tileHitBox.bottom;
-          } else {
-            console.log("move down");
-            translation.y = tileHitBox.top - playerHitBox.height;
-          }
-          this.cmpTransform.local.translation = translation;
+        let playerHitBox: ƒ.Rectangle = this.hitBoxVertical.getRectWorld();
+        let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
+        
+        if (playerHitBox.collides(tileHitBox)) {
+          this.resolveCollisionVertical(translation, playerHitBox, tileHitBox);
           this.speed.y = 0;
         }
-      }
-    }
-
-    private checkCollisionLeftRight(): void {
-      for (let tile of level.getChildren()) {
-        ƒ.RenderManager.update();
-        let tileHitBox: ƒ.Rectangle = (<Floor>tile).getRectWorld();
-        let playerHitBox: ƒ.Rectangle = this.hitBoxLeftRight.getRectWorld();
-        let hit: boolean = playerHitBox.collides(tileHitBox);
-        if (hit) {
-          console.log("Horizontal");
-          let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
-          if (this.posLast.x <= tileHitBox.left) {
-            console.log("move left");
-            translation.x = tileHitBox.left - playerHitBox.width / 2;
-          } else {
-            console.log("move right");
-            translation.x = tileHitBox.right + playerHitBox.width / 2;
-          }
-          console.log(translation.toString());
-          this.cmpTransform.local.translation = translation;
+        playerHitBox = this.hitBoxHorizontal.getRectWorld();
+        if (playerHitBox.collides(tileHitBox)) {
+          this.resolveCollisionHorizontal(translation, playerHitBox, tileHitBox);
           this.speed.x = 0;
         }
+        this.cmpTransform.local.translation = translation;
       }
     }
 
-    // private checkCollisionBody(_lastMutator: ƒ.Mutator): void { // TODO: replace this.cmpTransform.local.translation. with hitBox position
-    //   ƒ.RenderManager.update();
-    //   let save: ƒ.Mutator = this.cmpTransform.local.getMutator();
-    //   console.log("last:" + this.posLast.toString());
-    //   // console.log(this.hitBoxBody.getRectWorld().position.toString());
-    //   for (let floor of level.getChildren()) {
-    //     let rect: ƒ.Rectangle = (<Floor>floor).getRectWorld();
-    //     let hit: boolean = this.hitBoxBody.getRectWorld().collides(rect);
-    //     if (hit) {
-    //       let outerBound: ƒ.Vector3 = this.posLast;
-    //       let innerBound: ƒ.Vector3 = this.cmpTransform.local.translation.copy;
-    //       let delta: number = 1;
-    //       while (delta > 0.01) {
-    //         delta = ƒ.Vector3.DIFFERENCE(outerBound, innerBound).magnitude;
-    //         this.cmpTransform.local.translation = ƒ.Vector3.SCALE(ƒ.Vector3.SUM(innerBound, outerBound), 0.5);
-    //         if (this.hitBoxBody.getRectWorld().collides(rect)) {
-    //           innerBound = this.cmpTransform.local.translation.copy;
-    //         } else {
-    //           outerBound = this.cmpTransform.local.translation.copy;
-    //         }
-    //       }
-    //       console.log("middle: " + this.cmpTransform.local.translation.toString());
+    private resolveCollisionVertical(_translation: ƒ.Vector3, _hitBox: ƒ.Rectangle, _tile: ƒ.Rectangle): void {
+      if (this.posLast.y >= _tile.top) {
+        // console.log("move up");
+        _translation.y = _tile.bottom;
+      } else {
+        // console.log("move down");
+        _translation.y = _tile.top - _hitBox.height;
+      }
+    }
 
-
-    //       this.cmpTransform.local.mutate(save);
-    //       console.log("target: " + this.cmpTransform.local.translation.toString());
-    //       let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
-    //       console.log("outerbound: " + outerBound.toString());
-    //       if (outerBound.x <= rect.left || outerBound.x >= rect.right) {
-    //         console.log(1);
-    //         translation.x = outerBound.x;
-    //         this.speed.x = 0;
-    //       } else {
-    //         console.log(3);
-    //         if (outerBound.y >= rect.bottom) {
-    //           translation.y = outerBound.y;
-    //         }
-    //         if (outerBound.y <= rect.top) {
-    //           translation.y = outerBound.y;
-    //         }
-    //         this.speed.y = 0;
-    //       }
-    //       this.cmpTransform.local.translation = translation;
-
-
-
-    //       // if (outerBound.x >= rect.right) {
-    //       //   console.log(2);
-    //       //   this.speed.x = 0;
-    //       //   translation.x = outerBound.x;
-    //       // }
-
-
-
-    //       // if (outerBound.y >= rect.bottom) {
-    //       //   console.log(4);
-    //       //   this.speed.y = 0;
-    //       //   translation.y = outerBound.y;
-    //       // }
-
-
-    //       // if (outerBound.x == rect.)
-    //       // let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
-    //       // translation.y = outerBound.y;
-
-    //       // this.speed.y = 0;
-    //       // this.speed.set(0, 0, 0);
-    //     }
-    //   }
-    // }
-
-    // private checkCollisionBody(): void { // TODO: replace this.cmpTransform.local.translation. with hitBox position
-    //   ƒ.RenderManager.update();
-    //   for (let floor of level.getChildren()) {
-    //     let rect: ƒ.Rectangle = (<Floor>floor).getRectWorld();
-    //     let hit: boolean = this.hitBoxBody.getRectWorld().collides(rect);
-    //     if (hit) {
-    //       let outerBound: ƒ.Vector3 = this.posLast;
-    //       let innerBound: ƒ.Vector3 = this.cmpTransform.local.translation.copy;
-    //       let delta: number = 1;
-    //       while (delta > 0.01) {
-    //         delta = ƒ.Vector3.DIFFERENCE(outerBound, innerBound).magnitude;
-    //         this.cmpTransform.local.translation = ƒ.Vector3.SCALE(ƒ.Vector3.SUM(innerBound, outerBound), 0.5);
-    //         ƒ.RenderManager.update();
-    //         if (this.hitBoxBody.getRectWorld().collides(rect)) {
-    //           innerBound = this.cmpTransform.local.translation.copy;
-    //         } else {
-    //           outerBound = this.cmpTransform.local.translation.copy;
-    //         }
-    //       }
-    //       this.cmpTransform.local.translation = outerBound;
-    //       // let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
-    //       // translation.y = outerBound.y;
-    //       // this.cmpTransform.local.translation = translation;
-    //       this.speed.y = 0;
-    //     }
-    //   }
-    // }
+    private resolveCollisionHorizontal(_translation: ƒ.Vector3, _hitBox: ƒ.Rectangle, _tile: ƒ.Rectangle): void {
+      if (this.posLast.x <= _tile.left) {
+        // console.log("move left");
+        _translation.x = _tile.left - _hitBox.width / 2;
+      } else {
+        // console.log("move right");
+        _translation.x = _tile.right + _hitBox.width / 2;
+      }
+    }
 
     private grounded(): boolean {
       return this.speed.y == 0;
@@ -331,12 +223,12 @@ namespace MyGame {
       return this.getChildrenByName("HitBoxes")[0];
     }
 
-    private get hitBoxLeftRight(): Collidable {
-      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxLeftRight")[0];
+    private get hitBoxVertical(): Collidable {
+      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
     }
 
-    private get hitBoxTopBottom(): Collidable {
-      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxTopBottom")[0];
+    private get hitBoxHorizontal(): Collidable {
+      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
     }
   }
 }

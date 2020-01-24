@@ -15,22 +15,25 @@ declare namespace MyGame {
         private static sprites;
         private static speedMax;
         private static gravity;
+        private static acceleration;
         speed: ƒ.Vector3;
         private spriteFrameInterval;
         private cyclicAnimationTimer;
         private singleAnimationPlaying;
         private posLast;
+        private direction;
         constructor(_name?: string);
         static generateSprites(_txtImage: ƒ.TextureImage): void;
         show(_action: ACTION): void;
         act(_action: ACTION, _direction?: DIRECTION): void;
         private update;
-        private checkCollisionTopBottom;
-        private checkCollisionLeftRight;
+        private checkCollision;
+        private resolveCollisionVertical;
+        private resolveCollisionHorizontal;
         private grounded;
         private readonly sprites;
         private readonly hitBoxes;
-        private readonly hitBoxLeftRight;
-        private readonly hitBoxTopBottom;
+        private readonly hitBoxVertical;
+        private readonly hitBoxHorizontal;
     }
 }

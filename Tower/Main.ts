@@ -82,11 +82,10 @@ namespace MyGame {
       level.appendChild(floor);
   
       floor = new Floor("blue");
-      // floor.getComponent(ƒ.ComponentMesh).pivot.scaleY(1);
       floor.cmpTransform.local.scaleY(1);
       floor.cmpTransform.local.scaleX(1);
-      floor.cmpTransform.local.translateY(1);
-      floor.cmpTransform.local.translateX(1.5);
+      floor.cmpTransform.local.translateY(0);
+      floor.cmpTransform.local.translateX(3.45);
       level.appendChild(floor);
 
       floor = new Floor("red");
@@ -100,9 +99,23 @@ namespace MyGame {
       floor.cmpTransform.local.scaleY(0.2);
       floor.cmpTransform.local.scaleX(1);
       floor.cmpTransform.local.translateY(3);
+      floor.cmpTransform.local.translateX(1.41);
+      level.appendChild(floor);
+
+      floor = new Floor("green");
+      floor.cmpTransform.local.scaleY(1);
+      floor.cmpTransform.local.scaleX(1);
+      floor.cmpTransform.local.translateY(0.09);
       floor.cmpTransform.local.translateX(1.5);
       level.appendChild(floor);
   
+      floor = new Floor("green");
+      floor.cmpTransform.local.scaleY(1);
+      floor.cmpTransform.local.scaleX(1);
+      floor.cmpTransform.local.translateY(0.8);
+      floor.cmpTransform.local.translateX(-2.5);
+      level.appendChild(floor);
+
       return level;
     }
   }
