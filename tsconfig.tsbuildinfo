@@ -313,21 +313,25 @@
         "version": "1bbd6239d03350fdbdbc562275b3ec73f54dfaec620b17b551c3727baf46a5cd",
         "signature": "4fdd83576c299120ccdb37230931d824ad9750925e1009164d920565f4be823f"
       },
+      "./tower/animatednodesprite.ts": {
+        "version": "0d6d935e18024da3581628ed5b5a460d30704454125f0fda3589907ec1757f91",
+        "signature": "c45598e3c32f5766393aca7451a47c142360137c902b4cfe5cb9add4d7e2c29a"
+      },
       "./tower/character.ts": {
-        "version": "1b433e2da7582ddb1a8d5118ecc0cd8352c3a1abed6d5404c78448463532db68",
-        "signature": "e4c7bfdb7e474ea4f5fea8a052ce567183ed03d7c4927f3f6d351f33eea1e969"
+        "version": "fcd682bbb51b5c8892547c70aeb957ec1b11c487e3dc2bc994d2863ffa933539",
+        "signature": "7fa4088164d48d823de440b909226312f76ee54e81847b105690645f02672d21"
       },
       "./tower/collidable.ts": {
         "version": "bcb65d49edf2e8b6daf7d0ebdb7e3c6d62b8b1419cbb28fef607136600b2eadc",
         "signature": "5f90a1c0b7770e10d874273cd15bc965cb5d581065a28c406a358afb9bc00574"
       },
       "./tower/main.ts": {
-        "version": "decc508a9684c9ed07c994d1e053fc4ef54ee45c77ab2f57870676e90c7e3227",
+        "version": "d0132cc918116545a84e8eb2d2a6e8ef4cc67bff127a52011bdef0ca3cd52fe0",
         "signature": "f2fb737f74e099f0b90192a5624d08349cbe419cabdf9b4fbd54eedef7fd3af6"
       },
       "./tower/spritegenerator.ts": {
-        "version": "a5456262995d2ed8c75e500c7d9873c5f91f6ec12853bf5fe418d6faec7050bb",
-        "signature": "52bc847fc71cba94fcac70d94529c8b02231d956421eccc311b7cd794f1cc409"
+        "version": "0c61a66fc479138f0e4416c96439519790f99a997d7fd9f8a2bbda0ccac144e7",
+        "signature": "ba3be3a170f13c08f457a9bae75d191c4580ea5979bcf1a3122596cc31d45d7e"
       },
       "./tower/tile.ts": {
         "version": "9210b6655017c036b87021bfc7acfbbd5b38d6197d44e19e73fe18f18a4c2c47",
@@ -850,6 +854,10 @@
       ],
       "./l16_scrollercollide/main.ts": [
         "./l13_scrollerexample/spritegenerator.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./tower/animatednodesprite.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1673,6 +1681,7 @@
       "./l15_/main.ts",
       "./l16_scrollercollide/hare.ts",
       "./l16_scrollercollide/main.ts",
+      "./tower/animatednodesprite.ts",
       "./tower/character.ts",
       "./tower/collidable.ts",
       "./tower/main.ts",

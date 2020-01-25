@@ -95,10 +95,11 @@ namespace MyGame {
     }
   
     export class NodeSprite extends ƒ.Node {
+      public sprite: Sprite;
+      public frameCurrent: number = 0;
+      public spriteFrameInterval: number = 8; // 
       private cmpMesh: ƒ.ComponentMesh;
       private cmpMaterial: ƒ.ComponentMaterial;
-      private sprite: Sprite;
-      private frameCurrent: number = 0;
       private direction: number = 1;
   
       constructor(_name: string, _sprite: Sprite) {

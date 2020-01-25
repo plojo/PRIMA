@@ -1,0 +1,45 @@
+namespace MyGame {
+    import ƒ = FudgeCore;
+
+    export class AnimatedNodeSprite extends ƒ.Node {
+        public action: ACTION = ACTION.IDLE;
+        private gameFrameCounter: number = 0;
+        // private spriteFrameInterval: number = 8;
+
+        constructor(_name: string) {
+            super(_name);
+            ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
+        }
+
+        public start(_action: ACTION = this.action): void {
+            if (_action != this.action) {
+                this.gameFrameCounter = 0;
+                this.actionNode.activate(false);
+                this.action = _action;
+                this.actionNode.showFrame(0);
+                this.actionNode.activate(true);
+            }
+        }
+
+        public getNodeSprite(_action: ACTION): NodeSprite {
+            return <NodeSprite>this.getChildrenByName(_action)[0];
+        }
+
+        private get actionNode(): NodeSprite {
+            return this.getNodeSprite(this.action);
+        }
+
+        private update = (_event: ƒ.Eventƒ): void => {
+            this.gameFrameCounter++;
+            let actionNode: NodeSprite = this.actionNode;
+            if (this.gameFrameCounter >= actionNode.spriteFrameInterval) {
+                this.gameFrameCounter = 0;
+                console.log(this.action + " " + this.actionNode.frameCurrent);
+                if (actionNode.frameCurrent == actionNode.sprite.frames.length - 1) {
+                    this.dispatchEvent(new CustomEvent("animationFinished"));
+                }
+                actionNode.showFrameNext();
+            }
+        }
+    }
+}

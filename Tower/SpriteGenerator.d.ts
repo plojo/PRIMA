@@ -24,10 +24,11 @@ declare namespace MyGame {
         private createFrame;
     }
     class NodeSprite extends ƒ.Node {
+        sprite: Sprite;
+        frameCurrent: number;
+        spriteFrameInterval: number;
         private cmpMesh;
         private cmpMaterial;
-        private sprite;
-        private frameCurrent;
         private direction;
         constructor(_name: string, _sprite: Sprite);
         showFrame(_index: number): void;
