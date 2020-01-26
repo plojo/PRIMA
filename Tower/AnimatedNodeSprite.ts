@@ -11,7 +11,7 @@ namespace MyGame {
             ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
         }
 
-        public start(_action: ACTION = this.action): void {
+        public play(_action: ACTION = this.action): void {
             if (_action != this.action) {
                 this.gameFrameCounter = 0;
                 this.actionNode.activate(false);
@@ -34,7 +34,8 @@ namespace MyGame {
             let actionNode: NodeSprite = this.actionNode;
             if (this.gameFrameCounter >= actionNode.spriteFrameInterval) {
                 this.gameFrameCounter = 0;
-                console.log(this.action + " " + this.actionNode.frameCurrent);
+                // this.dispatchEvent(new CustomEvent("changedFrame"));
+                // console.log(this.action + " " + this.actionNode.frameCurrent);
                 if (actionNode.frameCurrent == actionNode.sprite.frames.length - 1) {
                     this.dispatchEvent(new CustomEvent("animationFinished"));
                 }

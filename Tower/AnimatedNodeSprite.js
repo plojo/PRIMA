@@ -13,7 +13,8 @@ var MyGame;
                 let actionNode = this.actionNode;
                 if (this.gameFrameCounter >= actionNode.spriteFrameInterval) {
                     this.gameFrameCounter = 0;
-                    console.log(this.action + " " + this.actionNode.frameCurrent);
+                    // this.dispatchEvent(new CustomEvent("changedFrame"));
+                    // console.log(this.action + " " + this.actionNode.frameCurrent);
                     if (actionNode.frameCurrent == actionNode.sprite.frames.length - 1) {
                         this.dispatchEvent(new CustomEvent("animationFinished"));
                     }
@@ -22,7 +23,7 @@ var MyGame;
             };
             ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
         }
-        start(_action = this.action) {
+        play(_action = this.action) {
             if (_action != this.action) {
                 this.gameFrameCounter = 0;
                 this.actionNode.activate(false);

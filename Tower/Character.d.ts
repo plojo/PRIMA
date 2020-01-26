@@ -5,7 +5,8 @@ declare namespace MyGame {
         WALK = "Walk",
         JUMP = "Jump",
         JUMPSQUAT = "JumpSquat",
-        FALL = "Fall"
+        FALL = "Fall",
+        DASH = "Dash"
     }
     enum DIRECTION {
         LEFT = 0,
@@ -13,10 +14,13 @@ declare namespace MyGame {
     }
     class Character extends ƒ.Node {
         private static sprites;
-        private static speedMax;
-        private static gravity;
+        private static readonly speedMax;
+        private static readonly distanceMax;
+        private static readonly gravity;
         private static friction;
-        private static acceleration;
+        private static accelerationGround;
+        private static accelerationMidAir;
+        acceleration: ƒ.Vector3;
         speed: ƒ.Vector3;
         private posLast;
         private direction;
@@ -33,5 +37,6 @@ declare namespace MyGame {
         private readonly hitBoxes;
         private readonly hitBoxVertical;
         private readonly hitBoxHorizontal;
+        private absMinSigned;
     }
 }

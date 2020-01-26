@@ -314,19 +314,19 @@
         "signature": "4fdd83576c299120ccdb37230931d824ad9750925e1009164d920565f4be823f"
       },
       "./tower/animatednodesprite.ts": {
-        "version": "0d6d935e18024da3581628ed5b5a460d30704454125f0fda3589907ec1757f91",
-        "signature": "c45598e3c32f5766393aca7451a47c142360137c902b4cfe5cb9add4d7e2c29a"
+        "version": "debc7743b93146f2458f18c08c2da4bf43abd2ca8fbb643da05fe64d0ac7ef50",
+        "signature": "4a9091e6d3799f524aa5625ddbe03b2954f8674c051d3ef98850bfb139b5bdc9"
       },
       "./tower/character.ts": {
-        "version": "fcd682bbb51b5c8892547c70aeb957ec1b11c487e3dc2bc994d2863ffa933539",
-        "signature": "7fa4088164d48d823de440b909226312f76ee54e81847b105690645f02672d21"
+        "version": "774fa18eb22e33a4206ea62608bc145fd7bf2805058076d43459d80cb3a14210",
+        "signature": "acb4de2daf9c7fec7ebba4ab5715c335861bbb4bb58a94b9ba73e96cce4be51a"
       },
       "./tower/collidable.ts": {
         "version": "bcb65d49edf2e8b6daf7d0ebdb7e3c6d62b8b1419cbb28fef607136600b2eadc",
         "signature": "5f90a1c0b7770e10d874273cd15bc965cb5d581065a28c406a358afb9bc00574"
       },
       "./tower/main.ts": {
-        "version": "d0132cc918116545a84e8eb2d2a6e8ef4cc67bff127a52011bdef0ca3cd52fe0",
+        "version": "f62053d67d573ac3826838b42359ef221b64a48fef54ff04c47a3aba6c2c6f30",
         "signature": "f2fb737f74e099f0b90192a5624d08349cbe419cabdf9b4fbd54eedef7fd3af6"
       },
       "./tower/spritegenerator.ts": {
@@ -1681,7 +1681,6 @@
       "./l15_/main.ts",
       "./l16_scrollercollide/hare.ts",
       "./l16_scrollercollide/main.ts",
-      "./tower/animatednodesprite.ts",
       "./tower/character.ts",
       "./tower/collidable.ts",
       "./tower/main.ts",
@@ -1732,7 +1731,8 @@
       "./node_modules/@types/node/ts3.2/globals.d.ts",
       "./node_modules/@types/node/ts3.2/index.d.ts",
       "./node_modules/@types/webgl2/index.d.ts",
-      "./node_modules/@types/ws/index.d.ts"
+      "./node_modules/@types/ws/index.d.ts",
+      "./tower/animatednodesprite.ts"
     ]
   },
   "version": "3.6.3"

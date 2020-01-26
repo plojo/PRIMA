@@ -6,7 +6,7 @@ var MyGame;
     let keysPressed = {};
     let hare;
     function test() {
-        MyGame.ƒ.Time.game.setScale(0.5);
+        // ƒ.Time.game.setScale(0.5);
         let canvas = document.querySelector("canvas");
         let crc2 = canvas.getContext("2d");
         let img = document.querySelector("img");
@@ -23,7 +23,7 @@ var MyGame;
         cmpCamera.pivot.translateZ(6);
         cmpCamera.pivot.lookAt(MyGame.ƒ.Vector3.ZERO());
         cmpCamera.backgroundColor = MyGame.ƒ.Color.CSS("aliceblue");
-        hare.addComponent(cmpCamera);
+        // hare.addComponent(cmpCamera);
         let viewport = new MyGame.ƒ.Viewport();
         viewport.initialize("Viewport", MyGame.game, cmpCamera, canvas);
         viewport.draw();
@@ -33,6 +33,10 @@ var MyGame;
         MyGame.ƒ.Loop.start(MyGame.ƒ.LOOP_MODE.TIME_GAME, 60);
         function update(_event) {
             processInput();
+            let translation = cmpCamera.pivot.translation;
+            translation.x = hare.mtxWorld.translation.x;
+            translation.y = hare.mtxWorld.translation.y;
+            cmpCamera.pivot.translation = translation;
             viewport.draw();
             crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
             crc2.strokeRect(-1, canvas.height / 2, canvas.width + 2, canvas.height);
@@ -42,6 +46,8 @@ var MyGame;
         keysPressed[_event.code] = (_event.type == "keydown");
         if (_event.code == MyGame.ƒ.KEYBOARD_CODE.SPACE && _event.type == "keydown")
             hare.act(MyGame.ACTION.JUMPSQUAT);
+        // if (_event.code == ƒ.KEYBOARD_CODE.E && _event.type == "keydown")
+        //   hare.act(ACTION.DASH);
     }
     function processInput() {
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.A]) {
