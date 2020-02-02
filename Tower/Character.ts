@@ -18,10 +18,10 @@ namespace MyGame {
     private static sprites: Sprite[];
     private static readonly speedMax: ƒ.Vector2 = new ƒ.Vector2(3, 15); // units per second
     private static readonly distanceMax: ƒ.Vector2 = new ƒ.Vector2(0.1, 0.1);
-    private static readonly gravity: number = 10; //units per square second
-    private static friction: number = 15; //units per square second
-    private static accelerationGround: number = 30; //units per square second, used to calculate ground movement
-    private static accelerationMidAir: number = 4.5; //units per square second, used to calculate mid air movement
+    private static gravity: number = 10; //units per square second
+    private static friction: number = 5 * Character.speedMax.x; // = 15 //units per square second
+    private static accelerationGround: number = 10 * Character.speedMax.x; // = 30 //units per square second, used to calculate ground movement
+    private static accelerationMidAir: number = 1.5 * Character.speedMax.x; // 4.5 //units per square second, used to calculate mid air movement
 
     public acceleration: ƒ.Vector3 = new ƒ.Vector3(0, -Character.gravity, 0);
     public speed: ƒ.Vector3 = ƒ.Vector3.ZERO();
@@ -72,8 +72,7 @@ namespace MyGame {
         (_event: Event) => {
           // console.log("animationFinished");
           if (this.animatedNodeSprite.action == ACTION.JUMPSQUAT) {
-            this.speed.y = 6;
-            this.animatedNodeSprite.play(ACTION.JUMP);
+            this.act(ACTION.JUMP);
           } else
             if (this.grounded) {
               if (this.animatedNodeSprite.action != ACTION.IDLE)
@@ -141,6 +140,14 @@ namespace MyGame {
           break;
         case ACTION.JUMPSQUAT:
           // the jump will be started after this animation finished, see event listener "animationFinished"
+          break;
+        case ACTION.JUMP:
+          if (this.animatedNodeSprite.action == ACTION.JUMPSQUAT) {
+            this.speed.y = 6;
+            this.animatedNodeSprite.play(_action);
+          } else {
+            this.act(ACTION.JUMPSQUAT);
+          }
           break;
         // case ACTION.DASH:
         //   this.acceleration.x = 0;

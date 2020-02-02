@@ -30,7 +30,7 @@ namespace MyGame {
     game.appendChild(hare);
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
-    cmpCamera.pivot.translateZ(6);
+    cmpCamera.pivot.translateZ(8);
     cmpCamera.pivot.lookAt(ƒ.Vector3.ZERO());
     cmpCamera.backgroundColor = ƒ.Color.CSS("aliceblue");
     // hare.addComponent(cmpCamera);
@@ -62,7 +62,7 @@ namespace MyGame {
   function handleKeyboard(_event: KeyboardEvent): void {
     keysPressed[_event.code] = (_event.type == "keydown");
     if (_event.code == ƒ.KEYBOARD_CODE.SPACE && _event.type == "keydown")
-      hare.act(ACTION.JUMPSQUAT);
+      hare.act(ACTION.JUMP);
     // if (_event.code == ƒ.KEYBOARD_CODE.E && _event.type == "keydown")
     //   hare.act(ACTION.DASH);
   }

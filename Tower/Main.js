@@ -20,7 +20,7 @@ var MyGame;
         MyGame.game.appendChild(MyGame.level);
         MyGame.game.appendChild(hare);
         let cmpCamera = new MyGame.ƒ.ComponentCamera();
-        cmpCamera.pivot.translateZ(6);
+        cmpCamera.pivot.translateZ(8);
         cmpCamera.pivot.lookAt(MyGame.ƒ.Vector3.ZERO());
         cmpCamera.backgroundColor = MyGame.ƒ.Color.CSS("aliceblue");
         // hare.addComponent(cmpCamera);
@@ -45,7 +45,7 @@ var MyGame;
     function handleKeyboard(_event) {
         keysPressed[_event.code] = (_event.type == "keydown");
         if (_event.code == MyGame.ƒ.KEYBOARD_CODE.SPACE && _event.type == "keydown")
-            hare.act(MyGame.ACTION.JUMPSQUAT);
+            hare.act(MyGame.ACTION.JUMP);
         // if (_event.code == ƒ.KEYBOARD_CODE.E && _event.type == "keydown")
         //   hare.act(ACTION.DASH);
     }

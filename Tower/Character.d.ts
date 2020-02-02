@@ -16,7 +16,7 @@ declare namespace MyGame {
         private static sprites;
         private static readonly speedMax;
         private static readonly distanceMax;
-        private static readonly gravity;
+        private static gravity;
         private static friction;
         private static accelerationGround;
         private static accelerationMidAir;

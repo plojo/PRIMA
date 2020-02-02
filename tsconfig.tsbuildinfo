@@ -318,15 +318,15 @@
         "signature": "4a9091e6d3799f524aa5625ddbe03b2954f8674c051d3ef98850bfb139b5bdc9"
       },
       "./tower/character.ts": {
-        "version": "774fa18eb22e33a4206ea62608bc145fd7bf2805058076d43459d80cb3a14210",
-        "signature": "acb4de2daf9c7fec7ebba4ab5715c335861bbb4bb58a94b9ba73e96cce4be51a"
+        "version": "619a8293750b7b55037f8624939e2b328c012840e7e2d2c687535b9424f403b8",
+        "signature": "842fe6619ddbc71a6cc6be38002d222e60fed97358e4ba34ba8a708bb1889ba3"
       },
       "./tower/collidable.ts": {
         "version": "bcb65d49edf2e8b6daf7d0ebdb7e3c6d62b8b1419cbb28fef607136600b2eadc",
         "signature": "5f90a1c0b7770e10d874273cd15bc965cb5d581065a28c406a358afb9bc00574"
       },
       "./tower/main.ts": {
-        "version": "f62053d67d573ac3826838b42359ef221b64a48fef54ff04c47a3aba6c2c6f30",
+        "version": "74ae3fc2f771075da97de3ba48a76ccb989a57165842e873bd37b96e04879bcd",
         "signature": "f2fb737f74e099f0b90192a5624d08349cbe419cabdf9b4fbd54eedef7fd3af6"
       },
       "./tower/spritegenerator.ts": {
@@ -1681,9 +1681,9 @@
       "./l15_/main.ts",
       "./l16_scrollercollide/hare.ts",
       "./l16_scrollercollide/main.ts",
+      "./tower/animatednodesprite.ts",
       "./tower/character.ts",
       "./tower/collidable.ts",
-      "./tower/main.ts",
       "./tower/spritegenerator.ts",
       "./tower/tile.ts",
       "./node_modules/@types/node/globals.d.ts",
@@ -1732,7 +1732,7 @@
       "./node_modules/@types/node/ts3.2/index.d.ts",
       "./node_modules/@types/webgl2/index.d.ts",
       "./node_modules/@types/ws/index.d.ts",
-      "./tower/animatednodesprite.ts"
+      "./tower/main.ts"
     ]
   },
   "version": "3.6.3"

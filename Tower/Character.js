@@ -69,8 +69,7 @@ var MyGame;
             this.addEventListener("animationFinished", (_event) => {
                 // console.log("animationFinished");
                 if (this.animatedNodeSprite.action == ACTION.JUMPSQUAT) {
-                    this.speed.y = 6;
-                    this.animatedNodeSprite.play(ACTION.JUMP);
+                    this.act(ACTION.JUMP);
                 }
                 else if (this.grounded) {
                     if (this.animatedNodeSprite.action != ACTION.IDLE)
@@ -129,6 +128,15 @@ var MyGame;
                     break;
                 case ACTION.JUMPSQUAT:
                     // the jump will be started after this animation finished, see event listener "animationFinished"
+                    break;
+                case ACTION.JUMP:
+                    if (this.animatedNodeSprite.action == ACTION.JUMPSQUAT) {
+                        this.speed.y = 6;
+                        this.animatedNodeSprite.play(_action);
+                    }
+                    else {
+                        this.act(ACTION.JUMPSQUAT);
+                    }
                     break;
                 // case ACTION.DASH:
                 //   this.acceleration.x = 0;
@@ -205,8 +213,8 @@ var MyGame;
     Character.speedMax = new ƒ.Vector2(3, 15); // units per second
     Character.distanceMax = new ƒ.Vector2(0.1, 0.1);
     Character.gravity = 10; //units per square second
-    Character.friction = 15; //units per square second
-    Character.accelerationGround = 30; //units per square second, used to calculate ground movement
-    Character.accelerationMidAir = 4.5; //units per square second, used to calculate mid air movement
+    Character.friction = 5 * Character.speedMax.x; // = 15 //units per square second
+    Character.accelerationGround = 10 * Character.speedMax.x; // = 30 //units per square second, used to calculate ground movement
+    Character.accelerationMidAir = 1.5 * Character.speedMax.x; // 4.5 //units per square second, used to calculate mid air movement
     MyGame.Character = Character;
 })(MyGame || (MyGame = {}));
