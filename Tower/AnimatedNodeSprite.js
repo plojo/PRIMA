@@ -23,7 +23,10 @@ var MyGame;
             };
             ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
         }
-        play(_action = this.action) {
+        get actionNode() {
+            return this.getNodeSprite(this.action);
+        }
+        play(_action) {
             if (_action != this.action) {
                 this.gameFrameCounter = 0;
                 this.actionNode.activate(false);
@@ -34,9 +37,6 @@ var MyGame;
         }
         getNodeSprite(_action) {
             return this.getChildrenByName(_action)[0];
-        }
-        get actionNode() {
-            return this.getNodeSprite(this.action);
         }
     }
     MyGame.AnimatedNodeSprite = AnimatedNodeSprite;

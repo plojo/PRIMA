@@ -6,7 +6,7 @@ var MyGame;
     let keysPressed = {};
     let hare;
     function test() {
-        // ƒ.Time.game.setScale(0.5);
+        MyGame.ƒ.Time.game.setScale(0.5);
         let canvas = document.querySelector("canvas");
         let crc2 = canvas.getContext("2d");
         let img = document.querySelector("img");
@@ -52,7 +52,6 @@ var MyGame;
     function processInput() {
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.SPACE]) {
             hare.act(MyGame.ACTION.JUMP);
-            // return;
         }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.A]) {
             hare.act(MyGame.ACTION.WALK, MyGame.DIRECTION.LEFT);

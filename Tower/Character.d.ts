@@ -5,6 +5,7 @@ declare namespace MyGame {
         WALK = "Walk",
         JUMP = "Jump",
         JUMPSQUAT = "JumpSquat",
+        JUMPSTART = "JumpStart",
         FALL = "Fall",
         DASH = "Dash"
     }
@@ -25,6 +26,7 @@ declare namespace MyGame {
         private posLast;
         private direction;
         private grounded;
+        private jumpStart;
         constructor(_name: string);
         static generateSprites(_txtImage: ƒ.TextureImage): void;
         private get animatedNodeSprite();

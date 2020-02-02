@@ -6,6 +6,7 @@ namespace MyGame {
     WALK = "Walk",
     JUMP = "Jump",
     JUMPSQUAT = "JumpSquat",
+    JUMPSTART = "JumpStart",
     FALL = "Fall",
     DASH = "Dash"
   }
@@ -29,6 +30,7 @@ namespace MyGame {
     private posLast: ƒ.Vector3;
     private direction: number = 0;
     private grounded: boolean;
+    private jumpStart: boolean = false;
 
     constructor(_name: string) {
       super(_name);
@@ -72,7 +74,7 @@ namespace MyGame {
         (_event: Event) => {
           // console.log("animationFinished");
           if (this.animatedNodeSprite.action == ACTION.JUMPSQUAT) {
-            this.act(ACTION.JUMP);
+            this.act(ACTION.JUMPSTART);
           } else
             if (this.grounded) {
               if (this.animatedNodeSprite.action != ACTION.IDLE)
@@ -105,7 +107,7 @@ namespace MyGame {
       Character.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.JUMP);
-      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(120, 180, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(180, 180, 60, 80), 3, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
       Character.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.FALL);
@@ -134,6 +136,7 @@ namespace MyGame {
     }
 
     public act(_action: ACTION, _direction?: DIRECTION): void {
+      // console.log(_action);
       switch (_action) {
         case ACTION.IDLE:
           if (this.grounded) {
@@ -154,17 +157,24 @@ namespace MyGame {
           else
             this.acceleration.x = Character.accelerationMidAir * this.direction;
           break;
+        case ACTION.JUMP:
+          if (!this.jumpStart) {
+            this.act(ACTION.JUMPSQUAT);
+          } else {
+            this.speed.y = 4;
+            this.animatedNodeSprite.play(_action);
+          }
+          return;
         case ACTION.JUMPSQUAT:
           // the jump will be started after this animation finished, see event listener "animationFinished"
           break;
-        case ACTION.JUMP:
-          if (this.animatedNodeSprite.action == ACTION.JUMPSQUAT) {
-            this.speed.y = 6;
-            this.animatedNodeSprite.play(_action);
-          } else {
-            this.act(ACTION.JUMPSQUAT);
-          }
-          break;
+        case ACTION.JUMPSTART:
+          this.jumpStart = true;
+          ƒ.Time.game.setTimer(250, 1, () => {
+            this.jumpStart = false;
+          });
+          this.act(ACTION.JUMP);
+          return;
         // case ACTION.DASH:
         //   this.acceleration.x = 0;
         //   this.speed.x = 3 * this.direction;

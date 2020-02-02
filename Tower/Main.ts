@@ -14,7 +14,7 @@ namespace MyGame {
 
 
   function test(): void {
-    // ƒ.Time.game.setScale(0.5);
+    ƒ.Time.game.setScale(0.5);
     let canvas: HTMLCanvasElement = document.querySelector("canvas");
     let crc2: CanvasRenderingContext2D = canvas.getContext("2d");
     let img: HTMLImageElement = document.querySelector("img");
@@ -70,7 +70,6 @@ namespace MyGame {
   function processInput(): void {
     if (keysPressed[ƒ.KEYBOARD_CODE.SPACE]) {
       hare.act(ACTION.JUMP);
-      // return;
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.A]) {
       hare.act(ACTION.WALK, DIRECTION.LEFT);

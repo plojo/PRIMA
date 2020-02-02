@@ -326,19 +326,19 @@
         "signature": "4fdd83576c299120ccdb37230931d824ad9750925e1009164d920565f4be823f"
       },
       "./tower/animatednodesprite.ts": {
-        "version": "debc7743b93146f2458f18c08c2da4bf43abd2ca8fbb643da05fe64d0ac7ef50",
-        "signature": "e08333b688f8de503e54e0b92456f999a0cf8b30ccf3788904e72b773ee9714c"
+        "version": "8591496a042b62585deac15e6abac2306d9c7fb590195ab6825c8d0c676cfba6",
+        "signature": "0749dc29c84c644c4294a17e98d422cc32b44416813ba7a451c34749297afdf5"
       },
       "./tower/character.ts": {
-        "version": "4826f5259712a966ab06238f131fa41f8dbdc5e30f51ad5ff1539ecb2b9e904b",
-        "signature": "72305e237ef8005f138a135e7ed2b0f134befc562dc9443a79cd58a41b489da4"
+        "version": "5b1a9c1e8d2c3b459551a9b7860dc060104fe690fc203f907d84abc896694cc1",
+        "signature": "60eb0c6ddfc1e5ecbd39dde8d063c73c05503b088ba3c2fd0756820e542dbd01"
       },
       "./tower/collidable.ts": {
         "version": "bcb65d49edf2e8b6daf7d0ebdb7e3c6d62b8b1419cbb28fef607136600b2eadc",
         "signature": "5f90a1c0b7770e10d874273cd15bc965cb5d581065a28c406a358afb9bc00574"
       },
       "./tower/main.ts": {
-        "version": "0b2fdbc30b7101338db320706df8a7d547b5fc758ed081a8f0a580825c829d63",
+        "version": "b54b67a817780aadb9cd6d0f893b287a84f5888221dcd91e63146b7351c0abb2",
         "signature": "f2fb737f74e099f0b90192a5624d08349cbe419cabdf9b4fbd54eedef7fd3af6"
       },
       "./tower/spritegenerator.ts": {
