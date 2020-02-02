@@ -21,7 +21,7 @@ namespace L15_ {
             processCollison(posLast, box.position, 0.01);
             velocity = 0;
         }
-        console.timeLog("timer", box.position.y);
+        // console.timeLog("timer", box.position.y);
     }
 
     function processCollison(upperBound: f.Vector2, lowerBound: f.Vector2, epsilon: number): void {

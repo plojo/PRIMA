@@ -19,7 +19,7 @@ var L15_;
             processCollison(posLast, box.position, 0.01);
             velocity = 0;
         }
-        console.timeLog("timer", box.position.y);
+        // console.timeLog("timer", box.position.y);
     }
     function processCollison(upperBound, lowerBound, epsilon) {
         let delta = upperBound.y - lowerBound.y;
