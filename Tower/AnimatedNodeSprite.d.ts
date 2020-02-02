@@ -6,7 +6,7 @@ declare namespace MyGame {
         constructor(_name: string);
         play(_action?: ACTION): void;
         getNodeSprite(_action: ACTION): NodeSprite;
-        private readonly actionNode;
+        private get actionNode();
         private update;
     }
 }

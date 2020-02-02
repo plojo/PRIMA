@@ -117,6 +117,22 @@ namespace MyGame {
       // Character.sprites.push(sprite);
     }
 
+    private get animatedNodeSprite(): AnimatedNodeSprite {
+      return <AnimatedNodeSprite>this.getChildrenByName("AnimatedNodeSprite")[0];
+    }
+
+    private get hitBoxes(): ƒ.Node {
+      return this.getChildrenByName("HitBoxes")[0];
+    }
+
+    private get hitBoxVertical(): Collidable {
+      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
+    }
+
+    private get hitBoxHorizontal(): Collidable {
+      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
+    }
+
     public act(_action: ACTION, _direction?: DIRECTION): void {
       switch (_action) {
         case ACTION.IDLE:
@@ -155,7 +171,7 @@ namespace MyGame {
         //   this.animatedNodeSprite.play(_action);
         //   break;
       }
-      if (this.grounded && this.animatedNodeSprite.action != ACTION.JUMPSQUAT /*&& this.animatedNodeSprite.action != ACTION.DASH*/)
+      if (this.grounded && this.animatedNodeSprite.action != ACTION.JUMPSQUAT && this.animatedNodeSprite.action != ACTION.JUMP/*&& this.animatedNodeSprite.action != ACTION.DASH*/)
         this.animatedNodeSprite.play(_action);
     }
 
@@ -224,22 +240,6 @@ namespace MyGame {
         _translation.x = _tile.right + _hitBox.width / 2;
       }
       this.speed.x = 0;
-    }
-
-    private get animatedNodeSprite(): AnimatedNodeSprite {
-      return <AnimatedNodeSprite>this.getChildrenByName("AnimatedNodeSprite")[0];
-    }
-
-    private get hitBoxes(): ƒ.Node {
-      return this.getChildrenByName("HitBoxes")[0];
-    }
-
-    private get hitBoxVertical(): Collidable {
-      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
-    }
-
-    private get hitBoxHorizontal(): Collidable {
-      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
     }
 
     private absMinSigned(x: number, y: number): number {

@@ -330,15 +330,15 @@
         "signature": "e08333b688f8de503e54e0b92456f999a0cf8b30ccf3788904e72b773ee9714c"
       },
       "./tower/character.ts": {
-        "version": "619a8293750b7b55037f8624939e2b328c012840e7e2d2c687535b9424f403b8",
-        "signature": "948eff90306a7e51ed8671f4404d2869077e992354a2cc31cc3353b0ceae391b"
+        "version": "4826f5259712a966ab06238f131fa41f8dbdc5e30f51ad5ff1539ecb2b9e904b",
+        "signature": "72305e237ef8005f138a135e7ed2b0f134befc562dc9443a79cd58a41b489da4"
       },
       "./tower/collidable.ts": {
         "version": "bcb65d49edf2e8b6daf7d0ebdb7e3c6d62b8b1419cbb28fef607136600b2eadc",
         "signature": "5f90a1c0b7770e10d874273cd15bc965cb5d581065a28c406a358afb9bc00574"
       },
       "./tower/main.ts": {
-        "version": "74ae3fc2f771075da97de3ba48a76ccb989a57165842e873bd37b96e04879bcd",
+        "version": "0b2fdbc30b7101338db320706df8a7d547b5fc758ed081a8f0a580825c829d63",
         "signature": "f2fb737f74e099f0b90192a5624d08349cbe419cabdf9b4fbd54eedef7fd3af6"
       },
       "./tower/spritegenerator.ts": {
@@ -460,11 +460,11 @@
       "./l16_scrollercollide/hare.ts",
       "./l16_scrollercollide/main.ts",
       "./tower/animatednodesprite.ts",
-      "./tower/character.ts",
       "./tower/collidable.ts",
+      "./tower/main.ts",
       "./tower/spritegenerator.ts",
       "./tower/tile.ts",
-      "./tower/main.ts"
+      "./tower/character.ts"
     ]
   },
   "version": "3.7.5"

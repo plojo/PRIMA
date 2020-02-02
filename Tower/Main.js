@@ -44,12 +44,16 @@ var MyGame;
     }
     function handleKeyboard(_event) {
         keysPressed[_event.code] = (_event.type == "keydown");
-        if (_event.code == MyGame.ƒ.KEYBOARD_CODE.SPACE && _event.type == "keydown")
-            hare.act(MyGame.ACTION.JUMP);
+        // if (_event.code == ƒ.KEYBOARD_CODE.SPACE && _event.type == "keydown")
+        //   hare.act(ACTION.JUMP);
         // if (_event.code == ƒ.KEYBOARD_CODE.E && _event.type == "keydown")
         //   hare.act(ACTION.DASH);
     }
     function processInput() {
+        if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.SPACE]) {
+            hare.act(MyGame.ACTION.JUMP);
+            // return;
+        }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.A]) {
             hare.act(MyGame.ACTION.WALK, MyGame.DIRECTION.LEFT);
             return;

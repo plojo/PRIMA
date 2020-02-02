@@ -104,6 +104,18 @@ var MyGame;
             // sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(360, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
             // Character.sprites.push(sprite);
         }
+        get animatedNodeSprite() {
+            return this.getChildrenByName("AnimatedNodeSprite")[0];
+        }
+        get hitBoxes() {
+            return this.getChildrenByName("HitBoxes")[0];
+        }
+        get hitBoxVertical() {
+            return this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
+        }
+        get hitBoxHorizontal() {
+            return this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
+        }
         act(_action, _direction) {
             switch (_action) {
                 case ACTION.IDLE:
@@ -144,7 +156,7 @@ var MyGame;
                 //   this.animatedNodeSprite.play(_action);
                 //   break;
             }
-            if (this.grounded && this.animatedNodeSprite.action != ACTION.JUMPSQUAT /*&& this.animatedNodeSprite.action != ACTION.DASH*/)
+            if (this.grounded && this.animatedNodeSprite.action != ACTION.JUMPSQUAT && this.animatedNodeSprite.action != ACTION.JUMP /*&& this.animatedNodeSprite.action != ACTION.DASH*/)
                 this.animatedNodeSprite.play(_action);
         }
         updateSpeed(_timeFrame) {
@@ -193,18 +205,6 @@ var MyGame;
                 _translation.x = _tile.right + _hitBox.width / 2;
             }
             this.speed.x = 0;
-        }
-        get animatedNodeSprite() {
-            return this.getChildrenByName("AnimatedNodeSprite")[0];
-        }
-        get hitBoxes() {
-            return this.getChildrenByName("HitBoxes")[0];
-        }
-        get hitBoxVertical() {
-            return this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
-        }
-        get hitBoxHorizontal() {
-            return this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
         }
         absMinSigned(x, y) {
             return Math.sign(x) * Math.min(Math.abs(x), Math.abs(y));

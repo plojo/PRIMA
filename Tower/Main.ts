@@ -61,13 +61,17 @@ namespace MyGame {
 
   function handleKeyboard(_event: KeyboardEvent): void {
     keysPressed[_event.code] = (_event.type == "keydown");
-    if (_event.code == ƒ.KEYBOARD_CODE.SPACE && _event.type == "keydown")
-      hare.act(ACTION.JUMP);
+    // if (_event.code == ƒ.KEYBOARD_CODE.SPACE && _event.type == "keydown")
+    //   hare.act(ACTION.JUMP);
     // if (_event.code == ƒ.KEYBOARD_CODE.E && _event.type == "keydown")
     //   hare.act(ACTION.DASH);
   }
 
   function processInput(): void {
+    if (keysPressed[ƒ.KEYBOARD_CODE.SPACE]) {
+      hare.act(ACTION.JUMP);
+      // return;
+    }
     if (keysPressed[ƒ.KEYBOARD_CODE.A]) {
       hare.act(ACTION.WALK, DIRECTION.LEFT);
       return;
