@@ -318,8 +318,8 @@
         "signature": "a7542cd95f6f8732a4537335d1e3a3817d0e2b56dca76b55012724a11eb905c7"
       },
       "./tower/character.ts": {
-        "version": "800d449c72c03288aeebe310a2e3ed66dfd21660f230aeb41824757a52b0e7e9",
-        "signature": "6f3d9685f0ed9e4d1505b128605acec45d7a944fae69cc9edfe18e4535c21705"
+        "version": "445a87a121c04f5152ce5821acba76b08ea2d637b17425299f4d6249da82b380",
+        "signature": "38f56691616d3c7fc255ee751f7a940044bfcefaf200003ac72e7855805efaa3"
       },
       "./tower/collidable.ts": {
         "version": "bcb65d49edf2e8b6daf7d0ebdb7e3c6d62b8b1419cbb28fef607136600b2eadc",
@@ -1684,6 +1684,7 @@
       "./tower/animatednodesprite.ts",
       "./tower/character.ts",
       "./tower/collidable.ts",
+      "./tower/main.ts",
       "./tower/spritegenerator.ts",
       "./tower/tile.ts",
       "./node_modules/@types/node/globals.d.ts",
@@ -1731,8 +1732,7 @@
       "./node_modules/@types/node/ts3.2/globals.d.ts",
       "./node_modules/@types/node/ts3.2/index.d.ts",
       "./node_modules/@types/webgl2/index.d.ts",
-      "./node_modules/@types/ws/index.d.ts",
-      "./tower/main.ts"
+      "./node_modules/@types/ws/index.d.ts"
     ]
   },
   "version": "3.6.3"
