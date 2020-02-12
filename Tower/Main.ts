@@ -14,7 +14,7 @@ namespace MyGame {
 
 
   function test(): void {
-    ƒ.Time.game.setScale(0.5);
+    // ƒ.Time.game.setScale(0.5);
     let canvas: HTMLCanvasElement = document.querySelector("canvas");
     let crc2: CanvasRenderingContext2D = canvas.getContext("2d");
     let img: HTMLImageElement = document.querySelector("img");
@@ -30,7 +30,7 @@ namespace MyGame {
     game.appendChild(hare);
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
-    cmpCamera.pivot.translateZ(8);
+    cmpCamera.pivot.translateZ(10);
     cmpCamera.pivot.lookAt(ƒ.Vector3.ZERO());
     cmpCamera.backgroundColor = ƒ.Color.CSS("aliceblue");
     // hare.addComponent(cmpCamera);

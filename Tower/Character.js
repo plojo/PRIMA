@@ -166,8 +166,21 @@ var MyGame;
                 //   this.animatedNodeSprite.play(_action);
                 //   break;
             }
-            if (this.grounded && this.animatedNodeSprite.action != ACTION.JUMPSQUAT && this.animatedNodeSprite.action != ACTION.JUMP /*&& this.animatedNodeSprite.action != ACTION.DASH*/)
-                this.animatedNodeSprite.play(_action);
+            switch (this.animatedNodeSprite.action) {
+                case ACTION.JUMP:
+                case ACTION.JUMPSQUAT:
+                    break;
+                default:
+                    if (this.grounded)
+                        this.animatedNodeSprite.play(_action);
+                    else
+                        this.animatedNodeSprite.play(ACTION.FALL);
+                    break;
+            }
+            // if (this.animatedNodeSprite.action != ACTION.JUMPSQUAT && this.animatedNodeSprite.action != ACTION.JUMP/*&& this.animatedNodeSprite.action != ACTION.DASH*/)
+            //   if (this.grounded)   
+            //     this.animatedNodeSprite.play(_action);
+            //   else this.animatedNodeSprite.play(ACTION.FALL);
         }
         updateSpeed(_timeFrame) {
             // console.log(this.speed.toString());

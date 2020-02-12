@@ -29,10 +29,10 @@ declare namespace MyGame {
         private jumpStart;
         constructor(_name: string);
         static generateSprites(_txtImage: ƒ.TextureImage): void;
-        private get animatedNodeSprite();
-        private get hitBoxes();
-        private get hitBoxVertical();
-        private get hitBoxHorizontal();
+        private readonly animatedNodeSprite;
+        private readonly hitBoxes;
+        private readonly hitBoxVertical;
+        private readonly hitBoxHorizontal;
         act(_action: ACTION, _direction?: DIRECTION): void;
         private update;
         private updateSpeed;
