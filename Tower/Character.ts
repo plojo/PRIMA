@@ -14,10 +14,8 @@ namespace MyGame {
     LEFT, RIGHT
   }
 
-  export class Character extends ƒ.Node {
-    private static sprites: Sprite[];
+  export class Character extends Actor {
     private static readonly speedMax: ƒ.Vector2 = new ƒ.Vector2(3, 15); // units per second
-    private static readonly distanceMax: ƒ.Vector2 = new ƒ.Vector2(0.1, 0.1);
     private static gravity: number = 10; //units per square second
     private static friction: number = 5 * Character.speedMax.x; // = 15 //units per square second
     private static accelerationGround: number = 10 * Character.speedMax.x; // = 30 //units per square second, used to calculate ground movement
@@ -27,28 +25,18 @@ namespace MyGame {
     public speed: ƒ.Vector3 = ƒ.Vector3.ZERO();
 
     private posLast: ƒ.Vector3;
-    private direction: number = 0;
     private grounded: boolean;
     private jumpStart: boolean = false;
 
     constructor(_name: string) {
       super(_name);
-      this.addComponent(new ƒ.ComponentTransform());
-
-      let animatedNodeSprite: AnimatedNodeSprite = new AnimatedNodeSprite("AnimatedNodeSprite");
-      animatedNodeSprite.addComponent(new ƒ.ComponentTransform());
-      this.appendChild(animatedNodeSprite);
-
-      let hitBoxes: ƒ.Node = new ƒ.Node("HitBoxes");
-      hitBoxes.addComponent(new ƒ.ComponentTransform());
-      this.appendChild(hitBoxes);
 
       // let hitBox: Collidable = new Collidable("HitBoxVertical");
       let hitBox: Collidable = new Tile("lime");
       hitBox.name = "HitBoxVertical";
       hitBox.cmpTransform.local.scaleY(-1);
       hitBox.cmpTransform.local.scaleX(0.29);
-      hitBoxes.appendChild(hitBox);
+      this.hitBoxes.appendChild(hitBox);
 
       // hitBox = new Collidable("HitBoxHorizontal");
       hitBox = new Tile("pink");
@@ -56,13 +44,7 @@ namespace MyGame {
       hitBox.cmpTransform.local.scaleY(-0.8);
       hitBox.cmpTransform.local.scaleX(0.50);
       hitBox.cmpTransform.local.translateY(0.1);
-      hitBoxes.appendChild(hitBox);
-
-      for (let sprite of Character.sprites) {
-        let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
-        nodeSprite.activate(false);
-        this.animatedNodeSprite.appendChild(nodeSprite);
-      }
+      this.hitBoxes.appendChild(hitBox);
 
       this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 5; // jumpsquat animation should last for 5 frames only
       this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).activate(true);
@@ -90,42 +72,32 @@ namespace MyGame {
     }
 
     public static generateSprites(_txtImage: ƒ.TextureImage): void {
-      Character.sprites = [];
-
       let sprite: Sprite = new Sprite(ACTION.IDLE);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-      Character.sprites.push(sprite);
+      this.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.WALK);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 90, 60, 80), 6, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-      Character.sprites.push(sprite);
+      this.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.JUMPSQUAT);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(60, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-      Character.sprites.push(sprite);
+      this.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.JUMP);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(180, 180, 60, 80), 3, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-      Character.sprites.push(sprite);
+      this.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.FALL);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(360, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-      Character.sprites.push(sprite);
-    }
-
-    private get animatedNodeSprite(): AnimatedNodeSprite {
-      return <AnimatedNodeSprite>this.getChildrenByName("AnimatedNodeSprite")[0];
-    }
-
-    private get hitBoxes(): ƒ.Node {
-      return this.getChildrenByName("HitBoxes")[0];
+      this.sprites.push(sprite);
     }
 
     private get hitBoxVertical(): Collidable {
       return <Collidable>this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
     }
 
-    private get hitBoxHorizontal(): Collidable {
+    public get hitBoxHorizontal(): Collidable {
       return <Collidable>this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
     }
 
@@ -145,12 +117,9 @@ namespace MyGame {
           break;
 
         case ACTION.WALK:
-          this.direction = (_direction == DIRECTION.RIGHT ? 1 : -1);
-          this.animatedNodeSprite.cmpTransform.local.rotation = ƒ.Vector3.Y(90 - 90 * this.direction);
-          if (this.grounded)
-            this.acceleration.x = Character.accelerationGround * this.direction;
-          else
-            this.acceleration.x = Character.accelerationMidAir * this.direction;
+          let direction: DIRECTION = (_direction == DIRECTION.RIGHT ? 1 : -1);
+          this.animatedNodeSprite.cmpTransform.local.rotation = ƒ.Vector3.Y(90 - 90 * direction);
+          this.acceleration.x = (this.grounded ? Character.accelerationGround : Character.accelerationMidAir) * direction;
           break;
 
         case ACTION.JUMP:
@@ -247,13 +216,5 @@ namespace MyGame {
       }
       this.speed.x = 0;
     }
-
-    private absMinSigned(x: number, y: number): number {
-      return Math.sign(x) * Math.min(Math.abs(x), Math.abs(y));
-    }
-
-    // private absoluteMinVector(x: ƒ.Vector3, y: ƒ.Vector3) {
-    //   return x.copy. map((value: number): number => {return Math.sign(value) * Math.min(Math.abs(x), Math.abs(y)})
-    // }
   }
 }

@@ -313,17 +313,25 @@
         "version": "1bbd6239d03350fdbdbc562275b3ec73f54dfaec620b17b551c3727baf46a5cd",
         "signature": "4fdd83576c299120ccdb37230931d824ad9750925e1009164d920565f4be823f"
       },
+      "./tower/actor.ts": {
+        "version": "cc300916ea8f39ad658d1c175f59c6e3f31b4849367de730550e7be38bcb16d7",
+        "signature": "0119165d514526bc21f18a0fa96b8ee70ba75ebba72520ace9aa1a47556c8e21"
+      },
       "./tower/animatednodesprite.ts": {
         "version": "8591496a042b62585deac15e6abac2306d9c7fb590195ab6825c8d0c676cfba6",
         "signature": "a7542cd95f6f8732a4537335d1e3a3817d0e2b56dca76b55012724a11eb905c7"
       },
       "./tower/character.ts": {
-        "version": "445a87a121c04f5152ce5821acba76b08ea2d637b17425299f4d6249da82b380",
-        "signature": "38f56691616d3c7fc255ee751f7a940044bfcefaf200003ac72e7855805efaa3"
+        "version": "91109391542501ee23682634e2891ef6a95a607a00d0fbc7c234c55348161b7a",
+        "signature": "98c48b7f66f794adf7ffcac776b97b8895da6e93a2012865d0a1cb494eb26fae"
       },
       "./tower/collidable.ts": {
         "version": "bcb65d49edf2e8b6daf7d0ebdb7e3c6d62b8b1419cbb28fef607136600b2eadc",
         "signature": "5f90a1c0b7770e10d874273cd15bc965cb5d581065a28c406a358afb9bc00574"
+      },
+      "./tower/gust.ts": {
+        "version": "24cbc748a467b7ca13519f5aec972e3c75afb5d7222e672ceab6591f88012bdb",
+        "signature": "9df512e6f465e07a0c6ca76b4292d031d8bf374aec0a49c8673ee69da98fce81"
       },
       "./tower/main.ts": {
         "version": "493c9ba3f902e9ab78ede4edfd1a5fdd91db5f94a881fe3cd231b56be08c0b3d",
@@ -857,6 +865,10 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "./tower/actor.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "./tower/animatednodesprite.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
@@ -866,6 +878,10 @@
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "./tower/collidable.ts": [
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "./tower/gust.ts": [
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -1641,6 +1657,7 @@
       "../../appdata/roaming/npm/node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../../appdata/roaming/npm/node_modules/typescript/lib/lib.esnext.bigint.d.ts",
       "../../appdata/roaming/npm/node_modules/typescript/lib/lib.esnext.full.d.ts",
+      "./tower/main.ts",
       "./fudge/fudgecore.d.ts",
       "./fudgecraft/main.ts",
       "./l01_helloworld/test.ts",
@@ -1681,10 +1698,39 @@
       "./l15_/main.ts",
       "./l16_scrollercollide/hare.ts",
       "./l16_scrollercollide/main.ts",
+      "./tower/actor.ts",
       "./tower/animatednodesprite.ts",
       "./tower/character.ts",
       "./tower/collidable.ts",
-      "./tower/main.ts",
+      [
+        "./tower/gust.ts",
+        [
+          {
+            "file": "./tower/gust.ts",
+            "start": 1649,
+            "length": 4,
+            "messageText": "Cannot find name 'hare'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./tower/gust.ts",
+            "start": 1699,
+            "length": 4,
+            "messageText": "Cannot find name 'hare'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./tower/gust.ts",
+            "start": 1726,
+            "length": 4,
+            "messageText": "Cannot find name 'hare'.",
+            "category": 1,
+            "code": 2304
+          }
+        ]
+      ],
       "./tower/spritegenerator.ts",
       "./tower/tile.ts",
       "./node_modules/@types/node/globals.d.ts",
