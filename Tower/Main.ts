@@ -12,6 +12,8 @@ namespace MyGame {
   export let level: ƒ.Node;
   let hare: Character;
 
+  
+
 
   function test(): void {
     // ƒ.Time.game.setScale(0.5);
@@ -84,7 +86,10 @@ namespace MyGame {
   }
 
   function createLevel(): ƒ.Node {
-    let level: ƒ.Node = new ƒ.Node("Level");
+    let lg: LevelGenerator;
+    lg = new LevelGenerator();
+    return lg.interpretJSON();
+ /*   let level: ƒ.Node = new ƒ.Node("Level");
     let floor: Tile = new Tile("red");
     floor.cmpTransform.local.scaleY(0.2);
     floor.cmpTransform.local.scaleX(100);
@@ -125,6 +130,6 @@ namespace MyGame {
     floor.cmpTransform.local.translateX(-2.5);
     level.appendChild(floor);
 
-    return level;
+    return level;*/
   }
 }

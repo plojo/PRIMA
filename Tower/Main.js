@@ -64,41 +64,50 @@ var MyGame;
         hare.act(MyGame.ACTION.IDLE);
     }
     function createLevel() {
-        let level = new MyGame.ƒ.Node("Level");
-        let floor = new MyGame.Tile("red");
-        floor.cmpTransform.local.scaleY(0.2);
-        floor.cmpTransform.local.scaleX(100);
-        level.appendChild(floor);
-        floor = new MyGame.Tile("blue");
-        floor.cmpTransform.local.scaleY(1);
-        floor.cmpTransform.local.scaleX(1);
-        floor.cmpTransform.local.translateY(0);
-        floor.cmpTransform.local.translateX(3.45);
-        level.appendChild(floor);
-        floor = new MyGame.Tile("red");
-        floor.cmpTransform.local.scaleY(0.2);
-        floor.cmpTransform.local.scaleX(1);
-        floor.cmpTransform.local.translateY(2);
-        floor.cmpTransform.local.translateX(0);
-        level.appendChild(floor);
-        floor = new MyGame.Tile("blue");
-        floor.cmpTransform.local.scaleY(0.2);
-        floor.cmpTransform.local.scaleX(1);
-        floor.cmpTransform.local.translateY(3);
-        floor.cmpTransform.local.translateX(1.45);
-        level.appendChild(floor);
-        floor = new MyGame.Tile("green");
-        floor.cmpTransform.local.scaleY(1);
-        floor.cmpTransform.local.scaleX(1);
-        floor.cmpTransform.local.translateY(0.09);
-        floor.cmpTransform.local.translateX(1.42);
-        level.appendChild(floor);
-        floor = new MyGame.Tile("green");
-        floor.cmpTransform.local.scaleY(1);
-        floor.cmpTransform.local.scaleX(1);
-        floor.cmpTransform.local.translateY(0.8);
-        floor.cmpTransform.local.translateX(-2.5);
-        level.appendChild(floor);
-        return level;
+        let lg;
+        lg = new MyGame.LevelGenerator();
+        return lg.interpretJSON();
+        /*   let level: ƒ.Node = new ƒ.Node("Level");
+           let floor: Tile = new Tile("red");
+           floor.cmpTransform.local.scaleY(0.2);
+           floor.cmpTransform.local.scaleX(100);
+           level.appendChild(floor);
+       
+           floor = new Tile("blue");
+           floor.cmpTransform.local.scaleY(1);
+           floor.cmpTransform.local.scaleX(1);
+           floor.cmpTransform.local.translateY(0);
+           floor.cmpTransform.local.translateX(3.45);
+           level.appendChild(floor);
+       
+           floor = new Tile("red");
+           floor.cmpTransform.local.scaleY(0.2);
+           floor.cmpTransform.local.scaleX(1);
+           floor.cmpTransform.local.translateY(2);
+           floor.cmpTransform.local.translateX(0);
+           level.appendChild(floor);
+       
+           floor = new Tile("blue");
+           floor.cmpTransform.local.scaleY(0.2);
+           floor.cmpTransform.local.scaleX(1);
+           floor.cmpTransform.local.translateY(3);
+           floor.cmpTransform.local.translateX(1.45);
+           level.appendChild(floor);
+       
+           floor = new Tile("green");
+           floor.cmpTransform.local.scaleY(1);
+           floor.cmpTransform.local.scaleX(1);
+           floor.cmpTransform.local.translateY(0.09);
+           floor.cmpTransform.local.translateX(1.42);
+           level.appendChild(floor);
+       
+           floor = new Tile("green");
+           floor.cmpTransform.local.scaleY(1);
+           floor.cmpTransform.local.scaleX(1);
+           floor.cmpTransform.local.translateY(0.8);
+           floor.cmpTransform.local.translateX(-2.5);
+           level.appendChild(floor);
+       
+           return level;*/
     }
 })(MyGame || (MyGame = {}));

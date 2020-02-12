@@ -4,8 +4,8 @@ declare namespace L10_FudgeCraft_DetectCombos {
         maxRotX: number;
         minDistance: number;
         constructor(_maxRotX: number);
-        get cmpCamera(): ƒ.ComponentCamera;
-        get rotatorX(): ƒ.Node;
+        readonly cmpCamera: ƒ.ComponentCamera;
+        readonly rotatorX: ƒ.Node;
         setDistance(_distance: number): void;
         moveDistance(_delta: number): void;
         setRotationY(_angle: number): void;

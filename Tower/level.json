@@ -1,0 +1,68 @@
+{
+  "Object1": {
+    "Type": 1,
+    "Scale": {
+      "ScaleX": 100,
+      "ScaleY": 0.2
+    },
+    "Translation": {
+      "TranslationX": 0,
+      "TranslationY": 0
+    }
+  },
+  "Object2": {
+    "Type": 1,
+    "Scale": {
+      "ScaleX": 1,
+      "ScaleY": 1
+    },
+    "Translation": {
+      "TranslationX": 3.45,
+      "TranslationY": 0
+    }
+  },
+  "Object3": {
+    "Type": 1,
+    "Scale": {
+      "ScaleX": 1,
+      "ScaleY": 0.2
+    },
+    "Translation": {
+      "TranslationX": 0,
+      "TranslationY": 2
+    }
+  },
+  "Object4": {
+    "Type": 1,
+    "Scale": {
+      "ScaleX": 1,
+      "ScaleY": 0.2
+    },
+    "Translation": {
+      "TranslationX": 1.45,
+      "TranslationY": 3
+    }
+  },
+  "Object5": {
+    "Type": 1,
+    "Scale": {
+      "ScaleX": 1,
+      "ScaleY": 1
+    },
+    "Translation": {
+      "TranslationX": 1.42,
+      "TranslationY": 0.09
+    }
+  },
+  "Object6": {
+    "Type": 1,
+    "Scale": {
+      "ScaleX": 1,
+      "ScaleY": 1
+    },
+    "Translation": {
+      "TranslationX": -2.5,
+      "TranslationY": 0.8
+    }
+  }
+}

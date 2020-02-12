@@ -11,6 +11,6 @@ declare namespace L09_FudgeCraft_Camera {
         setRotationX(_angle: number): void;
         setRotationY(_angle: number): void;
         setDistance(_distance: number): void;
-        get cmpCamera(): f.ComponentCamera;
+        readonly cmpCamera: f.ComponentCamera;
     }
 }
