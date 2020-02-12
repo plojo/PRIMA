@@ -28,6 +28,11 @@ namespace MyGame {
     game = new ƒ.Node("Game");
     player = new Character("Hare");
     level = createLevel();
+    let gust: Gust = new Gust("bla", ƒ.Vector3.X(-4));
+    gust.cmpTransform.local.translateX(5);
+    gust.cmpTransform.local.translateY(1);
+    level.appendChild(gust);
+
     game.appendChild(level);
     game.appendChild(player);
 
