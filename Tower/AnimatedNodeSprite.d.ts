@@ -4,7 +4,7 @@ declare namespace MyGame {
         action: ACTION;
         private gameFrameCounter;
         constructor(_name: string);
-        private get actionNode();
+        private readonly actionNode;
         play(_action: ACTION): void;
         getNodeSprite(_action: ACTION): NodeSprite;
         private update;

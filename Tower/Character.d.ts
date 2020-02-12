@@ -6,8 +6,7 @@ declare namespace MyGame {
         JUMP = "Jump",
         JUMPSQUAT = "JumpSquat",
         JUMPSTART = "JumpStart",
-        FALL = "Fall",
-        DASH = "Dash"
+        FALL = "Fall"
     }
     enum DIRECTION {
         LEFT = 0,
@@ -35,7 +34,6 @@ declare namespace MyGame {
         private readonly hitBoxHorizontal;
         act(_action: ACTION, _direction?: DIRECTION): void;
         private update;
-        private updateSpeed;
         private checkCollision;
         private resolveCollisionVertical;
         private resolveCollisionHorizontal;

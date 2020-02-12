@@ -10,7 +10,6 @@ var MyGame;
         ACTION["JUMPSQUAT"] = "JumpSquat";
         ACTION["JUMPSTART"] = "JumpStart";
         ACTION["FALL"] = "Fall";
-        ACTION["DASH"] = "Dash";
     })(ACTION = MyGame.ACTION || (MyGame.ACTION = {}));
     let DIRECTION;
     (function (DIRECTION) {
@@ -26,16 +25,13 @@ var MyGame;
             this.jumpStart = false;
             this.update = (_event) => {
                 let timeFrame = ƒ.Loop.timeFrameGame / 1000; // seconds
-                this.updateSpeed(timeFrame);
+                this.speed = ƒ.Vector3.SUM(this.speed, ƒ.Vector3.SCALE(this.acceleration, timeFrame));
+                this.speed.x = this.absMinSigned(this.speed.x, Character.speedMax.x);
+                this.speed.y = this.absMinSigned(this.speed.y, Character.speedMax.y);
                 this.posLast = this.cmpTransform.local.translation;
                 let distance = ƒ.Vector3.SCALE(this.speed, timeFrame);
-                // if (this.animatedNodeSprite.action == ACTION.DASH) {
-                //   distance.x = 2 * this.direction;
-                //   distance.y = 0;
-                // }
                 distance.x = this.absMinSigned(distance.x, Character.distanceMax.x);
                 distance.y = this.absMinSigned(distance.y, Character.distanceMax.y);
-                // console.log(distance.toString());
                 this.cmpTransform.local.translate(distance);
                 this.grounded = false;
                 this.checkCollision();
@@ -66,7 +62,6 @@ var MyGame;
                 this.animatedNodeSprite.appendChild(nodeSprite);
             }
             this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 5; // jumpsquat animation should last for 5 frames only
-            // this.animatedNodeSprite.getNodeSprite(ACTION.DASH).spriteFrameInterval = 20;
             this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).activate(true);
             this.addEventListener("animationFinished", (_event) => {
                 // console.log("animationFinished");
@@ -102,9 +97,6 @@ var MyGame;
             sprite = new MyGame.Sprite(ACTION.FALL);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(360, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
             Character.sprites.push(sprite);
-            // sprite = new Sprite(ACTION.DASH);
-            // sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(360, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
-            // Character.sprites.push(sprite);
         }
         get animatedNodeSprite() {
             return this.getChildrenByName("AnimatedNodeSprite")[0];
@@ -160,16 +152,13 @@ var MyGame;
                     });
                     this.act(ACTION.JUMP);
                     return;
-                // case ACTION.DASH:
-                //   this.acceleration.x = 0;
-                //   this.speed.x = 3 * this.direction;
-                //   this.animatedNodeSprite.play(_action);
-                //   break;
             }
             switch (this.animatedNodeSprite.action) {
+                // these animations can not be interrupted
                 case ACTION.JUMP:
                 case ACTION.JUMPSQUAT:
                     break;
+                // all other animations can be interrrupted
                 default:
                     if (this.grounded)
                         this.animatedNodeSprite.play(_action);
@@ -177,17 +166,6 @@ var MyGame;
                         this.animatedNodeSprite.play(ACTION.FALL);
                     break;
             }
-            // if (this.animatedNodeSprite.action != ACTION.JUMPSQUAT && this.animatedNodeSprite.action != ACTION.JUMP/*&& this.animatedNodeSprite.action != ACTION.DASH*/)
-            //   if (this.grounded)   
-            //     this.animatedNodeSprite.play(_action);
-            //   else this.animatedNodeSprite.play(ACTION.FALL);
-        }
-        updateSpeed(_timeFrame) {
-            // console.log(this.speed.toString());
-            // console.log(this.acceleration.toString());
-            this.speed = ƒ.Vector3.SUM(this.speed, ƒ.Vector3.SCALE(this.acceleration, _timeFrame));
-            this.speed.x = this.absMinSigned(this.speed.x, Character.speedMax.x);
-            this.speed.y = this.absMinSigned(this.speed.y, Character.speedMax.y);
         }
         checkCollision() {
             for (let tile of MyGame.level.getChildren()) {
