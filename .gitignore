@@ -6,3 +6,5 @@ FUDGE-win32-x64
 package-lock.json
 
 .DS_Store
+
+tsconfig.tsbuildinfo
