@@ -35,8 +35,8 @@ var MyGame;
             this.sprites.push(sprite);
         }
         checkCollision(_distance) {
-            if (this.hitBox.getRectWorld().collides(hare.hitBoxHorizontal.getRectWorld())) {
-                hare.speed = ƒ.Vector3.SUM(hare.speed, this.speed);
+            if (this.hitBox.getRectWorld().collides(MyGame.player.hitBoxHorizontal.getRectWorld())) {
+                MyGame.player.speed = ƒ.Vector3.SUM(MyGame.player.speed, this.speed);
             }
         }
     }

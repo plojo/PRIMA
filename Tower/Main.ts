@@ -10,7 +10,7 @@ namespace MyGame {
 
   export let game: ƒ.Node;
   export let level: ƒ.Node;
-  let hare: Character;
+  export let player: Character;
 
   
 
@@ -26,10 +26,10 @@ namespace MyGame {
 
     ƒ.RenderManager.initialize(true, false);
     game = new ƒ.Node("Game");
-    hare = new Character("Hare");
+    player = new Character("Hare");
     level = createLevel();
     game.appendChild(level);
-    game.appendChild(hare);
+    game.appendChild(player);
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
     cmpCamera.pivot.translateZ(10);
@@ -50,8 +50,8 @@ namespace MyGame {
     function update(_event: ƒ.Eventƒ): void {
       processInput();
       let translation: ƒ.Vector3 = cmpCamera.pivot.translation;
-      translation.x = hare.mtxWorld.translation.x;
-      translation.y = hare.mtxWorld.translation.y;
+      translation.x = player.mtxWorld.translation.x;
+      translation.y = player.mtxWorld.translation.y;
       cmpCamera.pivot.translation = translation;
 
       viewport.draw();
@@ -71,18 +71,18 @@ namespace MyGame {
 
   function processInput(): void {
     if (keysPressed[ƒ.KEYBOARD_CODE.SPACE]) {
-      hare.act(ACTION.JUMP);
+      player.act(ACTION.JUMP);
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.A]) {
-      hare.act(ACTION.WALK, DIRECTION.LEFT);
+      player.act(ACTION.WALK, DIRECTION.LEFT);
       return;
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.D]) {
-      hare.act(ACTION.WALK, DIRECTION.RIGHT);
+      player.act(ACTION.WALK, DIRECTION.RIGHT);
       return;
     }
 
-    hare.act(ACTION.IDLE);
+    player.act(ACTION.IDLE);
   }
 
   function createLevel(): ƒ.Node {

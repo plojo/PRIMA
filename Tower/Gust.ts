@@ -43,8 +43,8 @@ namespace MyGame {
     }
 
     private checkCollision(_distance: ƒ.Vector3): void {
-      if (this.hitBox.getRectWorld().collides(hare.hitBoxHorizontal.getRectWorld())) {
-        hare.speed = ƒ.Vector3.SUM(hare.speed, this.speed);
+      if (this.hitBox.getRectWorld().collides(player.hitBoxHorizontal.getRectWorld())) {
+        player.speed = ƒ.Vector3.SUM(player.speed, this.speed);
       }
     }
   }
