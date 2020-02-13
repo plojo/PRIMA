@@ -29,6 +29,9 @@ namespace MyGame {
         }
 
         protected update = (_event: ƒ.Eventƒ): void => {
+            for (const child of this.getChildren()) {
+                console.log(child);
+            }
             let timeFrame: number = ƒ.Loop.timeFrameGame;
             this.elapsedTime += timeFrame;
             if (this.elapsedTime >= this.interval) {

@@ -30,8 +30,9 @@ namespace MyGame {
     game = new ƒ.Node("Game");
     player = new Character("Hare");
     level = createLevel();
-    let gustSpawner: GustSpawner = new GustSpawner("GustSpawner", 3, 1, 90, 3, 3);
-    gustSpawner.cmpTransform.local.translateX(5);
+    let gustSpawner: GustSpawner = new GustSpawner("GustSpawner", 3, 1, 270, 3, 3);
+    gustSpawner.cmpTransform.local.translateX(-4);
+    gustSpawner.cmpTransform.local.translateY(1);
     game.appendChild(gustSpawner);
     // let gust: Gust = new Gust("bla", ƒ.Vector3.X(-3));
     // gust.cmpTransform.local.translateX(-2);

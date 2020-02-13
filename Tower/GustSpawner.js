@@ -16,6 +16,9 @@ var MyGame;
             super(_name);
             this.elapsedTime = 0;
             this.update = (_event) => {
+                for (const child of this.getChildren()) {
+                    console.log(child);
+                }
                 let timeFrame = ƒ.Loop.timeFrameGame;
                 this.elapsedTime += timeFrame;
                 if (this.elapsedTime >= this.interval) {

@@ -9,9 +9,6 @@ namespace MyGame {
       this.speed = _speed;
 
       let hitBox: Collidable = new Tile("purple");
-      // hitBox.cmpTransform.local.scaleX(1);
-      hitBox.cmpTransform.local.scaleY(2);
-      hitBox.cmpTransform.local.translateY(1);
       hitBox.name = "HitBox";
       this.appendChild(hitBox);
 
@@ -19,8 +16,7 @@ namespace MyGame {
       
       ƒ.Time.game.setTimer(_lifespan, 1, () => {
         ƒ.Loop.removeEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
-        this.activate(false);
-        super.removeChild(this);
+        this.getParent().removeChild(this);
       });
 
     }
@@ -46,9 +42,9 @@ namespace MyGame {
 
     private checkCollision(_distance: ƒ.Vector3): void {
       if (this.hitBox.getRectWorld().collides(player.hitBoxHorizontal.getRectWorld())) {
-        player.cmpTransform.local.translate(ƒ.Vector3.SCALE(ƒ.Vector3.TRANSFORMATION(_distance, this.mtxWorld, false), 0.5));
+        // player.cmpTransform.local.translate(ƒ.Vector3.SCALE(ƒ.Vector3.TRANSFORMATION(_distance, this.mtxWorld, false), 0.5));
         // player.acceleration = ƒ.Vector3.SUM(player.acceleration, ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false));
-        // player.speed = ƒ.Vector3.SUM(player.speed, ƒ.Vector3.SCALE(ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false), 0.06));
+        player.speed = ƒ.Vector3.SUM(player.speed, ƒ.Vector3.SCALE(ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false), 0.06));
       }
     }
   }
