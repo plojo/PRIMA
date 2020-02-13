@@ -64,5 +64,19 @@
       "TranslationX": -2.5,
       "TranslationY": 0.8
     }
+  },
+  "Object7": {
+    "Type": 2,
+    "Parameters": {
+      "Offset": 1,
+      "Interval": 1,
+      "Rotation": 90,
+      "Lifespan": 5,
+      "Speed": 4
+    },
+    "Translation": {
+      "TranslationX": -2.5,
+      "TranslationY": 0.8
+    }
   }
 }

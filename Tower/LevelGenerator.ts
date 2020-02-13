@@ -2,23 +2,21 @@ namespace MyGame {
     //    import ƒ = FudgeCore;
 
     export class LevelGenerator {
-        public interpretJSON(): ƒ.Node {
+        public static interpretJSON(level: ƒ.Node, objects: ƒ.Node): void {
             let file = new XMLHttpRequest();
             file.open('GET', 'level.json', false);
             file.send(null);
             console.log(JSON.parse(file.responseText));
             let levelString = JSON.parse(file.responseText);
-            let level: ƒ.Node = new ƒ.Node("Level");
             for (let obj of Object.values(levelString)) {
                 let values = Object.values(obj);
                 console.log(obj);
-                this.generateObject(level, values[0], Object.values(values[1]), Object.values(values[2]));
+                this.generateObject(level, objects, values[0], Object.values(values[1]), Object.values(values[2]));
             }
-            return level;
         }
 
 
-        public generateObject(level: ƒ.Node, type: any, scale: any, translation: any) {
+        private static generateObject(level: ƒ.Node, objects: ƒ.Node, type: any, scale: any, translation: any): void{
             switch (type) {
                 case 1:
                     let floor: Tile = new Tile("green");
@@ -31,14 +29,12 @@ namespace MyGame {
                     level.appendChild(floor);
                     break;
                 case 2:
-                    let wall: Tile = new Tile("green");
-                    wall.cmpTransform.local.scaleX(scale[0]);
-                    wall.cmpTransform.local.scaleY(scale[1]);
+                    let gustSpawner: GustSpawner = new GustSpawner("Gust", scale[0], scale[1], scale[2], scale[3], scale[4]);
 
-                    wall.cmpTransform.local.translateX(translation[0]);
-                    wall.cmpTransform.local.translateY(translation[1]);
+                    gustSpawner.cmpTransform.local.translateX(translation[0]);
+                    gustSpawner.cmpTransform.local.translateY(translation[1]);
 
-                    level.appendChild(wall);
+                    objects.appendChild(gustSpawner);
                     break;
                 case 3:
                     let object: Tile = new Tile("green");
@@ -52,7 +48,6 @@ namespace MyGame {
                     break;
 
             }
-            return level;
         }
     }
 }

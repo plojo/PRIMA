@@ -3,21 +3,19 @@ var MyGame;
 (function (MyGame) {
     //    import ƒ = FudgeCore;
     class LevelGenerator {
-        interpretJSON() {
+        static interpretJSON(level, objects) {
             let file = new XMLHttpRequest();
             file.open('GET', 'level.json', false);
             file.send(null);
             console.log(JSON.parse(file.responseText));
             let levelString = JSON.parse(file.responseText);
-            let level = new MyGame.ƒ.Node("Level");
             for (let obj of Object.values(levelString)) {
                 let values = Object.values(obj);
                 console.log(obj);
-                this.generateObject(level, values[0], Object.values(values[1]), Object.values(values[2]));
+                this.generateObject(level, objects, values[0], Object.values(values[1]), Object.values(values[2]));
             }
-            return level;
         }
-        generateObject(level, type, scale, translation) {
+        static generateObject(level, objects, type, scale, translation) {
             switch (type) {
                 case 1:
                     let floor = new MyGame.Tile("green");
@@ -28,12 +26,10 @@ var MyGame;
                     level.appendChild(floor);
                     break;
                 case 2:
-                    let wall = new MyGame.Tile("green");
-                    wall.cmpTransform.local.scaleX(scale[0]);
-                    wall.cmpTransform.local.scaleY(scale[1]);
-                    wall.cmpTransform.local.translateX(translation[0]);
-                    wall.cmpTransform.local.translateY(translation[1]);
-                    level.appendChild(wall);
+                    let gustSpawner = new MyGame.GustSpawner("Gust", scale[0], scale[1], scale[2], scale[3], scale[4]);
+                    gustSpawner.cmpTransform.local.translateX(translation[0]);
+                    gustSpawner.cmpTransform.local.translateY(translation[1]);
+                    objects.appendChild(gustSpawner);
                     break;
                 case 3:
                     let object = new MyGame.Tile("green");
@@ -44,7 +40,6 @@ var MyGame;
                     level.appendChild(object);
                     break;
             }
-            return level;
         }
     }
     MyGame.LevelGenerator = LevelGenerator;

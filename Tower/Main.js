@@ -16,18 +16,21 @@ var MyGame;
         MyGame.ƒ.RenderManager.initialize(true, false);
         MyGame.game = new MyGame.ƒ.Node("Game");
         MyGame.player = new MyGame.Character("Hare");
-        MyGame.level = createLevel();
-        let gustSpawner = new MyGame.GustSpawner("GustSpawner", 3, 1, 270, 3, 3);
-        gustSpawner.cmpTransform.local.translateX(-4);
-        gustSpawner.cmpTransform.local.translateY(1);
-        MyGame.game.appendChild(gustSpawner);
+        MyGame.level = new MyGame.ƒ.Node("Level");
+        MyGame.objects = new MyGame.ƒ.Node("Objects");
+        MyGame.LevelGenerator.interpretJSON(MyGame.level, MyGame.objects);
+        MyGame.game.appendChild(MyGame.level);
+        MyGame.game.appendChild(MyGame.objects);
+        /*   let gustSpawner: GustSpawner = new GustSpawner("GustSpawner", 3, 1, 270, 3, 3);
+           gustSpawner.cmpTransform.local.translateX(-4);
+           gustSpawner.cmpTransform.local.translateY(1);
+           game.appendChild(gustSpawner);*/
         // let gust: Gust = new Gust("bla", ƒ.Vector3.X(-3));
         // gust.cmpTransform.local.translateX(-2);
         // gust.cmpTransform.local.translateY(-3);
         // gust.cmpTransform.local.rotateZ(-90);
         // gust.cmpTransform.local.scaleX(0.1);
         // game.appendChild(gust); // TODO: split up level into tiles and dynamic objects
-        MyGame.game.appendChild(MyGame.level);
         MyGame.game.appendChild(MyGame.player);
         // game.broadcastEvent(new CustomEvent("registerUpdate"));
         let cmpCamera = new MyGame.ƒ.ComponentCamera();
@@ -74,53 +77,6 @@ var MyGame;
             return;
         }
         MyGame.player.act(MyGame.ACTION.IDLE);
-    }
-    function createLevel() {
-        let lg;
-        lg = new MyGame.LevelGenerator();
-        return lg.interpretJSON();
-        /*   let level: ƒ.Node = new ƒ.Node("Level");
-           let floor: Tile = new Tile("red");
-           floor.cmpTransform.local.scaleY(0.2);
-           floor.cmpTransform.local.scaleX(100);
-           level.appendChild(floor);
-       
-           floor = new Tile("blue");
-           floor.cmpTransform.local.scaleY(1);
-           floor.cmpTransform.local.scaleX(1);
-           floor.cmpTransform.local.translateY(0);
-           floor.cmpTransform.local.translateX(3.45);
-           level.appendChild(floor);
-       
-           floor = new Tile("red");
-           floor.cmpTransform.local.scaleY(0.2);
-           floor.cmpTransform.local.scaleX(1);
-           floor.cmpTransform.local.translateY(2);
-           floor.cmpTransform.local.translateX(0);
-           level.appendChild(floor);
-       
-           floor = new Tile("blue");
-           floor.cmpTransform.local.scaleY(0.2);
-           floor.cmpTransform.local.scaleX(1);
-           floor.cmpTransform.local.translateY(3);
-           floor.cmpTransform.local.translateX(1.45);
-           level.appendChild(floor);
-       
-           floor = new Tile("green");
-           floor.cmpTransform.local.scaleY(1);
-           floor.cmpTransform.local.scaleX(1);
-           floor.cmpTransform.local.translateY(0.09);
-           floor.cmpTransform.local.translateX(1.42);
-           level.appendChild(floor);
-       
-           floor = new Tile("green");
-           floor.cmpTransform.local.scaleY(1);
-           floor.cmpTransform.local.scaleX(1);
-           floor.cmpTransform.local.translateY(0.8);
-           floor.cmpTransform.local.translateX(-2.5);
-           level.appendChild(floor);
-       
-           return level;*/
     }
     function hndKeyDown(_event) {
         if (_event.code == MyGame.ƒ.KEYBOARD_CODE.SPACE) {

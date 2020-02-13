@@ -10,6 +10,7 @@ namespace MyGame {
 
   export let game: ƒ.Node;
   export let level: ƒ.Node;
+  export let objects: ƒ.Node;
   export let player: Character;
   
   let viewport: ƒ.Viewport;
@@ -29,18 +30,21 @@ namespace MyGame {
     ƒ.RenderManager.initialize(true, false);
     game = new ƒ.Node("Game");
     player = new Character("Hare");
-    level = createLevel();
-    let gustSpawner: GustSpawner = new GustSpawner("GustSpawner", 3, 1, 270, 3, 3);
+    level = new ƒ.Node("Level");
+    objects = new ƒ.Node("Objects");
+    LevelGenerator.interpretJSON(level, objects);
+    game.appendChild(level);
+    game.appendChild(objects);
+ /*   let gustSpawner: GustSpawner = new GustSpawner("GustSpawner", 3, 1, 270, 3, 3);
     gustSpawner.cmpTransform.local.translateX(-4);
     gustSpawner.cmpTransform.local.translateY(1);
-    game.appendChild(gustSpawner);
+    game.appendChild(gustSpawner);*/
     // let gust: Gust = new Gust("bla", ƒ.Vector3.X(-3));
     // gust.cmpTransform.local.translateX(-2);
     // gust.cmpTransform.local.translateY(-3);
     // gust.cmpTransform.local.rotateZ(-90);
     // gust.cmpTransform.local.scaleX(0.1);
     // game.appendChild(gust); // TODO: split up level into tiles and dynamic objects
-    game.appendChild(level);
     game.appendChild(player);
 
     // game.broadcastEvent(new CustomEvent("registerUpdate"));
@@ -101,53 +105,6 @@ namespace MyGame {
     player.act(ACTION.IDLE);
   }
 
-  function createLevel(): ƒ.Node {
-    let lg: LevelGenerator;
-    lg = new LevelGenerator();
-    return lg.interpretJSON();
- /*   let level: ƒ.Node = new ƒ.Node("Level");
-    let floor: Tile = new Tile("red");
-    floor.cmpTransform.local.scaleY(0.2);
-    floor.cmpTransform.local.scaleX(100);
-    level.appendChild(floor);
-
-    floor = new Tile("blue");
-    floor.cmpTransform.local.scaleY(1);
-    floor.cmpTransform.local.scaleX(1);
-    floor.cmpTransform.local.translateY(0);
-    floor.cmpTransform.local.translateX(3.45);
-    level.appendChild(floor);
-
-    floor = new Tile("red");
-    floor.cmpTransform.local.scaleY(0.2);
-    floor.cmpTransform.local.scaleX(1);
-    floor.cmpTransform.local.translateY(2);
-    floor.cmpTransform.local.translateX(0);
-    level.appendChild(floor);
-
-    floor = new Tile("blue");
-    floor.cmpTransform.local.scaleY(0.2);
-    floor.cmpTransform.local.scaleX(1);
-    floor.cmpTransform.local.translateY(3);
-    floor.cmpTransform.local.translateX(1.45);
-    level.appendChild(floor);
-
-    floor = new Tile("green");
-    floor.cmpTransform.local.scaleY(1);
-    floor.cmpTransform.local.scaleX(1);
-    floor.cmpTransform.local.translateY(0.09);
-    floor.cmpTransform.local.translateX(1.42);
-    level.appendChild(floor);
-
-    floor = new Tile("green");
-    floor.cmpTransform.local.scaleY(1);
-    floor.cmpTransform.local.scaleX(1);
-    floor.cmpTransform.local.translateY(0.8);
-    floor.cmpTransform.local.translateX(-2.5);
-    level.appendChild(floor);
-
-    return level;*/
-  }
 
   function hndKeyDown(_event: KeyboardEvent): void {
     if (_event.code == ƒ.KEYBOARD_CODE.SPACE) {
