@@ -4,6 +4,7 @@ var MyGame;
     MyGame.ƒ = FudgeCore;
     window.addEventListener("load", test);
     let keysPressed = {};
+    let viewport;
     function test() {
         // ƒ.Time.game.setScale(0.5);
         let canvas = document.querySelector("canvas");
@@ -27,13 +28,14 @@ var MyGame;
         cmpCamera.pivot.lookAt(MyGame.ƒ.Vector3.ZERO());
         cmpCamera.backgroundColor = MyGame.ƒ.Color.CSS("aliceblue");
         // hare.addComponent(cmpCamera);
-        let viewport = new MyGame.ƒ.Viewport();
+        viewport = new MyGame.ƒ.Viewport();
         viewport.initialize("Viewport", MyGame.game, cmpCamera, canvas);
         viewport.draw();
         document.addEventListener("keydown", handleKeyboard);
         document.addEventListener("keyup", handleKeyboard);
         MyGame.ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
         MyGame.ƒ.Loop.start(MyGame.ƒ.LOOP_MODE.TIME_GAME, 60);
+        start();
         function update(_event) {
             processInput();
             let translation = cmpCamera.pivot.translation;
@@ -112,5 +114,32 @@ var MyGame;
            level.appendChild(floor);
        
            return level;*/
+    }
+    function hndKeyDown(_event) {
+        if (_event.code == MyGame.ƒ.KEYBOARD_CODE.SPACE) {
+            updateView();
+        }
+    }
+    function updateView() {
+        viewport.draw();
+    }
+    async function start() {
+        MyGame.ƒ.Debug.log("Wait for space");
+        await waitForKeyPress(MyGame.ƒ.KEYBOARD_CODE.SPACE);
+        MyGame.ƒ.Debug.log("Space pressed");
+        let domMenu = document.querySelector("div#Menu");
+        domMenu.style.visibility = "hidden";
+        window.addEventListener("keydown", hndKeyDown);
+    }
+    async function waitForKeyPress(_code) {
+        return new Promise(_resolve => {
+            window.addEventListener("keydown", hndKeyDown);
+            function hndKeyDown(_event) {
+                if (_event.code == _code) {
+                    window.removeEventListener("keydown", hndKeyDown);
+                    _resolve();
+                }
+            }
+        });
     }
 })(MyGame || (MyGame = {}));

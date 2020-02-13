@@ -1,35 +1,27 @@
 namespace MyGame {
-//    import ƒ = FudgeCore;
+    //    import ƒ = FudgeCore;
 
     export class LevelGenerator {
         public interpretJSON(): ƒ.Node {
             let file = new XMLHttpRequest();
-            file.open('GET','level.json',false);
+            file.open('GET', 'level.json', false);
             file.send(null);
- //           let file = require('fs')
- /*           file.readFile('level.json', 'utf8', function(err, data) {
-                if (err) {
-                    return console.error(err);
-                }
-                console.log(JSON.parse(data.toString()));
-            });*/
             console.log(JSON.parse(file.responseText));
             let levelString = JSON.parse(file.responseText);
             let level: ƒ.Node = new ƒ.Node("Level");
-            for(let obj of Object.values(levelString)){
+            for (let obj of Object.values(levelString)) {
                 let values = Object.values(obj);
                 console.log(obj);
                 this.generateObject(level, values[0], Object.values(values[1]), Object.values(values[2]));
-//                console.log(obj);
             }
             return level;
         }
 
 
         public generateObject(level: ƒ.Node, type: any, scale: any, translation: any) {
-            switch(type) {
-                case 1: 
-                    let floor: Tile = new Tile("green")
+            switch (type) {
+                case 1:
+                    let floor: Tile = new Tile("green");
                     floor.cmpTransform.local.scaleX(scale[0]);
                     floor.cmpTransform.local.scaleY(scale[1]);
 
@@ -39,7 +31,7 @@ namespace MyGame {
                     level.appendChild(floor);
                     break;
                 case 2:
-                    let wall: Tile = new Tile("green")
+                    let wall: Tile = new Tile("green");
                     wall.cmpTransform.local.scaleX(scale[0]);
                     wall.cmpTransform.local.scaleY(scale[1]);
 
@@ -49,7 +41,7 @@ namespace MyGame {
                     level.appendChild(wall);
                     break;
                 case 3:
-                    let object: Tile = new Tile("green")
+                    let object: Tile = new Tile("green");
                     object.cmpTransform.local.scaleX(scale[0]);
                     object.cmpTransform.local.scaleY(scale[1]);
 

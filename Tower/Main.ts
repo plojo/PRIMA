@@ -11,6 +11,8 @@ namespace MyGame {
   export let game: ƒ.Node;
   export let level: ƒ.Node;
   export let player: Character;
+  
+  let viewport: ƒ.Viewport;
 
   
 
@@ -42,7 +44,7 @@ namespace MyGame {
     cmpCamera.backgroundColor = ƒ.Color.CSS("aliceblue");
     // hare.addComponent(cmpCamera);
 
-    let viewport: ƒ.Viewport = new ƒ.Viewport();
+    viewport = new ƒ.Viewport();
     viewport.initialize("Viewport", game, cmpCamera, canvas);
     viewport.draw();
 
@@ -51,6 +53,8 @@ namespace MyGame {
 
     ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
     ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 60);
+
+    start();
 
     function update(_event: ƒ.Eventƒ): void {
       processInput();
@@ -136,5 +140,35 @@ namespace MyGame {
     level.appendChild(floor);
 
     return level;*/
+  }
+
+  function hndKeyDown(_event: KeyboardEvent): void {
+    if (_event.code == ƒ.KEYBOARD_CODE.SPACE) {
+      updateView();
+    }
+  }
+
+  function updateView(): void{
+    viewport.draw();
+  }
+
+  async function start(): Promise<void> {
+    ƒ.Debug.log("Wait for space");
+    await waitForKeyPress(ƒ.KEYBOARD_CODE.SPACE);
+    ƒ.Debug.log("Space pressed");
+    let domMenu: HTMLElement = document.querySelector("div#Menu");
+    domMenu.style.visibility = "hidden";
+    window.addEventListener("keydown", hndKeyDown);
+  }
+  async function waitForKeyPress(_code: ƒ.KEYBOARD_CODE): Promise<void> {
+    return new Promise(_resolve => {
+      window.addEventListener("keydown", hndKeyDown);
+      function hndKeyDown(_event: KeyboardEvent): void {
+        if (_event.code == _code) {
+          window.removeEventListener("keydown", hndKeyDown);
+          _resolve();
+        }
+      }
+    });
   }
 }
