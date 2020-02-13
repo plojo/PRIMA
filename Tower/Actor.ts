@@ -3,7 +3,6 @@ namespace MyGame {
 
     export abstract class Actor extends ƒ.Node {
         protected static sprites: Sprite[] = [];
-        protected static readonly distanceMax: ƒ.Vector2 = new ƒ.Vector2(0.1, 0.1);
 
         protected abstract update: (_event: ƒ.Eventƒ) => void;
 
@@ -46,10 +45,6 @@ namespace MyGame {
 
         protected get hitBoxes(): ƒ.Node {
             return this.getChildrenByName("HitBoxes")[0];
-        }
-
-        protected absMinSigned(x: number, y: number): number {
-            return Math.sign(x) * Math.min(Math.abs(x), Math.abs(y));
         }
     }
 }

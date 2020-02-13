@@ -63,7 +63,7 @@ namespace MyGame {
             break;
         }
   
-        rects.forEach((_rect: ƒ.Rectangle) => ƒ.Debug.log(_rect.toString()));
+        // rects.forEach((_rect: ƒ.Rectangle) => ƒ.Debug.log(_rect.toString()));
         this.generate(_texture, rects, _resolutionQuad, _origin);
       }
   
@@ -113,7 +113,7 @@ namespace MyGame {
   
         this.showFrame(this.frameCurrent);
   
-        ƒ.Debug.info("NodeSprite constructor", this);
+        // ƒ.Debug.info("NodeSprite constructor", this);
       }
   
       public showFrame(_index: number): void {

@@ -1,5 +1,10 @@
 namespace MyGame {
 
+    enum TYPE {
+        TILE = "Tile",
+        GUSTSPAWNER = "GustSpawner"
+    }
+
     interface TranslationJSON {
         x: number;
         y: number;
@@ -48,17 +53,18 @@ namespace MyGame {
 
         private static generateObject(_object: GenericJSON): void {
             switch (_object.type) {
-                case "Tile":
+                case TYPE.TILE:
                     let tileJSON: TileJSON = <TileJSON>_object;
                     let tile: Tile = new Tile("green");
                     tile.cmpTransform.local.translate(new ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
                     tile.cmpTransform.local.scale(new ƒ.Vector3(tileJSON.scale.x, tileJSON.scale.y, 0));
                     staticObjects.appendChild(tile);
                     break;
-                case "GustSpawner":
+                case TYPE.GUSTSPAWNER:
                     let gustSpawnerJSON: GustSpawnerJSON = <GustSpawnerJSON>_object;
-                    let gustSpawner: GustSpawner = new GustSpawner(gustSpawnerJSON.parameter.offset, gustSpawnerJSON.parameter.interval, gustSpawnerJSON.parameter.rotation, gustSpawnerJSON.parameter.lifespan, gustSpawnerJSON.parameter.speed);
+                    let gustSpawner: GustSpawner = new GustSpawner(gustSpawnerJSON.parameter.offset, gustSpawnerJSON.parameter.interval, gustSpawnerJSON.parameter.lifespan, gustSpawnerJSON.parameter.speed);
                     gustSpawner.cmpTransform.local.translate(new ƒ.Vector3(gustSpawnerJSON.translation.x, gustSpawnerJSON.translation.y, 0));
+                    gustSpawner.cmpTransform.local.rotateZ(gustSpawnerJSON.parameter.rotation);
                     dynamicObjects.appendChild(gustSpawner);
                     break;
             }

@@ -7,7 +7,7 @@
         "y": 0
       },
       "scale": {
-        "x": 2,
+        "x": 5,
         "y": 0.2
       }
     },
@@ -16,6 +16,20 @@
       "translation": {
         "x": 0,
         "y": 0
+      },
+      "parameter": {
+        "offset": 1,
+        "interval": 1,
+        "rotation": 0,
+        "lifespan": 5,
+        "speed": 4
+      }
+    },
+    {
+      "type": "GustSpawner",
+      "translation": {
+        "x": 4,
+        "y": 1
       },
       "parameter": {
         "offset": 1,

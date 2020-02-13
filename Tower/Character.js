@@ -26,9 +26,6 @@ var MyGame;
                 let timeFrame = ƒ.Loop.timeFrameGame / 1000; // seconds
                 // console.log("acc: " + this.acceleration.x);
                 // console.log("speed: " + this.speed.x);
-                // if (Math.abs(this.speed.x) > Character.speedMax.x)
-                //  this.acceleration.x = 0;
-                this.acceleration.y = -Character.gravity;
                 this.speed = ƒ.Vector3.SUM(this.speed, ƒ.Vector3.SCALE(this.acceleration, timeFrame));
                 this.speed.x = this.absMinSigned(this.speed.x, Character.speedMax.x);
                 this.speed.y = this.absMinSigned(this.speed.y, Character.speedMax.y);
@@ -72,6 +69,12 @@ var MyGame;
             this.animatedNodeSprite.play(ACTION.IDLE);
             this.registerUpdate();
         }
+        get hitBoxVertical() {
+            return this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
+        }
+        get hitBoxHorizontal() {
+            return this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
+        }
         static generateSprites(_txtImage) {
             let sprite = new MyGame.Sprite(ACTION.IDLE);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
@@ -88,12 +91,6 @@ var MyGame;
             sprite = new MyGame.Sprite(ACTION.FALL);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(360, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
             this.sprites.push(sprite);
-        }
-        get hitBoxVertical() {
-            return this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
-        }
-        get hitBoxHorizontal() {
-            return this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
         }
         act(_action, _direction) {
             // console.log(_action);
@@ -149,6 +146,9 @@ var MyGame;
                     break;
             }
         }
+        absMinSigned(x, y) {
+            return Math.sign(x) * Math.min(Math.abs(x), Math.abs(y));
+        }
         checkCollision() {
             for (let tile of MyGame.staticObjects.getChildren()) {
                 ƒ.RenderManager.update();
@@ -191,6 +191,7 @@ var MyGame;
         }
     }
     Character.speedMax = new ƒ.Vector2(3, 15); // units per second
+    Character.distanceMax = new ƒ.Vector2(0.1, 0.1);
     Character.gravity = 10; //units per square second
     Character.friction = 5 * Character.speedMax.x; // = 15 //units per square second
     Character.accelerationGround = 10 * Character.speedMax.x; // = 30 //units per square second, used to calculate ground movement

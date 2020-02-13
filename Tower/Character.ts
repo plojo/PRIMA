@@ -15,7 +15,16 @@ namespace MyGame {
   }
 
   export class Character extends Actor {
+
+    private get hitBoxVertical(): Collidable {
+      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
+    }
+
+    public get hitBoxHorizontal(): Collidable {
+      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
+    }
     private static readonly speedMax: ƒ.Vector2 = new ƒ.Vector2(3, 15); // units per second
+    private static readonly distanceMax: ƒ.Vector2 = new ƒ.Vector2(0.1, 0.1);
     private static gravity: number = 10; //units per square second
     private static friction: number = 5 * Character.speedMax.x; // = 15 //units per square second
     private static accelerationGround: number = 10 * Character.speedMax.x; // = 30 //units per square second, used to calculate ground movement
@@ -92,14 +101,6 @@ namespace MyGame {
       this.sprites.push(sprite);
     }
 
-    private get hitBoxVertical(): Collidable {
-      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
-    }
-
-    public get hitBoxHorizontal(): Collidable {
-      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
-    }
-
     public act(_action: ACTION, _direction?: DIRECTION): void {
       // console.log(_action);
       switch (_action) {
@@ -161,9 +162,6 @@ namespace MyGame {
       let timeFrame: number = ƒ.Loop.timeFrameGame / 1000; // seconds
       // console.log("acc: " + this.acceleration.x);
       // console.log("speed: " + this.speed.x);
-      // if (Math.abs(this.speed.x) > Character.speedMax.x)
-      //  this.acceleration.x = 0;
-      this.acceleration.y = -Character.gravity;
       this.speed = ƒ.Vector3.SUM(this.speed, ƒ.Vector3.SCALE(this.acceleration, timeFrame));
       this.speed.x = this.absMinSigned(this.speed.x, Character.speedMax.x);
       this.speed.y = this.absMinSigned(this.speed.y, Character.speedMax.y);
@@ -177,6 +175,10 @@ namespace MyGame {
       this.cmpTransform.local.translate(distance);
       this.grounded = false;
       this.checkCollision();
+    }
+
+    protected absMinSigned(x: number, y: number): number {
+      return Math.sign(x) * Math.min(Math.abs(x), Math.abs(y));
     }
 
     private checkCollision(): void {

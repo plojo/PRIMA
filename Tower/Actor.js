@@ -35,11 +35,7 @@ var MyGame;
         get hitBoxes() {
             return this.getChildrenByName("HitBoxes")[0];
         }
-        absMinSigned(x, y) {
-            return Math.sign(x) * Math.min(Math.abs(x), Math.abs(y));
-        }
     }
     Actor.sprites = [];
-    Actor.distanceMax = new ƒ.Vector2(0.1, 0.1);
     MyGame.Actor = Actor;
 })(MyGame || (MyGame = {}));

@@ -48,7 +48,7 @@ var MyGame;
                 if (rect.bottom > _texture.image.height)
                     break;
             }
-            rects.forEach((_rect) => ƒ.Debug.log(_rect.toString()));
+            // rects.forEach((_rect: ƒ.Rectangle) => ƒ.Debug.log(_rect.toString()));
             this.generate(_texture, rects, _resolutionQuad, _origin);
         }
         createFrame(_name, _texture, _framing, _rect, _resolutionQuad, _origin) {
@@ -86,7 +86,7 @@ var MyGame;
             this.addComponent(this.cmpMesh);
             this.addComponent(this.cmpMaterial);
             this.showFrame(this.frameCurrent);
-            ƒ.Debug.info("NodeSprite constructor", this);
+            // ƒ.Debug.info("NodeSprite constructor", this);
         }
         showFrame(_index) {
             let spriteFrame = this.sprite.frames[_index];

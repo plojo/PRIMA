@@ -13,7 +13,10 @@ declare namespace MyGame {
         RIGHT = 1
     }
     class Character extends Actor {
+        private readonly hitBoxVertical;
+        readonly hitBoxHorizontal: Collidable;
         private static readonly speedMax;
+        private static readonly distanceMax;
         private static gravity;
         private static friction;
         private static accelerationGround;
@@ -25,10 +28,9 @@ declare namespace MyGame {
         private jumpStart;
         constructor(_name: string);
         static generateSprites(_txtImage: ƒ.TextureImage): void;
-        private readonly hitBoxVertical;
-        readonly hitBoxHorizontal: Collidable;
         act(_action: ACTION, _direction?: DIRECTION): void;
         protected update: (_event: ƒ.Eventƒ) => void;
+        protected absMinSigned(x: number, y: number): number;
         private checkCollision;
         private resolveCollisionVertical;
         private resolveCollisionHorizontal;
