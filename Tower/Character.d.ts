@@ -28,7 +28,7 @@ declare namespace MyGame {
         private readonly hitBoxVertical;
         readonly hitBoxHorizontal: Collidable;
         act(_action: ACTION, _direction?: DIRECTION): void;
-        private update;
+        protected update: (_event: ƒ.Eventƒ) => void;
         private checkCollision;
         private resolveCollisionVertical;
         private resolveCollisionHorizontal;

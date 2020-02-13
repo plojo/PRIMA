@@ -17,8 +17,18 @@ var MyGame;
                 nodeSprite.activate(false);
                 this.animatedNodeSprite.appendChild(nodeSprite);
             }
+            // this.addEventListener(
+            //     "registerUpdate",
+            //     (_event: Event) => {
+            //         this.registerUpdate();
+            //     },
+            //     true
+            // );
         }
         // protected abstract static generateSprites(_txtImage: ƒ.TextureImage): void; // No static abstract methods in typescript <.<
+        registerUpdate() {
+            ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
+        }
         get animatedNodeSprite() {
             return this.getChildrenByName("AnimatedNodeSprite")[0];
         }

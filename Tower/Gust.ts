@@ -4,21 +4,23 @@ namespace MyGame {
   export class Gust extends Actor {
     public speed: ƒ.Vector3;
 
-    constructor(_name: string, _speed: ƒ.Vector3) {
+    constructor(_name: string, _speed: ƒ.Vector3, _lifespan: number) {
       super(_name);
       this.speed = _speed;
-      
+
       let hitBox: Collidable = new Tile("purple");
-      hitBox.cmpTransform.local.scaleX(1);
+      // hitBox.cmpTransform.local.scaleX(1);
       hitBox.cmpTransform.local.scaleY(2);
       hitBox.cmpTransform.local.translateY(1);
       hitBox.name = "HitBox";
       this.appendChild(hitBox);
 
-      ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
-      ƒ.Time.game.setTimer(4000, 1, () => {
+      this.registerUpdate();
+      
+      ƒ.Time.game.setTimer(_lifespan, 1, () => {
         ƒ.Loop.removeEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
         this.activate(false);
+        super.removeChild(this);
       });
 
     }
@@ -33,7 +35,7 @@ namespace MyGame {
       this.sprites.push(sprite);
     }
 
-    private update = (_event: ƒ.Eventƒ): void => {
+    protected update = (_event: ƒ.Eventƒ): void => {
       let timeFrame: number = ƒ.Loop.timeFrameGame / 1000; // seconds
       let distance: ƒ.Vector3 = ƒ.Vector3.SCALE(this.speed, timeFrame);
       distance.x = this.absMinSigned(distance.x, Gust.distanceMax.x);
@@ -44,7 +46,9 @@ namespace MyGame {
 
     private checkCollision(_distance: ƒ.Vector3): void {
       if (this.hitBox.getRectWorld().collides(player.hitBoxHorizontal.getRectWorld())) {
-        player.speed = ƒ.Vector3.SUM(player.speed, this.speed);
+        player.cmpTransform.local.translate(ƒ.Vector3.SCALE(ƒ.Vector3.TRANSFORMATION(_distance, this.mtxWorld, false), 0.5));
+        // player.acceleration = ƒ.Vector3.SUM(player.acceleration, ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false));
+        // player.speed = ƒ.Vector3.SUM(player.speed, ƒ.Vector3.SCALE(ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false), 0.06));
       }
     }
   }

@@ -24,6 +24,11 @@ var MyGame;
             this.jumpStart = false;
             this.update = (_event) => {
                 let timeFrame = ƒ.Loop.timeFrameGame / 1000; // seconds
+                // console.log("acc: " + this.acceleration.x);
+                // console.log("speed: " + this.speed.x);
+                // if (Math.abs(this.speed.x) > Character.speedMax.x)
+                //  this.acceleration.x = 0;
+                this.acceleration.y = -Character.gravity;
                 this.speed = ƒ.Vector3.SUM(this.speed, ƒ.Vector3.SCALE(this.acceleration, timeFrame));
                 this.speed.x = this.absMinSigned(this.speed.x, Character.speedMax.x);
                 this.speed.y = this.absMinSigned(this.speed.y, Character.speedMax.y);
@@ -65,7 +70,7 @@ var MyGame;
                 }
             }, true);
             this.animatedNodeSprite.play(ACTION.IDLE);
-            ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
+            this.registerUpdate();
         }
         static generateSprites(_txtImage) {
             let sprite = new MyGame.Sprite(ACTION.IDLE);

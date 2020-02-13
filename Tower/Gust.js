@@ -3,7 +3,7 @@ var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
     class Gust extends MyGame.Actor {
-        constructor(_name, _speed) {
+        constructor(_name, _speed, _lifespan) {
             super(_name);
             this.update = (_event) => {
                 let timeFrame = ƒ.Loop.timeFrameGame / 1000; // seconds
@@ -15,15 +15,16 @@ var MyGame;
             };
             this.speed = _speed;
             let hitBox = new MyGame.Tile("purple");
-            hitBox.cmpTransform.local.scaleX(1);
+            // hitBox.cmpTransform.local.scaleX(1);
             hitBox.cmpTransform.local.scaleY(2);
             hitBox.cmpTransform.local.translateY(1);
             hitBox.name = "HitBox";
             this.appendChild(hitBox);
-            ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
-            ƒ.Time.game.setTimer(4000, 1, () => {
+            this.registerUpdate();
+            ƒ.Time.game.setTimer(_lifespan, 1, () => {
                 ƒ.Loop.removeEventListener("loopFrame" /* LOOP_FRAME */, this.update);
                 this.activate(false);
+                super.removeChild(this);
             });
         }
         get hitBox() {
@@ -36,7 +37,9 @@ var MyGame;
         }
         checkCollision(_distance) {
             if (this.hitBox.getRectWorld().collides(MyGame.player.hitBoxHorizontal.getRectWorld())) {
-                MyGame.player.speed = ƒ.Vector3.SUM(MyGame.player.speed, this.speed);
+                MyGame.player.cmpTransform.local.translate(ƒ.Vector3.SCALE(ƒ.Vector3.TRANSFORMATION(_distance, this.mtxWorld, false), 0.5));
+                // player.acceleration = ƒ.Vector3.SUM(player.acceleration, ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false));
+                // player.speed = ƒ.Vector3.SUM(player.speed, ƒ.Vector3.SCALE(ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false), 0.06));
             }
         }
     }

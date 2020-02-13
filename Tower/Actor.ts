@@ -5,6 +5,8 @@ namespace MyGame {
         protected static sprites: Sprite[] = [];
         protected static readonly distanceMax: ƒ.Vector2 = new ƒ.Vector2(0.1, 0.1);
 
+        protected abstract update: (_event: ƒ.Eventƒ) => void;
+
         constructor(_name: string) {
             super(_name);
             this.addComponent(new ƒ.ComponentTransform());
@@ -22,9 +24,21 @@ namespace MyGame {
                 nodeSprite.activate(false);
                 this.animatedNodeSprite.appendChild(nodeSprite);
             }
+
+            // this.addEventListener(
+            //     "registerUpdate",
+            //     (_event: Event) => {
+            //         this.registerUpdate();
+            //     },
+            //     true
+            // );
         }
 
         // protected abstract static generateSprites(_txtImage: ƒ.TextureImage): void; // No static abstract methods in typescript <.<
+
+        protected registerUpdate(): void {
+            ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
+        }
 
         protected get animatedNodeSprite(): AnimatedNodeSprite {
             return <AnimatedNodeSprite>this.getChildrenByName("AnimatedNodeSprite")[0];

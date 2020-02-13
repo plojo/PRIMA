@@ -28,13 +28,19 @@ namespace MyGame {
     game = new ƒ.Node("Game");
     player = new Character("Hare");
     level = createLevel();
-    let gust: Gust = new Gust("bla", ƒ.Vector3.X(-4));
-    gust.cmpTransform.local.translateX(5);
-    gust.cmpTransform.local.translateY(1);
-    level.appendChild(gust);
-
+    let gustSpawner: GustSpawner = new GustSpawner("GustSpawner", 3, 1, 90, 3, 3);
+    gustSpawner.cmpTransform.local.translateX(5);
+    game.appendChild(gustSpawner);
+    // let gust: Gust = new Gust("bla", ƒ.Vector3.X(-3));
+    // gust.cmpTransform.local.translateX(-2);
+    // gust.cmpTransform.local.translateY(-3);
+    // gust.cmpTransform.local.rotateZ(-90);
+    // gust.cmpTransform.local.scaleX(0.1);
+    // game.appendChild(gust); // TODO: split up level into tiles and dynamic objects
     game.appendChild(level);
     game.appendChild(player);
+
+    // game.broadcastEvent(new CustomEvent("registerUpdate"));
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
     cmpCamera.pivot.translateZ(10);

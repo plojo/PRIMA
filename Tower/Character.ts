@@ -66,9 +66,8 @@ namespace MyGame {
         },
         true
       );
-
       this.animatedNodeSprite.play(ACTION.IDLE);
-      ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
+      this.registerUpdate();
     }
 
     public static generateSprites(_txtImage: ƒ.TextureImage): void {
@@ -158,9 +157,13 @@ namespace MyGame {
       }
     }
 
-    private update = (_event: ƒ.Eventƒ): void => {
+    protected update = (_event: ƒ.Eventƒ): void => {
       let timeFrame: number = ƒ.Loop.timeFrameGame / 1000; // seconds
-
+      // console.log("acc: " + this.acceleration.x);
+      // console.log("speed: " + this.speed.x);
+      // if (Math.abs(this.speed.x) > Character.speedMax.x)
+      //  this.acceleration.x = 0;
+      this.acceleration.y = -Character.gravity;
       this.speed = ƒ.Vector3.SUM(this.speed, ƒ.Vector3.SCALE(this.acceleration, timeFrame));
       this.speed.x = this.absMinSigned(this.speed.x, Character.speedMax.x);
       this.speed.y = this.absMinSigned(this.speed.y, Character.speedMax.y);
