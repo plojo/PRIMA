@@ -7,13 +7,6 @@ var MyGame;
             let file = new XMLHttpRequest();
             file.open('GET', 'level.json', false);
             file.send(null);
-            //           let file = require('fs')
-            /*           file.readFile('level.json', 'utf8', function(err, data) {
-                           if (err) {
-                               return console.error(err);
-                           }
-                           console.log(JSON.parse(data.toString()));
-                       });*/
             console.log(JSON.parse(file.responseText));
             let levelString = JSON.parse(file.responseText);
             let level = new MyGame.ƒ.Node("Level");
@@ -21,7 +14,6 @@ var MyGame;
                 let values = Object.values(obj);
                 console.log(obj);
                 this.generateObject(level, values[0], Object.values(values[1]), Object.values(values[2]));
-                //                console.log(obj);
             }
             return level;
         }
