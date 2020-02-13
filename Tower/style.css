@@ -19,6 +19,12 @@
     font-weight: bolder;
   }
 
+
+  div#head {
+    grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+    text-align: center;
+  }
   
   div {
     padding: 0 0.5em;
