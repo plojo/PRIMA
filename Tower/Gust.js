@@ -3,8 +3,8 @@ var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
     class Gust extends MyGame.Actor {
-        constructor(_name, _speed, _lifespan) {
-            super(_name);
+        constructor(_speed, _lifespan) {
+            super("Gust");
             this.update = (_event) => {
                 let timeFrame = ƒ.Loop.timeFrameGame / 1000; // seconds
                 let distance = ƒ.Vector3.SCALE(this.speed, timeFrame);

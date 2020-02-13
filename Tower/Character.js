@@ -150,7 +150,7 @@ var MyGame;
             }
         }
         checkCollision() {
-            for (let tile of MyGame.level.getChildren()) {
+            for (let tile of MyGame.staticObjects.getChildren()) {
                 ƒ.RenderManager.update();
                 let tileHitBox = tile.getRectWorld();
                 let playerHitBox = this.hitBoxVertical.getRectWorld();

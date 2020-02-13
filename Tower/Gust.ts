@@ -4,8 +4,8 @@ namespace MyGame {
   export class Gust extends Actor {
     public speed: ƒ.Vector3;
 
-    constructor(_name: string, _speed: ƒ.Vector3, _lifespan: number) {
-      super(_name);
+    constructor(_speed: ƒ.Vector3, _lifespan: number) {
+      super("Gust");
       this.speed = _speed;
 
       let hitBox: Collidable = new Tile("purple");

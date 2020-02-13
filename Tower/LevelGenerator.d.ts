@@ -1,6 +1,6 @@
 declare namespace MyGame {
     class LevelGenerator {
-        static interpretJSON(level: ƒ.Node, objects: ƒ.Node): void;
+        static generateLevel(): void;
         private static generateObject;
     }
 }

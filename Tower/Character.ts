@@ -180,7 +180,7 @@ namespace MyGame {
     }
 
     private checkCollision(): void {
-      for (let tile of level.getChildren()) {
+      for (let tile of staticObjects.getChildren()) {
         ƒ.RenderManager.update();
         let tileHitBox: ƒ.Rectangle = (<Tile>tile).getRectWorld();
         let playerHitBox: ƒ.Rectangle = this.hitBoxVertical.getRectWorld();

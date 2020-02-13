@@ -10,13 +10,11 @@ namespace MyGame {
 
   export let game: ƒ.Node;
   export let level: ƒ.Node;
-  export let objects: ƒ.Node;
+  export let dynamicObjects: ƒ.Node;
+  export let staticObjects: ƒ.Node;
   export let player: Character;
   
   let viewport: ƒ.Viewport;
-
-  
-
 
   function test(): void {
     // ƒ.Time.game.setScale(0.5);
@@ -31,29 +29,20 @@ namespace MyGame {
     game = new ƒ.Node("Game");
     player = new Character("Hare");
     level = new ƒ.Node("Level");
-    objects = new ƒ.Node("Objects");
-    LevelGenerator.interpretJSON(level, objects);
-    game.appendChild(level);
-    game.appendChild(objects);
- /*   let gustSpawner: GustSpawner = new GustSpawner("GustSpawner", 3, 1, 270, 3, 3);
-    gustSpawner.cmpTransform.local.translateX(-4);
-    gustSpawner.cmpTransform.local.translateY(1);
-    game.appendChild(gustSpawner);*/
-    // let gust: Gust = new Gust("bla", ƒ.Vector3.X(-3));
-    // gust.cmpTransform.local.translateX(-2);
-    // gust.cmpTransform.local.translateY(-3);
-    // gust.cmpTransform.local.rotateZ(-90);
-    // gust.cmpTransform.local.scaleX(0.1);
-    // game.appendChild(gust); // TODO: split up level into tiles and dynamic objects
+    staticObjects = new ƒ.Node("StaticObjects");
+    dynamicObjects = new ƒ.Node("DynamicObjects"); 
+    
     game.appendChild(player);
+    game.appendChild(level);
+    level.appendChild(staticObjects);
+    level.appendChild(dynamicObjects);
 
-    // game.broadcastEvent(new CustomEvent("registerUpdate"));
+    LevelGenerator.generateLevel();
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
     cmpCamera.pivot.translateZ(10);
     cmpCamera.pivot.lookAt(ƒ.Vector3.ZERO());
     cmpCamera.backgroundColor = ƒ.Color.CSS("aliceblue");
-    // hare.addComponent(cmpCamera);
 
     viewport = new ƒ.Viewport();
     viewport.initialize("Viewport", game, cmpCamera, canvas);
