@@ -26,6 +26,7 @@ var MyGame;
         //   game.appendChild(nodeSprite);
         // }
         MyGame.LevelGenerator.generateLevel("level.json");
+        // ƒ.Time.game.setScale(0.2);
         let cmpCamera = new MyGame.ƒ.ComponentCamera();
         cmpCamera.pivot.translateZ(14);
         cmpCamera.pivot.lookAt(MyGame.ƒ.Vector3.ZERO());

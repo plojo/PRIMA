@@ -8,6 +8,20 @@
       }
     },
     {
+      "type": "Platform",
+      "translation": {
+        "x": 1.5,
+        "y": 0
+      }
+    },
+    {
+      "type": "Platform",
+      "translation": {
+        "x": 3,
+        "y": 0
+      }
+    },
+    {
       "type": "GustSpawner",
       "translation": {
         "x": 10,

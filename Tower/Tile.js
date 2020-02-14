@@ -3,8 +3,8 @@ var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
     class Tile extends ƒ.Node {
-        constructor(_sprite) {
-            super("Tile");
+        constructor(_name, _sprite) {
+            super(_name);
             this.addComponent(new ƒ.ComponentTransform());
             let nodeSprite = new MyGame.NodeSprite(_sprite.name, _sprite);
             this.appendChild(nodeSprite);
@@ -18,7 +18,7 @@ var MyGame;
     MyGame.Tile = Tile;
     class Platform extends Tile {
         constructor() {
-            super(Platform.sprite);
+            super(MyGame.TYPE.PLATFORM, Platform.sprite);
             this.hitBox.cmpTransform.local.scaleY(0.5);
             this.hitBox.cmpTransform.local.scaleX(1.5);
         }

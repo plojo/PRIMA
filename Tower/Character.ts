@@ -48,7 +48,8 @@ namespace MyGame {
       hitBox.cmpTransform.local.translateY(0.5);
       this.hitBoxes.appendChild(hitBox);
 
-      this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 5; // jumpsquat animation should last for 5 frames only
+      this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 3; // jumpsquat animation should last for 5 frames only
+      this.animatedNodeSprite.getNodeSprite(ACTION.JUMP).spriteFrameInterval = 8;
       this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).activate(true);
       this.animatedNodeSprite.registerUpdate();
 
@@ -75,25 +76,25 @@ namespace MyGame {
 
     public static generateSprites(_txtImage: ƒ.TextureImage): void {
       this.sprites = [];
-      
+      let resolutionQuad: number = 27;
       let sprite: Sprite = new Sprite(ACTION.IDLE);
-      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(10, 0, 30, 36), 4, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
       this.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.WALK);
-      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 90, 60, 80), 6, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(60, 36, 30, 37), 6, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
       this.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.JUMPSQUAT);
-      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(60, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(10, 73, 30, 37), 2, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
       this.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.JUMP);
-      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(180, 180, 60, 80), 3, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(110, 73, 30, 37), 6, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
       this.sprites.push(sprite);
 
       sprite = new Sprite(ACTION.FALL);
-      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(360, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(410, 73, 30, 37), 2, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
       this.sprites.push(sprite);
     }
 

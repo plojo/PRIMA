@@ -78,7 +78,7 @@ var MyGame;
         constructor(_name, _sprite) {
             super(_name);
             this.frameCurrent = 0;
-            this.spriteFrameInterval = 8; // 
+            this.spriteFrameInterval = 10; // 
             this.direction = 1;
             this.sprite = _sprite;
             this.cmpMesh = new ƒ.ComponentMesh(Sprite.getMesh());

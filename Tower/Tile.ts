@@ -4,8 +4,8 @@ namespace MyGame {
   export abstract class Tile extends ƒ.Node {
     protected static sprite: Sprite;
 
-    public constructor(_sprite: Sprite) {
-      super("Tile");
+    public constructor(_name: string, _sprite: Sprite) {
+      super(_name);
       this.addComponent(new ƒ.ComponentTransform());
 
       let nodeSprite: NodeSprite = new NodeSprite(_sprite.name, _sprite);
@@ -22,7 +22,7 @@ namespace MyGame {
 
   export class Platform extends Tile {
     public constructor() {
-      super(Platform.sprite);
+      super(TYPE.PLATFORM, Platform.sprite);
       this.hitBox.cmpTransform.local.scaleY(0.5);
       this.hitBox.cmpTransform.local.scaleX(1.5);
     }

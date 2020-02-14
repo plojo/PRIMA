@@ -42,7 +42,7 @@ namespace MyGame {
     //   game.appendChild(nodeSprite);
     // }
     LevelGenerator.generateLevel("level.json");
-
+    // ƒ.Time.game.setScale(0.2);
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
     cmpCamera.pivot.translateZ(14);
     cmpCamera.pivot.lookAt(ƒ.Vector3.ZERO());
