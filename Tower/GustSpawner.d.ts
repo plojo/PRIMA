@@ -1,14 +1,5 @@
 declare namespace MyGame {
     import ƒ = FudgeCore;
-    class Gust extends Actor {
-        private speed;
-        private lastFrameCollision;
-        constructor(_speed: ƒ.Vector3, _lifespan: number);
-        private readonly hitBox;
-        static generateSprites(_txtImage: ƒ.TextureImage): void;
-        protected update: (_event: ƒ.Eventƒ) => void;
-        private checkCollision;
-    }
     class GustSpawner extends Actor {
         private elapsedTime;
         private interval;

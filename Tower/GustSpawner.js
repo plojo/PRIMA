@@ -43,7 +43,6 @@ var MyGame;
             }
         }
     }
-    MyGame.Gust = Gust;
     class GustSpawner extends MyGame.Actor {
         /**
          *

@@ -1,7 +1,7 @@
 namespace MyGame {
     import ƒ = FudgeCore;
 
-    export class Gust extends Actor {
+    class Gust extends Actor {
         private speed: ƒ.Vector3;
         // private speedWorld:  ƒ.Vector3;
         private lastFrameCollision: boolean = false;
