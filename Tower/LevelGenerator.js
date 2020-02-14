@@ -7,9 +7,9 @@ var MyGame;
         TYPE["GUSTSPAWNER"] = "GustSpawner";
     })(TYPE || (TYPE = {}));
     class LevelGenerator {
-        static generateLevel() {
+        static generateLevel(_filename) {
             let file = new XMLHttpRequest();
-            file.open("GET", "level.json", false);
+            file.open("GET", _filename, false);
             file.send(null);
             let levelJSON = JSON.parse(file.responseText);
             for (let object of levelJSON.objects) {

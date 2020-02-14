@@ -41,9 +41,9 @@ namespace MyGame {
     }
 
     export class LevelGenerator {
-        public static generateLevel(): void {
+        public static generateLevel(_filename: string): void {
             let file: XMLHttpRequest = new XMLHttpRequest();
-            file.open("GET", "level.json", false);
+            file.open("GET", _filename, false);
             file.send(null);
             let levelJSON: LevelJSON = JSON.parse(file.responseText);
             for (let object of levelJSON.objects) {

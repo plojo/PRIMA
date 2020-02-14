@@ -17,7 +17,6 @@ namespace MyGame {
   let viewport: ƒ.Viewport;
 
   function test(): void {
-    // ƒ.Time.game.setScale(0.5);
     let canvas: HTMLCanvasElement = document.querySelector("canvas");
     let crc2: CanvasRenderingContext2D = canvas.getContext("2d");
     let img: HTMLImageElement = document.querySelector("img");
@@ -37,10 +36,10 @@ namespace MyGame {
     level.appendChild(staticObjects);
     level.appendChild(dynamicObjects);
 
-    LevelGenerator.generateLevel();
+    LevelGenerator.generateLevel("level.json");
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
-    cmpCamera.pivot.translateZ(10);
+    cmpCamera.pivot.translateZ(14);
     cmpCamera.pivot.lookAt(ƒ.Vector3.ZERO());
     cmpCamera.backgroundColor = ƒ.Color.CSS("aliceblue");
 
@@ -54,7 +53,7 @@ namespace MyGame {
     ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
     ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 60);
 
-    start();
+    // start();
 
     function update(_event: ƒ.Eventƒ): void {
       processInput();
@@ -72,10 +71,9 @@ namespace MyGame {
 
   function handleKeyboard(_event: KeyboardEvent): void {
     keysPressed[_event.code] = (_event.type == "keydown");
-    // if (_event.code == ƒ.KEYBOARD_CODE.SPACE && _event.type == "keydown")
-    //   hare.act(ACTION.JUMP);
-    // if (_event.code == ƒ.KEYBOARD_CODE.E && _event.type == "keydown")
-    //   hare.act(ACTION.DASH);
+    if (_event.code == ƒ.KEYBOARD_CODE.ESC && _event.type == "keydown") {
+        ƒ.Time.game.setScale(ƒ.Time.game.getScale() == 1 ? 0 : 1);
+    }
   }
 
   function processInput(): void {
@@ -101,7 +99,7 @@ namespace MyGame {
     }
   }
 
-  function updateView(): void{
+  function updateView(): void {
     viewport.draw();
   }
 

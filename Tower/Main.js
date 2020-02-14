@@ -6,7 +6,6 @@ var MyGame;
     let keysPressed = {};
     let viewport;
     function test() {
-        // ƒ.Time.game.setScale(0.5);
         let canvas = document.querySelector("canvas");
         let crc2 = canvas.getContext("2d");
         let img = document.querySelector("img");
@@ -23,9 +22,9 @@ var MyGame;
         MyGame.game.appendChild(MyGame.level);
         MyGame.level.appendChild(MyGame.staticObjects);
         MyGame.level.appendChild(MyGame.dynamicObjects);
-        MyGame.LevelGenerator.generateLevel();
+        MyGame.LevelGenerator.generateLevel("level.json");
         let cmpCamera = new MyGame.ƒ.ComponentCamera();
-        cmpCamera.pivot.translateZ(10);
+        cmpCamera.pivot.translateZ(14);
         cmpCamera.pivot.lookAt(MyGame.ƒ.Vector3.ZERO());
         cmpCamera.backgroundColor = MyGame.ƒ.Color.CSS("aliceblue");
         viewport = new MyGame.ƒ.Viewport();
@@ -35,7 +34,7 @@ var MyGame;
         document.addEventListener("keyup", handleKeyboard);
         MyGame.ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
         MyGame.ƒ.Loop.start(MyGame.ƒ.LOOP_MODE.TIME_GAME, 60);
-        start();
+        // start();
         function update(_event) {
             processInput();
             let translation = cmpCamera.pivot.translation;
@@ -49,10 +48,9 @@ var MyGame;
     }
     function handleKeyboard(_event) {
         keysPressed[_event.code] = (_event.type == "keydown");
-        // if (_event.code == ƒ.KEYBOARD_CODE.SPACE && _event.type == "keydown")
-        //   hare.act(ACTION.JUMP);
-        // if (_event.code == ƒ.KEYBOARD_CODE.E && _event.type == "keydown")
-        //   hare.act(ACTION.DASH);
+        if (_event.code == MyGame.ƒ.KEYBOARD_CODE.ESC && _event.type == "keydown") {
+            MyGame.ƒ.Time.game.setScale(MyGame.ƒ.Time.game.getScale() == 1 ? 0 : 1);
+        }
     }
     function processInput() {
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.SPACE]) {

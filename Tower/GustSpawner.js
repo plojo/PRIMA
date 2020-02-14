@@ -5,6 +5,7 @@ var MyGame;
     class Gust extends MyGame.Actor {
         constructor(_speed, _lifespan) {
             super("Gust");
+            // private speedWorld:  ƒ.Vector3;
             this.lastFrameCollision = false;
             this.update = (_event) => {
                 let timeFrame = ƒ.Loop.timeFrameGame / 1000; // seconds
@@ -13,6 +14,7 @@ var MyGame;
                 this.checkCollision(distance);
             };
             this.speed = _speed;
+            // this.speedWorld = ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false);
             let hitBox = new MyGame.Tile("purple");
             hitBox.name = "HitBox";
             this.appendChild(hitBox);
@@ -32,24 +34,12 @@ var MyGame;
         }
         checkCollision(_distance) {
             if (this.hitBox.getRectWorld().collides(MyGame.player.hitBoxHorizontal.getRectWorld())) {
-                // if (!this.lastFrameCollision)
-                // player.speed = ƒ.Vector3.SUM(player.speed, ƒ.Vector3.SCALE(ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false), 0.5));
                 this.lastFrameCollision = true;
                 MyGame.player.cmpTransform.local.translate(ƒ.Vector3.SCALE(ƒ.Vector3.TRANSFORMATION(_distance, this.mtxWorld, false), 0.3));
-                // let transformedSpeed: ƒ.Vector3 = ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false);
-                // player.speedManipulation.set(transformedSpeed.x * 0.3, transformedSpeed.y * 0.3);
-                // if (Math.sign(player.speed.x) != Math.sign(transformedSpeed.x))
-                //     player.speed.x = 0;
-                // player.acceleration = ƒ.Vector3.SUM(player.acceleration, ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false));
-                // let transformedSpeed: ƒ.Vector3 = ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false);
-                // console.log(transformedSpeed.y + " " + player.speed.y);
-                // if (player.speed.y < transformedSpeed.y)
-                // player.speed.y += this.speed.y * 0.06;
             }
             else if (this.lastFrameCollision) {
-                MyGame.player.speed = ƒ.Vector3.SUM(MyGame.player.speed, ƒ.Vector3.SCALE(ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false), 0.3));
-                // player.speedManipulation.set(0, 0, 0);
                 this.lastFrameCollision = false;
+                MyGame.player.speed = ƒ.Vector3.SUM(MyGame.player.speed, ƒ.Vector3.SCALE(ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false), 0.3));
             }
         }
     }

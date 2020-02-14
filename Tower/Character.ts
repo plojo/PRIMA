@@ -161,10 +161,11 @@ namespace MyGame {
     protected update = (_event: ƒ.Eventƒ): void => {
       let timeFrame: number = ƒ.Loop.timeFrameGame / 1000; // seconds
       // console.log("acc: " + this.acceleration.x);
-      // console.log("speed: " + this.speed.x);
+      
       this.speed = ƒ.Vector3.SUM(this.speed, ƒ.Vector3.SCALE(this.acceleration, timeFrame));
       this.speed.x = this.absMinSigned(this.speed.x, Character.speedMax.x);
       this.speed.y = this.absMinSigned(this.speed.y, Character.speedMax.y);
+      // console.log("speed: " + this.speed.x);
 
       this.posLast = this.cmpTransform.local.translation;
       let distance: ƒ.Vector3 = ƒ.Vector3.SCALE(this.speed, timeFrame);

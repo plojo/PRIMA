@@ -3,7 +3,6 @@ namespace MyGame {
 
   export class Tile extends Collidable {
     private static mesh: ƒ.MeshSprite = new ƒ.MeshSprite();
-    // private static material: ƒ.Material = new ƒ.Material("Floor", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("red", 0.5)));
 
     public constructor(_cssColor: string) {
       super("Tile");
