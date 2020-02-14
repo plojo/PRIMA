@@ -19,7 +19,7 @@ var MyGame;
         static generateSprite(_txtImage) {
             let sprite = new MyGame.Sprite("Tile");
             console.log(_txtImage);
-            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(32, 0, 48, 16), 1, ƒ.Vector2.ZERO(), 16, ƒ.ORIGIN2D.CENTER);
+            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(48, 0, 16, 16), 1, ƒ.Vector2.ZERO(), 32, ƒ.ORIGIN2D.CENTER);
             this.sprites.push(sprite);
         }
     }
