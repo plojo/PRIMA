@@ -40,16 +40,16 @@ var MyGame;
             let hitBox = new MyGame.HitBox("HitBoxVertical");
             //let hitBox: Collidable = new Tile("lime");
             // hitBox.name = "HitBoxVertical";
-            hitBox.cmpTransform.local.scaleY(1);
-            hitBox.cmpTransform.local.scaleX(0.29);
-            hitBox.cmpTransform.local.translateY(0.5);
+            hitBox.cmpTransform.local.scaleY(0.9);
+            hitBox.cmpTransform.local.scaleX(0.19);
+            hitBox.cmpTransform.local.translateY(0.45);
             this.hitBoxes.appendChild(hitBox);
             hitBox = new MyGame.HitBox("HitBoxHorizontal");
             //hitBox = new Tile("pink");
             // hitBox.name = "HitBoxHorizontal";
-            hitBox.cmpTransform.local.scaleY(0.8);
-            hitBox.cmpTransform.local.scaleX(0.50);
-            hitBox.cmpTransform.local.translateY(0.5);
+            hitBox.cmpTransform.local.scaleY(0.7);
+            hitBox.cmpTransform.local.scaleX(0.40);
+            hitBox.cmpTransform.local.translateY(0.45);
             this.hitBoxes.appendChild(hitBox);
             this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 3; // jumpsquat animation should last for 5 frames only
             this.animatedNodeSprite.getNodeSprite(ACTION.JUMP).spriteFrameInterval = 8;
@@ -74,21 +74,21 @@ var MyGame;
         }
         static generateSprites(_txtImage) {
             this.sprites = [];
-            let resolutionQuad = 27;
+            let resolutionQuad = 32;
             let sprite = new MyGame.Sprite(ACTION.IDLE);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(10, 0, 30, 36), 4, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
             this.sprites.push(sprite);
             sprite = new MyGame.Sprite(ACTION.WALK);
-            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(60, 36, 30, 37), 6, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(60, 37, 30, 36), 6, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
             this.sprites.push(sprite);
             sprite = new MyGame.Sprite(ACTION.JUMPSQUAT);
-            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(10, 73, 30, 37), 2, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(10, 74, 30, 36), 2, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
             this.sprites.push(sprite);
             sprite = new MyGame.Sprite(ACTION.JUMP);
-            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(110, 73, 30, 37), 6, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(110, 74, 30, 36), 6, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
             this.sprites.push(sprite);
             sprite = new MyGame.Sprite(ACTION.FALL);
-            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(410, 73, 30, 37), 2, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
+            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(410, 74, 30, 36), 2, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
             this.sprites.push(sprite);
         }
         get hitBoxVertical() {
