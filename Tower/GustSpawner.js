@@ -4,8 +4,7 @@ var MyGame;
     var ƒ = FudgeCore;
     class Gust extends MyGame.Actor {
         constructor(_speed, _lifespan) {
-            super("Gust");
-            // private speedWorld:  ƒ.Vector3;
+            super(MyGame.TYPE.GUST, Gust.sprites);
             this.lastFrameCollision = false;
             this.update = (_event) => {
                 let timeFrame = ƒ.Loop.timeFrameGame / 1000; // seconds
@@ -14,9 +13,7 @@ var MyGame;
                 this.checkCollision(distance);
             };
             this.speed = _speed;
-            // this.speedWorld = ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false);
-            let hitBox = new MyGame.Collidable("purple");
-            hitBox.name = "HitBox";
+            let hitBox = new MyGame.HitBox("HitBox");
             this.appendChild(hitBox);
             this.registerUpdate();
             ƒ.Time.game.setTimer(_lifespan, 1, () => {
@@ -24,13 +21,14 @@ var MyGame;
                 this.getParent().removeChild(this);
             });
         }
-        get hitBox() {
-            return this.getChildrenByName("HitBox")[0];
-        }
         static generateSprites(_txtImage) {
-            let sprite = new MyGame.Sprite("Wind");
+            this.sprites = [];
+            let sprite = new MyGame.Sprite(MyGame.TYPE.GUST);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
             this.sprites.push(sprite);
+        }
+        get hitBox() {
+            return this.getChildrenByName("HitBox")[0];
         }
         checkCollision(_distance) {
             if (this.hitBox.getRectWorld().collides(MyGame.player.hitBoxHorizontal.getRectWorld())) {
@@ -43,6 +41,7 @@ var MyGame;
             }
         }
     }
+    MyGame.Gust = Gust;
     class GustSpawner extends MyGame.Actor {
         /**
          *
@@ -53,7 +52,7 @@ var MyGame;
          * @param _gustSpeed speed of the gusts in units per second
          */
         constructor(_offset = 0, _interval, _gustLifespan, _gustSpeed) {
-            super("GustSpawner");
+            super(MyGame.TYPE.GUSTSPAWNER, []);
             this.elapsedTime = 0;
             this.update = (_event) => {
                 let timeFrame = ƒ.Loop.timeFrameGame;

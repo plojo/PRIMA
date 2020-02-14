@@ -18,7 +18,7 @@ var MyGame;
     })(DIRECTION = MyGame.DIRECTION || (MyGame.DIRECTION = {}));
     class Character extends MyGame.Actor {
         constructor(_name) {
-            super(_name);
+            super(_name, Character.sprites);
             this.acceleration = new ƒ.Vector3(0, -Character.gravity, 0);
             this.speed = ƒ.Vector3.ZERO();
             this.jumpStart = false;
@@ -37,22 +37,23 @@ var MyGame;
                 this.grounded = false;
                 this.checkCollision();
             };
-            let hitBox = new MyGame.Collidable("HitBoxVertical");
+            let hitBox = new MyGame.HitBox("HitBoxVertical");
             //let hitBox: Collidable = new Tile("lime");
-            hitBox.name = "HitBoxVertical";
+            // hitBox.name = "HitBoxVertical";
             hitBox.cmpTransform.local.scaleY(1);
             hitBox.cmpTransform.local.scaleX(0.29);
             hitBox.cmpTransform.local.translateY(0.5);
             this.hitBoxes.appendChild(hitBox);
-            hitBox = new MyGame.Collidable("HitBoxHorizontal");
+            hitBox = new MyGame.HitBox("HitBoxHorizontal");
             //hitBox = new Tile("pink");
-            hitBox.name = "HitBoxHorizontal";
+            // hitBox.name = "HitBoxHorizontal";
             hitBox.cmpTransform.local.scaleY(0.8);
             hitBox.cmpTransform.local.scaleX(0.50);
-            hitBox.cmpTransform.local.translateY(0.4);
+            hitBox.cmpTransform.local.translateY(0.5);
             this.hitBoxes.appendChild(hitBox);
             this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 5; // jumpsquat animation should last for 5 frames only
             this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).activate(true);
+            this.animatedNodeSprite.registerUpdate();
             this.addEventListener("animationFinished", (_event) => {
                 // console.log("animationFinished");
                 if (this.animatedNodeSprite.action == ACTION.JUMPSQUAT) {
@@ -70,13 +71,8 @@ var MyGame;
             this.animatedNodeSprite.play(ACTION.IDLE);
             this.registerUpdate();
         }
-        get hitBoxVertical() {
-            return this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
-        }
-        get hitBoxHorizontal() {
-            return this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
-        }
         static generateSprites(_txtImage) {
+            this.sprites = [];
             let sprite = new MyGame.Sprite(ACTION.IDLE);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
             this.sprites.push(sprite);
@@ -92,6 +88,12 @@ var MyGame;
             sprite = new MyGame.Sprite(ACTION.FALL);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(360, 180, 60, 80), 1, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
             this.sprites.push(sprite);
+        }
+        get hitBoxVertical() {
+            return this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
+        }
+        get hitBoxHorizontal() {
+            return this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
         }
         act(_action, _direction) {
             // console.log(_action);
@@ -153,7 +155,7 @@ var MyGame;
         checkCollision() {
             for (let tile of MyGame.staticObjects.getChildren()) {
                 ƒ.RenderManager.update();
-                let tileHitBox = tile.getRectWorld();
+                let tileHitBox = tile.hitBox.getRectWorld();
                 let playerHitBox = this.hitBoxVertical.getRectWorld();
                 let translation = this.cmpTransform.local.translation;
                 if (playerHitBox.collides(tileHitBox)) {

@@ -1,8 +1,12 @@
 declare namespace MyGame {
     import ƒ = FudgeCore;
-    class Tile extends Collidable {
-        private static sprites;
-        constructor(_cssColor: string);
+    abstract class Tile extends ƒ.Node {
+        protected static sprite: Sprite;
+        constructor(_sprite: Sprite);
+        get hitBox(): HitBox;
+    }
+    class Platform extends Tile {
+        constructor();
         static generateSprite(_txtImage: ƒ.TextureImage): void;
     }
 }

@@ -6,11 +6,6 @@ namespace MyGame {
         private gameFrameCounter: number = 0;
         // private spriteFrameInterval: number = 8;
 
-        constructor(_name: string) {
-            super(_name);
-            ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
-        }
-
         private get actionNode(): NodeSprite {
             return this.getNodeSprite(this.action);
         }
@@ -27,6 +22,10 @@ namespace MyGame {
 
         public getNodeSprite(_action: ACTION): NodeSprite {
             return <NodeSprite>this.getChildrenByName(_action)[0];
+        }
+
+        public registerUpdate(): void {
+            ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
         }
 
         private update = (_event: ƒ.Eventƒ): void => {

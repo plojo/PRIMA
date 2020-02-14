@@ -14,15 +14,7 @@ namespace MyGame {
     LEFT, RIGHT
   }
 
-  export class Character extends Actor {
-
-    private get hitBoxVertical(): Collidable {
-      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
-    }
-
-    public get hitBoxHorizontal(): Collidable {
-      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
-    }
+  export class Character extends Actor {    
     private static readonly speedMax: ƒ.Vector2 = new ƒ.Vector2(3, 15); // units per second
     private static readonly distanceMax: ƒ.Vector2 = new ƒ.Vector2(0.1, 0.1);
     private static gravity: number = 10; //units per square second
@@ -38,26 +30,27 @@ namespace MyGame {
     private jumpStart: boolean = false;
 
     constructor(_name: string) {
-      super(_name);
+      super(_name, Character.sprites);
 
-      let hitBox: Collidable = new Collidable("HitBoxVertical");
+      let hitBox: HitBox = new HitBox("HitBoxVertical");
       //let hitBox: Collidable = new Tile("lime");
-      hitBox.name = "HitBoxVertical";
+      // hitBox.name = "HitBoxVertical";
       hitBox.cmpTransform.local.scaleY(1);
       hitBox.cmpTransform.local.scaleX(0.29);
       hitBox.cmpTransform.local.translateY(0.5);
       this.hitBoxes.appendChild(hitBox);
 
-      hitBox = new Collidable("HitBoxHorizontal");
+      hitBox = new HitBox("HitBoxHorizontal");
       //hitBox = new Tile("pink");
-      hitBox.name = "HitBoxHorizontal";
+      // hitBox.name = "HitBoxHorizontal";
       hitBox.cmpTransform.local.scaleY(0.8);
       hitBox.cmpTransform.local.scaleX(0.50);
-      hitBox.cmpTransform.local.translateY(0.4);
+      hitBox.cmpTransform.local.translateY(0.5);
       this.hitBoxes.appendChild(hitBox);
 
       this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 5; // jumpsquat animation should last for 5 frames only
       this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).activate(true);
+      this.animatedNodeSprite.registerUpdate();
 
       this.addEventListener(
         "animationFinished",
@@ -81,6 +74,8 @@ namespace MyGame {
     }
 
     public static generateSprites(_txtImage: ƒ.TextureImage): void {
+      this.sprites = [];
+      
       let sprite: Sprite = new Sprite(ACTION.IDLE);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
       this.sprites.push(sprite);
@@ -102,6 +97,14 @@ namespace MyGame {
       this.sprites.push(sprite);
     }
 
+    public get hitBoxVertical(): HitBox {
+      return <HitBox>this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
+    }
+
+    public get hitBoxHorizontal(): HitBox {
+      return <HitBox>this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
+    }
+    
     public act(_action: ACTION, _direction?: DIRECTION): void {
       // console.log(_action);
       switch (_action) {
@@ -179,14 +182,14 @@ namespace MyGame {
       this.checkCollision();
     }
 
-    protected absMinSigned(x: number, y: number): number {
+    private absMinSigned(x: number, y: number): number {
       return Math.sign(x) * Math.min(Math.abs(x), Math.abs(y));
     }
 
     private checkCollision(): void {
       for (let tile of staticObjects.getChildren()) {
         ƒ.RenderManager.update();
-        let tileHitBox: ƒ.Rectangle = (<Tile>tile).getRectWorld();
+        let tileHitBox: ƒ.Rectangle = (<Tile>tile).hitBox.getRectWorld();
         let playerHitBox: ƒ.Rectangle = this.hitBoxVertical.getRectWorld();
         let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
 

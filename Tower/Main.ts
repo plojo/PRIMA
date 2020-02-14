@@ -18,44 +18,29 @@ namespace MyGame {
 
   function test(): void {
     let canvas: HTMLCanvasElement = document.querySelector("canvas");
-    let crc2: CanvasRenderingContext2D = canvas.getContext("2d");
-    let img: HTMLImageElement = <HTMLImageElement>document.getElementById("player");
-    let txtPlayer: ƒ.TextureImage = new ƒ.TextureImage();
-    txtPlayer.image = img;
+    // let crc2: CanvasRenderingContext2D = canvas.getContext("2d");
 
-    img = <HTMLImageElement>document.getElementById("font");
-    let txtFont: ƒ.TextureImage = new ƒ.TextureImage();
-    txtFont.image = img;
-
-    Font.generateSprites(txtFont);
-
-    img = <HTMLImageElement>document.getElementById("assets");
-    console.log(img);
-    let txtAssets: ƒ.TextureImage = new ƒ.TextureImage();
-    txtAssets.image = img;
-    
-    Tile.generateSprite(txtAssets);
-
-    Character.generateSprites(txtPlayer);
+    generateSprites();
 
     ƒ.RenderManager.initialize(true, false);
+
     game = new ƒ.Node("Game");
     player = new Character("Hare");
     level = new ƒ.Node("Level");
     staticObjects = new ƒ.Node("StaticObjects");
     dynamicObjects = new ƒ.Node("DynamicObjects");
-
+  
     game.appendChild(player);
     game.appendChild(level);
     level.appendChild(staticObjects);
     level.appendChild(dynamicObjects);
 
-    for (let sprite of Font.sprites) {
-      let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
-      // nodeSprite.showFrame(1);
-      // nodeSprite.activate(false);
-      game.appendChild(nodeSprite);
-    }
+    // for (let sprite of Font.sprites) {
+    //   let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
+    //   // nodeSprite.showFrame(1);
+    //   // nodeSprite.activate(false);
+    //   game.appendChild(nodeSprite);
+    // }
     LevelGenerator.generateLevel("level.json");
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
@@ -84,8 +69,23 @@ namespace MyGame {
 
       viewport.draw();
 
-      crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
-      crc2.strokeRect(-1, canvas.height / 2, canvas.width + 2, canvas.height);
+      // crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
+      // crc2.strokeRect(-1, canvas.height / 2, canvas.width + 2, canvas.height);
+    }
+  }
+
+  function generateSprites(): void {
+    Character.generateSprites(getTexture("player"));
+    Font.generateSprites(getTexture("font"));
+    Gust.generateSprites(getTexture("assets"));
+    Platform.generateSprite(getTexture("assets"));
+    // console.log("a " + Actor.sprites + " | c " + Character.sprites + " | g " + Gust.sprites);
+
+    function getTexture(_elementId: string): ƒ.TextureImage {
+      let img: HTMLImageElement = <HTMLImageElement>document.getElementById(_elementId);
+      let txtPlayer: ƒ.TextureImage = new ƒ.TextureImage();
+      txtPlayer.image = img;
+      return txtPlayer;
     }
   }
 
@@ -113,33 +113,33 @@ namespace MyGame {
   }
 
 
-  function hndKeyDown(_event: KeyboardEvent): void {
-    if (_event.code == ƒ.KEYBOARD_CODE.SPACE) {
-      updateView();
-    }
-  }
+  // function hndKeyDown(_event: KeyboardEvent): void {
+  //   if (_event.code == ƒ.KEYBOARD_CODE.SPACE) {
+  //     updateView();
+  //   }
+  // }
 
-  function updateView(): void {
-    viewport.draw();
-  }
+  // function updateView(): void {
+  //   viewport.draw();
+  // }
 
-  async function start(): Promise<void> {
-    ƒ.Debug.log("Wait for space");
-    await waitForKeyPress(ƒ.KEYBOARD_CODE.SPACE);
-    ƒ.Debug.log("Space pressed");
-    let domMenu: HTMLElement = document.querySelector("div#Menu");
-    domMenu.style.visibility = "hidden";
-    window.addEventListener("keydown", hndKeyDown);
-  }
-  async function waitForKeyPress(_code: ƒ.KEYBOARD_CODE): Promise<void> {
-    return new Promise(_resolve => {
-      window.addEventListener("keydown", hndKeyDown);
-      function hndKeyDown(_event: KeyboardEvent): void {
-        if (_event.code == _code) {
-          window.removeEventListener("keydown", hndKeyDown);
-          _resolve();
-        }
-      }
-    });
-  }
+  // async function start(): Promise<void> {
+  //   ƒ.Debug.log("Wait for space");
+  //   await waitForKeyPress(ƒ.KEYBOARD_CODE.SPACE);
+  //   ƒ.Debug.log("Space pressed");
+  //   let domMenu: HTMLElement = document.querySelector("div#Menu");
+  //   domMenu.style.visibility = "hidden";
+  //   window.addEventListener("keydown", hndKeyDown);
+  // }
+  // async function waitForKeyPress(_code: ƒ.KEYBOARD_CODE): Promise<void> {
+  //   return new Promise(_resolve => {
+  //     window.addEventListener("keydown", hndKeyDown);
+  //     function hndKeyDown(_event: KeyboardEvent): void {
+  //       if (_event.code == _code) {
+  //         window.removeEventListener("keydown", hndKeyDown);
+  //         _resolve();
+  //       }
+  //     }
+  //   });
+  // }
 }

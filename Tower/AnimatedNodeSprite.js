@@ -3,9 +3,8 @@ var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
     class AnimatedNodeSprite extends ƒ.Node {
-        // private spriteFrameInterval: number = 8;
-        constructor(_name) {
-            super(_name);
+        constructor() {
+            super(...arguments);
             this.action = MyGame.ACTION.IDLE;
             this.gameFrameCounter = 0;
             this.update = (_event) => {
@@ -21,8 +20,8 @@ var MyGame;
                     actionNode.showFrameNext();
                 }
             };
-            ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
         }
+        // private spriteFrameInterval: number = 8;
         get actionNode() {
             return this.getNodeSprite(this.action);
         }
@@ -37,6 +36,9 @@ var MyGame;
         }
         getNodeSprite(_action) {
             return this.getChildrenByName(_action)[0];
+        }
+        registerUpdate() {
+            ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
         }
     }
     MyGame.AnimatedNodeSprite = AnimatedNodeSprite;

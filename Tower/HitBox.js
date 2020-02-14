@@ -2,21 +2,19 @@
 var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
-    class Collidable extends ƒ.Node {
-        // protected static readonly pivot: ƒ.Matrix4x4 = ƒ.Matrix4x4.TRANSLATION(ƒ.Vector3.Y(-0.5));
-        constructor(_name) {
+    class HitBox extends ƒ.Node {
+        constructor(_name = "HitBox") {
             super(_name);
             this.addComponent(new ƒ.ComponentTransform());
-            // this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material("Tile", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("blue", 0.5)))));
-            // let cmpMesh: ƒ.ComponentMesh = new ƒ.ComponentMesh(new ƒ.MeshSprite());
-            // // cmpMesh.pivot = Collidable.pivot;
-            // this.addComponent(cmpMesh);
+            this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material(_name, ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("blue", 0.2)))));
+            let cmpMesh = new ƒ.ComponentMesh(new ƒ.MeshSprite());
+            this.addComponent(cmpMesh);
         }
         getRectWorld() {
             let rect = ƒ.Rectangle.GET(0, 0, 100, 100);
             let topleft = new ƒ.Vector3(-0.5, 0.5, 0);
             let bottomright = new ƒ.Vector3(0.5, -0.5, 0);
-            let mtxResult = this.mtxWorld; //ƒ.Matrix4x4.MULTIPLICATION(this.mtxWorld, Collidable.pivot);
+            let mtxResult = this.mtxWorld;
             topleft.transform(mtxResult, true);
             bottomright.transform(mtxResult, true);
             let size = new ƒ.Vector2(bottomright.x - topleft.x, bottomright.y - topleft.y);
@@ -25,5 +23,5 @@ var MyGame;
             return rect;
         }
     }
-    MyGame.Collidable = Collidable;
+    MyGame.HitBox = HitBox;
 })(MyGame || (MyGame = {}));

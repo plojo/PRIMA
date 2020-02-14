@@ -1,14 +1,10 @@
 {
   "objects": [
     {
-      "type": "Tile",
+      "type": "Platform",
       "translation": {
         "x": 0,
         "y": 0
-      },
-      "scale": {
-        "x": 1,
-        "y": 1
       }
     },
     {
@@ -18,9 +14,9 @@
         "y": 0
       },
       "parameter": {
-        "offset": 1,
+        "offset": 100,
         "interval": 2,
-        "rotation": 90,
+        "rotation": 0,
         "lifespan": 5,
         "speed": 4
       }

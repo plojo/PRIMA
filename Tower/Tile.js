@@ -2,28 +2,30 @@
 var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
-    class Tile extends MyGame.Collidable {
-        constructor(_cssColor) {
+    class Tile extends ƒ.Node {
+        constructor(_sprite) {
             super("Tile");
-            // this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material("Tile", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS(_cssColor, 0.5)))));
-            // let cmpMesh: ƒ.ComponentMesh = new ƒ.ComponentMesh(Tile.mesh);
-            // cmpMesh.pivot = Collidable.pivot;
-            // this.addComponent(cmpMesh);
-            for (let sprite of Tile.sprites) {
-                let nodeSprite = new MyGame.NodeSprite(sprite.name, sprite);
-                // nodeSprite.showFrame(1);
-                // nodeSprite.activate(false);
-                this.appendChild(nodeSprite);
-            }
+            this.addComponent(new ƒ.ComponentTransform());
+            let nodeSprite = new MyGame.NodeSprite(_sprite.name, _sprite);
+            this.appendChild(nodeSprite);
+            let hitBox = new MyGame.HitBox("HitBox");
+            this.appendChild(hitBox);
         }
-        static generateSprite(_txtImage) {
-            let sprite = new MyGame.Sprite("Tile");
-            console.log(_txtImage);
-            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(48, 0, 16, 16), 1, ƒ.Vector2.ZERO(), 32, ƒ.ORIGIN2D.CENTER);
-            this.sprites.push(sprite);
+        get hitBox() {
+            return this.getChildrenByName("HitBox")[0];
         }
     }
-    // private static mesh: ƒ.MeshSprite = new ƒ.MeshSprite();
-    Tile.sprites = [];
     MyGame.Tile = Tile;
+    class Platform extends Tile {
+        constructor() {
+            super(Platform.sprite);
+            this.hitBox.cmpTransform.local.scaleY(0.5);
+            this.hitBox.cmpTransform.local.scaleX(1.5);
+        }
+        static generateSprite(_txtImage) {
+            this.sprite = new MyGame.Sprite(MyGame.TYPE.PLATFORM);
+            this.sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(64, 192, 48, 16), 1, ƒ.Vector2.ZERO(), 32, ƒ.ORIGIN2D.CENTER);
+        }
+    }
+    MyGame.Platform = Platform;
 })(MyGame || (MyGame = {}));

@@ -1,18 +1,15 @@
 namespace MyGame {
     import ƒ = FudgeCore;
 
-    class Gust extends Actor {
+    export class Gust extends Actor {
         private speed: ƒ.Vector3;
-        // private speedWorld:  ƒ.Vector3;
         private lastFrameCollision: boolean = false;
 
         constructor(_speed: ƒ.Vector3, _lifespan: number) {
-            super("Gust");
+            super(TYPE.GUST, Gust.sprites);
             this.speed = _speed;
-            // this.speedWorld = ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false);
 
-            let hitBox: Collidable = new Collidable("purple");
-            hitBox.name = "HitBox";
+            let hitBox: HitBox = new HitBox("HitBox");
             this.appendChild(hitBox);
 
             this.registerUpdate();
@@ -24,14 +21,15 @@ namespace MyGame {
 
         }
 
-        private get hitBox(): Collidable {
-            return <Collidable>this.getChildrenByName("HitBox")[0];
-        }
-
         public static generateSprites(_txtImage: ƒ.TextureImage): void {
-            let sprite: Sprite = new Sprite("Wind");
+            this.sprites = [];
+            let sprite: Sprite = new Sprite(TYPE.GUST);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
             this.sprites.push(sprite);
+        }
+
+        private get hitBox(): HitBox {
+            return <HitBox>this.getChildrenByName("HitBox")[0];
         }
 
         protected update = (_event: ƒ.Eventƒ): void => {
@@ -67,7 +65,7 @@ namespace MyGame {
          * @param _gustSpeed speed of the gusts in units per second
          */
         constructor(_offset: number = 0, _interval: number, _gustLifespan: number, _gustSpeed: number) {
-            super("GustSpawner");
+            super(TYPE.GUSTSPAWNER, []);
             this.interval = _interval * 1000;
             this.gustLifespan = _gustLifespan * 1000;
             this.gustSpeed = _gustSpeed;

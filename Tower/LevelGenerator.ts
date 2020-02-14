@@ -1,7 +1,9 @@
 namespace MyGame {
 
-    enum TYPE {
+    export enum TYPE {
         TILE = "Tile",
+        PLATFORM = "Platform",
+        GUST = "Gust",
         GUSTSPAWNER = "GustSpawner"
     }
 
@@ -10,10 +12,10 @@ namespace MyGame {
         y: number;
     }
 
-    interface ScaleJSON {
-        x: number;
-        y: number;
-    }
+    // interface ScaleJSON {
+    //     x: number;
+    //     y: number;
+    // }
 
     interface ParameterJSON {
         offset: number;
@@ -28,9 +30,9 @@ namespace MyGame {
         translation: TranslationJSON;
     }
 
-    interface TileJSON extends GenericJSON {
-        scale?: ScaleJSON;
-    }
+    // interface TileJSON extends GenericJSON {
+        
+    // }
 
     interface GustSpawnerJSON extends GenericJSON {
         parameter: ParameterJSON;
@@ -53,11 +55,10 @@ namespace MyGame {
 
         private static generateObject(_object: GenericJSON): void {
             switch (_object.type) {
-                case TYPE.TILE:
-                    let tileJSON: TileJSON = <TileJSON>_object;
-                    let tile: Tile = new Tile("green");
+                case TYPE.PLATFORM:
+                    let tileJSON: GenericJSON = _object;
+                    let tile: Tile = new Platform();
                     tile.cmpTransform.local.translate(new ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
-                    tile.cmpTransform.local.scale(new ƒ.Vector3(tileJSON.scale.x, tileJSON.scale.y, 0));
                     staticObjects.appendChild(tile);
                     break;
                 case TYPE.GUSTSPAWNER:

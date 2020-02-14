@@ -4,8 +4,10 @@ var MyGame;
     let TYPE;
     (function (TYPE) {
         TYPE["TILE"] = "Tile";
+        TYPE["PLATFORM"] = "Platform";
+        TYPE["GUST"] = "Gust";
         TYPE["GUSTSPAWNER"] = "GustSpawner";
-    })(TYPE || (TYPE = {}));
+    })(TYPE = MyGame.TYPE || (MyGame.TYPE = {}));
     class LevelGenerator {
         static generateLevel(_filename) {
             let file = new XMLHttpRequest();
@@ -18,11 +20,10 @@ var MyGame;
         }
         static generateObject(_object) {
             switch (_object.type) {
-                case TYPE.TILE:
+                case TYPE.PLATFORM:
                     let tileJSON = _object;
-                    let tile = new MyGame.Tile("green");
+                    let tile = new MyGame.Platform();
                     tile.cmpTransform.local.translate(new MyGame.ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
-                    tile.cmpTransform.local.scale(new MyGame.ƒ.Vector3(tileJSON.scale.x, tileJSON.scale.y, 0));
                     MyGame.staticObjects.appendChild(tile);
                     break;
                 case TYPE.GUSTSPAWNER:
