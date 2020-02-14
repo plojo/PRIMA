@@ -7,6 +7,10 @@ var MyGame;
         constructor(_name) {
             super(_name);
             this.addComponent(new ƒ.ComponentTransform());
+            this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material("Tile", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("blue", 0.5)))));
+            let cmpMesh = new ƒ.ComponentMesh(new ƒ.MeshSprite());
+            // cmpMesh.pivot = Collidable.pivot;
+            this.addComponent(cmpMesh);
         }
         getRectWorld() {
             let rect = ƒ.Rectangle.GET(0, 0, 100, 100);

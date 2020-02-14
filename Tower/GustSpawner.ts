@@ -11,7 +11,7 @@ namespace MyGame {
             this.speed = _speed;
             // this.speedWorld = ƒ.Vector3.TRANSFORMATION(this.speed, this.mtxWorld, false);
 
-            let hitBox: Collidable = new Tile("purple");
+            let hitBox: Collidable = new Collidable("purple");
             hitBox.name = "HitBox";
             this.appendChild(hitBox);
 

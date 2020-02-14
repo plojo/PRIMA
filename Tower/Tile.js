@@ -5,10 +5,10 @@ var MyGame;
     class Tile extends MyGame.Collidable {
         constructor(_cssColor) {
             super("Tile");
-            this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material("Tile", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS(_cssColor, 0.5)))));
-            let cmpMesh = new ƒ.ComponentMesh(Tile.mesh);
+            // this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material("Tile", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS(_cssColor, 0.5)))));
+            // let cmpMesh: ƒ.ComponentMesh = new ƒ.ComponentMesh(Tile.mesh);
             // cmpMesh.pivot = Collidable.pivot;
-            this.addComponent(cmpMesh);
+            // this.addComponent(cmpMesh);
             for (let sprite of Tile.sprites) {
                 let nodeSprite = new MyGame.NodeSprite(sprite.name, sprite);
                 // nodeSprite.showFrame(1);
@@ -23,7 +23,7 @@ var MyGame;
             this.sprites.push(sprite);
         }
     }
-    Tile.mesh = new ƒ.MeshSprite();
+    // private static mesh: ƒ.MeshSprite = new ƒ.MeshSprite();
     Tile.sprites = [];
     MyGame.Tile = Tile;
 })(MyGame || (MyGame = {}));

@@ -7,6 +7,10 @@ namespace MyGame {
         public constructor(_name: string) {
             super(_name);
             this.addComponent(new ƒ.ComponentTransform());
+            this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material("Tile", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("blue", 0.5)))));
+            let cmpMesh: ƒ.ComponentMesh = new ƒ.ComponentMesh(new ƒ.MeshSprite());
+            // cmpMesh.pivot = Collidable.pivot;
+            this.addComponent(cmpMesh);
         }
 
         public getRectWorld(): ƒ.Rectangle {

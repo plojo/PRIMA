@@ -40,15 +40,16 @@ var MyGame;
             let hitBox = new MyGame.Collidable("HitBoxVertical");
             //let hitBox: Collidable = new Tile("lime");
             hitBox.name = "HitBoxVertical";
-            hitBox.cmpTransform.local.scaleY(-1);
+            hitBox.cmpTransform.local.scaleY(1);
             hitBox.cmpTransform.local.scaleX(0.29);
+            hitBox.cmpTransform.local.translateY(0.5);
             this.hitBoxes.appendChild(hitBox);
             hitBox = new MyGame.Collidable("HitBoxHorizontal");
             //hitBox = new Tile("pink");
             hitBox.name = "HitBoxHorizontal";
-            hitBox.cmpTransform.local.scaleY(-0.8);
+            hitBox.cmpTransform.local.scaleY(0.8);
             hitBox.cmpTransform.local.scaleX(0.50);
-            hitBox.cmpTransform.local.translateY(0.1);
+            hitBox.cmpTransform.local.translateY(0.4);
             this.hitBoxes.appendChild(hitBox);
             this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 5; // jumpsquat animation should last for 5 frames only
             this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).activate(true);
@@ -175,7 +176,7 @@ var MyGame;
                 this.grounded = true;
             }
             else {
-                _translation.y = _tile.top - _hitBox.height;
+                _translation.y = _tile.bottom - _hitBox.height;
                 this.animatedNodeSprite.play(ACTION.FALL);
             }
             this.speed.y = 0;
