@@ -40,15 +40,15 @@ namespace MyGame {
     constructor(_name: string) {
       super(_name);
 
-      // let hitBox: Collidable = new Collidable("HitBoxVertical");
-      let hitBox: Collidable = new Tile("lime");
+      let hitBox: Collidable = new Collidable("HitBoxVertical");
+      //let hitBox: Collidable = new Tile("lime");
       hitBox.name = "HitBoxVertical";
       hitBox.cmpTransform.local.scaleY(-1);
       hitBox.cmpTransform.local.scaleX(0.29);
       this.hitBoxes.appendChild(hitBox);
 
-      // hitBox = new Collidable("HitBoxHorizontal");
-      hitBox = new Tile("pink");
+      hitBox = new Collidable("HitBoxHorizontal");
+      //hitBox = new Tile("pink");
       hitBox.name = "HitBoxHorizontal";
       hitBox.cmpTransform.local.scaleY(-0.8);
       hitBox.cmpTransform.local.scaleX(0.50);

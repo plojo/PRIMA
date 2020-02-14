@@ -28,7 +28,13 @@ namespace MyGame {
     txtFont.image = img;
 
     Font.generateSprites(txtFont);
+
+    img = <HTMLImageElement>document.getElementById("assets");
+    console.log(img);
+    let txtAssets: ƒ.TextureImage = new ƒ.TextureImage();
+    txtAssets.image = img;
     
+    Tile.generateSprite(txtAssets);
 
     Character.generateSprites(txtPlayer);
 
