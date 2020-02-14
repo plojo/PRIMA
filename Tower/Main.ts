@@ -13,29 +13,43 @@ namespace MyGame {
   export let dynamicObjects: ƒ.Node;
   export let staticObjects: ƒ.Node;
   export let player: Character;
-  
+
   let viewport: ƒ.Viewport;
 
   function test(): void {
     let canvas: HTMLCanvasElement = document.querySelector("canvas");
     let crc2: CanvasRenderingContext2D = canvas.getContext("2d");
-    let img: HTMLImageElement = document.querySelector("img");
-    let txtHare: ƒ.TextureImage = new ƒ.TextureImage();
-    txtHare.image = img;
-    Character.generateSprites(txtHare);
+    let img: HTMLImageElement = <HTMLImageElement>document.getElementById("player");
+    let txtPlayer: ƒ.TextureImage = new ƒ.TextureImage();
+    txtPlayer.image = img;
+
+    img = <HTMLImageElement>document.getElementById("font");
+    let txtFont: ƒ.TextureImage = new ƒ.TextureImage();
+    txtFont.image = img;
+
+    Font.generateSprites(txtFont);
+    
+
+    Character.generateSprites(txtPlayer);
 
     ƒ.RenderManager.initialize(true, false);
     game = new ƒ.Node("Game");
     player = new Character("Hare");
     level = new ƒ.Node("Level");
     staticObjects = new ƒ.Node("StaticObjects");
-    dynamicObjects = new ƒ.Node("DynamicObjects"); 
-    
+    dynamicObjects = new ƒ.Node("DynamicObjects");
+
     game.appendChild(player);
     game.appendChild(level);
     level.appendChild(staticObjects);
     level.appendChild(dynamicObjects);
 
+    for (let sprite of Font.sprites) {
+      let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
+      // nodeSprite.showFrame(1);
+      // nodeSprite.activate(false);
+      game.appendChild(nodeSprite);
+    }
     LevelGenerator.generateLevel("level.json");
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
@@ -72,7 +86,7 @@ namespace MyGame {
   function handleKeyboard(_event: KeyboardEvent): void {
     keysPressed[_event.code] = (_event.type == "keydown");
     if (_event.code == ƒ.KEYBOARD_CODE.ESC && _event.type == "keydown") {
-        ƒ.Time.game.setScale(ƒ.Time.game.getScale() == 1 ? 0 : 1);
+      ƒ.Time.game.setScale(ƒ.Time.game.getScale() == 1 ? 0 : 1);
     }
   }
 

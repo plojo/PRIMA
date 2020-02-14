@@ -8,10 +8,14 @@ var MyGame;
     function test() {
         let canvas = document.querySelector("canvas");
         let crc2 = canvas.getContext("2d");
-        let img = document.querySelector("img");
-        let txtHare = new MyGame.ƒ.TextureImage();
-        txtHare.image = img;
-        MyGame.Character.generateSprites(txtHare);
+        let img = document.getElementById("player");
+        let txtPlayer = new MyGame.ƒ.TextureImage();
+        txtPlayer.image = img;
+        img = document.getElementById("font");
+        let txtFont = new MyGame.ƒ.TextureImage();
+        txtFont.image = img;
+        MyGame.Font.generateSprites(txtFont);
+        MyGame.Character.generateSprites(txtPlayer);
         MyGame.ƒ.RenderManager.initialize(true, false);
         MyGame.game = new MyGame.ƒ.Node("Game");
         MyGame.player = new MyGame.Character("Hare");
@@ -22,6 +26,12 @@ var MyGame;
         MyGame.game.appendChild(MyGame.level);
         MyGame.level.appendChild(MyGame.staticObjects);
         MyGame.level.appendChild(MyGame.dynamicObjects);
+        for (let sprite of MyGame.Font.sprites) {
+            let nodeSprite = new MyGame.NodeSprite(sprite.name, sprite);
+            // nodeSprite.showFrame(1);
+            // nodeSprite.activate(false);
+            MyGame.game.appendChild(nodeSprite);
+        }
         MyGame.LevelGenerator.generateLevel("level.json");
         let cmpCamera = new MyGame.ƒ.ComponentCamera();
         cmpCamera.pivot.translateZ(14);
