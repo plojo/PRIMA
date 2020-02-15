@@ -5,6 +5,10 @@ var MyGame;
     (function (TYPE) {
         TYPE["TILE"] = "Tile";
         TYPE["PLATFORM"] = "Platform";
+        TYPE["FLOOR"] = "Floor";
+        TYPE["CEILING"] = "Ceiling";
+        TYPE["WALLLEFT"] = "WallLeft";
+        TYPE["WALLRIGHT"] = "WallRight";
         TYPE["GUST"] = "Gust";
         TYPE["GUSTSPAWNER"] = "GustSpawner";
     })(TYPE = MyGame.TYPE || (MyGame.TYPE = {}));
@@ -21,11 +25,22 @@ var MyGame;
         static generateObject(_object) {
             switch (_object.type) {
                 case TYPE.PLATFORM:
+                case TYPE.FLOOR:
+                case TYPE.CEILING: {
                     let tileJSON = _object;
-                    let tile = new MyGame.Platform();
+                    let tile = new MyGame.Tile(_object.type, tileJSON.length, MyGame.ORIENTATION.RIGHT);
                     tile.cmpTransform.local.translate(new MyGame.ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
                     MyGame.staticObjects.appendChild(tile);
                     break;
+                }
+                case TYPE.WALLLEFT:
+                case TYPE.WALLRIGHT: {
+                    let tileJSON = _object;
+                    let tile = new MyGame.Tile(_object.type, tileJSON.length, MyGame.ORIENTATION.UP, false);
+                    tile.cmpTransform.local.translate(new MyGame.ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
+                    MyGame.staticObjects.appendChild(tile);
+                    break;
+                }
                 case TYPE.GUSTSPAWNER:
                     let gustSpawnerJSON = _object;
                     let gustSpawner = new MyGame.GustSpawner(gustSpawnerJSON.parameter.offset, gustSpawnerJSON.parameter.interval, gustSpawnerJSON.parameter.lifespan, gustSpawnerJSON.parameter.speed);

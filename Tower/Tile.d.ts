@@ -1,12 +1,22 @@
 declare namespace MyGame {
     import ƒ = FudgeCore;
-    abstract class Tile extends ƒ.Node {
-        protected static sprite: Sprite;
+    export enum ORIENTATION {
+        UP = "Up",
+        RIGHT = "Right"
+    }
+    interface HitBoxes {
+        [code: string]: ƒ.Rectangle[];
+    }
+    export class Block extends NodeSprite {
+        static hit: HitBoxes;
         constructor(_name: string, _sprite: Sprite);
-        get hitBox(): HitBox;
+        readonly hitBox: HitBox;
     }
-    class Platform extends Tile {
-        constructor();
-        static generateSprite(_txtImage: ƒ.TextureImage): void;
+    export class Tile extends ƒ.Node {
+        protected static sprites: Map<TYPE, Sprite>;
+        constructor(_type: TYPE, _length: number, _orientation: ORIENTATION, cornerBlocks?: boolean);
+        static generateSprites(_txtImage: ƒ.TextureImage): void;
+        protected createBlock(_name: string, _sprite: Sprite, _frame: number, _offset: number, _orientation: ORIENTATION): void;
     }
+    export {};
 }

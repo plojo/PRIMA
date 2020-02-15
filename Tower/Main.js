@@ -36,6 +36,9 @@ var MyGame;
         viewport.draw();
         document.addEventListener("keydown", handleKeyboard);
         document.addEventListener("keyup", handleKeyboard);
+        MyGame.ƒ.RenderManager.update();
+        MyGame.game.broadcastEvent(new CustomEvent("registerHitBox"));
+        // console.log(Block.hit[new ƒ.Vector3(0,0,0).toString()]);
         MyGame.ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
         MyGame.ƒ.Loop.start(MyGame.ƒ.LOOP_MODE.TIME_GAME, 60);
         // start();
@@ -54,7 +57,7 @@ var MyGame;
         MyGame.Character.generateSprites(getTexture("player"));
         MyGame.Font.generateSprites(getTexture("font"));
         MyGame.Gust.generateSprites(getTexture("assets"));
-        MyGame.Platform.generateSprite(getTexture("assets"));
+        MyGame.Tile.generateSprites(getTexture("assets"));
         // console.log("a " + Actor.sprites + " | c " + Character.sprites + " | g " + Gust.sprites);
         function getTexture(_elementId) {
             let img = document.getElementById(_elementId);

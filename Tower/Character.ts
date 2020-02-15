@@ -14,7 +14,7 @@ namespace MyGame {
     LEFT, RIGHT
   }
 
-  export class Character extends Actor {    
+  export class Character extends Actor {
     private static readonly speedMax: ƒ.Vector2 = new ƒ.Vector2(3, 15); // units per second
     private static readonly distanceMax: ƒ.Vector2 = new ƒ.Vector2(0.1, 0.1);
     private static gravity: number = 10; //units per square second
@@ -105,7 +105,7 @@ namespace MyGame {
     public get hitBoxHorizontal(): HitBox {
       return <HitBox>this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
     }
-    
+
     public act(_action: ACTION, _direction?: DIRECTION): void {
       // console.log(_action);
       switch (_action) {
@@ -166,7 +166,7 @@ namespace MyGame {
     protected update = (_event: ƒ.Eventƒ): void => {
       let timeFrame: number = ƒ.Loop.timeFrameGame / 1000; // seconds
       // console.log("acc: " + this.acceleration.x);
-      
+
       this.speed = ƒ.Vector3.SUM(this.speed, ƒ.Vector3.SCALE(this.acceleration, timeFrame));
       this.speed.x = this.absMinSigned(this.speed.x, Character.speedMax.x);
       this.speed.y = this.absMinSigned(this.speed.y, Character.speedMax.y);
@@ -188,9 +188,24 @@ namespace MyGame {
     }
 
     private checkCollision(): void {
-      for (let tile of staticObjects.getChildren()) {
+      // narrowing down possible collisions
+      let position: ƒ.Vector3 = this.mtxWorld.translation;
+      position = position.map((_value: number) => { return Math.floor(_value); });
+
+      let possibleCollisions: ƒ.Rectangle[] = [];
+      for (let x: number = -1; x <= 1; x++) {
+        for (let y: number = -1; y <= 1; y++) {
+          possibleCollisions = 
+            possibleCollisions
+              .concat(Block.hit[new ƒ.Vector3(position.x + x, position.y + y, 0).toString()])
+              .filter((_value: ƒ.Rectangle) => _value != null);
+        }
+      }
+
+      // checking possible collisions
+      for (let rect of possibleCollisions) {
         ƒ.RenderManager.update();
-        let tileHitBox: ƒ.Rectangle = (<Tile>tile).hitBox.getRectWorld();
+        let tileHitBox: ƒ.Rectangle = rect;
         let playerHitBox: ƒ.Rectangle = this.hitBoxVertical.getRectWorld();
         let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
 
@@ -206,6 +221,26 @@ namespace MyGame {
         }
         this.cmpTransform.local.translation = translation;
       }
+      // for (let tile of staticObjects.getChildren()) {
+      //   for (let block of tile.getChildren()) {
+      //     ƒ.RenderManager.update();
+      //     let tileHitBox: ƒ.Rectangle = (<Block>block).hitBox.getRectWorld();
+      //     let playerHitBox: ƒ.Rectangle = this.hitBoxVertical.getRectWorld();
+      //     let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
+
+      //     if (playerHitBox.collides(tileHitBox)) {
+      //       // console.log("ver");
+      //       this.resolveCollisionVertical(translation, playerHitBox, tileHitBox);
+      //     } else {
+      //       playerHitBox = this.hitBoxHorizontal.getRectWorld();
+      //       if (playerHitBox.collides(tileHitBox)) {
+      //         // console.log("hor");
+      //         this.resolveCollisionHorizontal(translation, playerHitBox, tileHitBox);
+      //       }
+      //     }
+      //     this.cmpTransform.local.translation = translation;
+      //   }
+      // }
     }
 
     private resolveCollisionVertical(_translation: ƒ.Vector3, _hitBox: ƒ.Rectangle, _tile: ƒ.Rectangle): void {

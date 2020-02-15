@@ -2,6 +2,10 @@ declare namespace MyGame {
     enum TYPE {
         TILE = "Tile",
         PLATFORM = "Platform",
+        FLOOR = "Floor",
+        CEILING = "Ceiling",
+        WALLLEFT = "WallLeft",
+        WALLRIGHT = "WallRight",
         GUST = "Gust",
         GUSTSPAWNER = "GustSpawner"
     }

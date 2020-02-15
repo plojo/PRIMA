@@ -155,9 +155,22 @@ var MyGame;
             return Math.sign(x) * Math.min(Math.abs(x), Math.abs(y));
         }
         checkCollision() {
-            for (let tile of MyGame.staticObjects.getChildren()) {
+            // narrowing down possible collisions
+            let position = this.mtxWorld.translation;
+            position = position.map((_value) => { return Math.floor(_value); });
+            let possibleCollisions = [];
+            for (let x = -1; x <= 1; x++) {
+                for (let y = -1; y <= 1; y++) {
+                    possibleCollisions =
+                        possibleCollisions
+                            .concat(MyGame.Block.hit[new ƒ.Vector3(position.x + x, position.y + y, 0).toString()])
+                            .filter((_value) => _value != null);
+                }
+            }
+            // checking possible collisions
+            for (let rect of possibleCollisions) {
                 ƒ.RenderManager.update();
-                let tileHitBox = tile.hitBox.getRectWorld();
+                let tileHitBox = rect;
                 let playerHitBox = this.hitBoxVertical.getRectWorld();
                 let translation = this.cmpTransform.local.translation;
                 if (playerHitBox.collides(tileHitBox)) {
@@ -173,6 +186,25 @@ var MyGame;
                 }
                 this.cmpTransform.local.translation = translation;
             }
+            // for (let tile of staticObjects.getChildren()) {
+            //   for (let block of tile.getChildren()) {
+            //     ƒ.RenderManager.update();
+            //     let tileHitBox: ƒ.Rectangle = (<Block>block).hitBox.getRectWorld();
+            //     let playerHitBox: ƒ.Rectangle = this.hitBoxVertical.getRectWorld();
+            //     let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
+            //     if (playerHitBox.collides(tileHitBox)) {
+            //       // console.log("ver");
+            //       this.resolveCollisionVertical(translation, playerHitBox, tileHitBox);
+            //     } else {
+            //       playerHitBox = this.hitBoxHorizontal.getRectWorld();
+            //       if (playerHitBox.collides(tileHitBox)) {
+            //         // console.log("hor");
+            //         this.resolveCollisionHorizontal(translation, playerHitBox, tileHitBox);
+            //       }
+            //     }
+            //     this.cmpTransform.local.translation = translation;
+            //   }
+            // }
         }
         resolveCollisionVertical(_translation, _hitBox, _tile) {
             if (this.posLast.y >= _tile.top) {

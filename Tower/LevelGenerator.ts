@@ -3,6 +3,10 @@ namespace MyGame {
     export enum TYPE {
         TILE = "Tile",
         PLATFORM = "Platform",
+        FLOOR = "Floor",
+        CEILING = "Ceiling",
+        WALLLEFT = "WallLeft",
+        WALLRIGHT = "WallRight",
         GUST = "Gust",
         GUSTSPAWNER = "GustSpawner"
     }
@@ -30,9 +34,9 @@ namespace MyGame {
         translation: TranslationJSON;
     }
 
-    // interface TileJSON extends GenericJSON {
-        
-    // }
+    interface TileJSON extends GenericJSON {
+        length: number;
+    }
 
     interface GustSpawnerJSON extends GenericJSON {
         parameter: ParameterJSON;
@@ -56,11 +60,22 @@ namespace MyGame {
         private static generateObject(_object: GenericJSON): void {
             switch (_object.type) {
                 case TYPE.PLATFORM:
-                    let tileJSON: GenericJSON = _object;
-                    let tile: Tile = new Platform();
+                case TYPE.FLOOR:
+                case TYPE.CEILING: {
+                    let tileJSON: TileJSON = <TileJSON>_object;
+                    let tile: Tile = new Tile(_object.type, tileJSON.length, ORIENTATION.RIGHT);
                     tile.cmpTransform.local.translate(new ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
                     staticObjects.appendChild(tile);
                     break;
+                }
+                case TYPE.WALLLEFT:
+                case TYPE.WALLRIGHT: {
+                    let tileJSON: TileJSON = <TileJSON>_object;
+                    let tile: Tile = new Tile(_object.type, tileJSON.length, ORIENTATION.UP, false);
+                    tile.cmpTransform.local.translate(new ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
+                    staticObjects.appendChild(tile);
+                    break;
+                }   
                 case TYPE.GUSTSPAWNER:
                     let gustSpawnerJSON: GustSpawnerJSON = <GustSpawnerJSON>_object;
                     let gustSpawner: GustSpawner = new GustSpawner(gustSpawnerJSON.parameter.offset, gustSpawnerJSON.parameter.interval, gustSpawnerJSON.parameter.lifespan, gustSpawnerJSON.parameter.speed);

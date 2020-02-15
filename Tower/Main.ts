@@ -42,6 +42,7 @@ namespace MyGame {
     //   game.appendChild(nodeSprite);
     // }
     LevelGenerator.generateLevel("level.json");
+
     // ƒ.Time.game.setScale(0.2);
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
     cmpCamera.pivot.translateZ(14);
@@ -55,8 +56,14 @@ namespace MyGame {
     document.addEventListener("keydown", handleKeyboard);
     document.addEventListener("keyup", handleKeyboard);
 
+    ƒ.RenderManager.update();
+    game.broadcastEvent(new CustomEvent("registerHitBox"));
+
+    // console.log(Block.hit[new ƒ.Vector3(0,0,0).toString()]);
+
     ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
     ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 60);
+    
 
     // start();
 
@@ -78,7 +85,7 @@ namespace MyGame {
     Character.generateSprites(getTexture("player"));
     Font.generateSprites(getTexture("font"));
     Gust.generateSprites(getTexture("assets"));
-    Platform.generateSprite(getTexture("assets"));
+    Tile.generateSprites(getTexture("assets"));
     // console.log("a " + Actor.sprites + " | c " + Character.sprites + " | g " + Gust.sprites);
 
     function getTexture(_elementId: string): ƒ.TextureImage {

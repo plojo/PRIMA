@@ -20,7 +20,7 @@ declare namespace MyGame {
          * @param _origin The location of the origin of the sprite quad
          */
         generate(_texture: ƒ.TextureImage, _rects: ƒ.Rectangle[], _resolutionQuad: number, _origin: ƒ.ORIGIN2D): void;
-        generateByGrid(_texture: ƒ.TextureImage, _startRect: ƒ.Rectangle, _frames: number, _borderSize: ƒ.Vector2, _resolutionQuad: number, _origin: ƒ.ORIGIN2D): void;
+        generateByGrid(_texture: ƒ.TextureImage, _startRect: ƒ.Rectangle, _frames: number, _borderSize: ƒ.Vector2, _resolutionQuad: number, _origin: ƒ.ORIGIN2D, _upwards?: boolean): void;
         private createFrame;
     }
     class NodeSprite extends ƒ.Node {

@@ -1,25 +1,12 @@
 {
   "objects": [
     {
-      "type": "Platform",
+      "type": "Floor",
       "translation": {
         "x": 0,
         "y": 0
-      }
-    },
-    {
-      "type": "Platform",
-      "translation": {
-        "x": 1.5,
-        "y": 0
-      }
-    },
-    {
-      "type": "Platform",
-      "translation": {
-        "x": 3,
-        "y": 0
-      }
+      },
+      "length": 10
     },
     {
       "type": "GustSpawner",
