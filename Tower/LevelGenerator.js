@@ -23,21 +23,22 @@ var MyGame;
             }
         }
         static generateObject(_object) {
+            let translation = new MyGame.ƒ.Vector3(_object.translation.x * 0.5, _object.translation.y * 0.5, 0);
             switch (_object.type) {
                 case TYPE.PLATFORM:
                 case TYPE.FLOOR:
                 case TYPE.CEILING: {
                     let tileJSON = _object;
-                    let tile = new MyGame.Tile(_object.type, tileJSON.length, MyGame.ORIENTATION.RIGHT);
-                    tile.cmpTransform.local.translate(new MyGame.ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
+                    let tile = new MyGame.Tile(_object.type, tileJSON.length, MyGame.ORIENTATION.RIGHT, tileJSON.cornerBlocks);
+                    tile.cmpTransform.local.translate(translation);
                     MyGame.staticObjects.appendChild(tile);
                     break;
                 }
                 case TYPE.WALLLEFT:
                 case TYPE.WALLRIGHT: {
                     let tileJSON = _object;
-                    let tile = new MyGame.Tile(_object.type, tileJSON.length, MyGame.ORIENTATION.UP, false);
-                    tile.cmpTransform.local.translate(new MyGame.ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
+                    let tile = new MyGame.Tile(_object.type, tileJSON.length, MyGame.ORIENTATION.UP, tileJSON.cornerBlocks ? tileJSON.cornerBlocks : false);
+                    tile.cmpTransform.local.translate(translation);
                     MyGame.staticObjects.appendChild(tile);
                     break;
                 }

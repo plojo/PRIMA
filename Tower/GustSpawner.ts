@@ -33,7 +33,7 @@ namespace MyGame {
         }
 
         protected update = (_event: ƒ.Eventƒ): void => {
-            let timeFrame: number = ƒ.Loop.timeFrameGame / 1000; // seconds
+            let timeFrame: number = ƒ.Loop.timeFrameGame * 0.001; // seconds
             let distance: ƒ.Vector3 = ƒ.Vector3.SCALE(this.speed, timeFrame);
             this.cmpTransform.local.translate(distance);
             this.checkCollision(distance);

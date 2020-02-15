@@ -33,22 +33,18 @@ namespace MyGame {
       super(_name, Character.sprites);
 
       let hitBox: HitBox = new HitBox("HitBoxVertical");
-      //let hitBox: Collidable = new Tile("lime");
-      // hitBox.name = "HitBoxVertical";
       hitBox.cmpTransform.local.scaleY(0.9);
       hitBox.cmpTransform.local.scaleX(0.19);
       hitBox.cmpTransform.local.translateY(0.45);
       this.hitBoxes.appendChild(hitBox);
 
       hitBox = new HitBox("HitBoxHorizontal");
-      //hitBox = new Tile("pink");
-      // hitBox.name = "HitBoxHorizontal";
       hitBox.cmpTransform.local.scaleY(0.7);
       hitBox.cmpTransform.local.scaleX(0.40);
       hitBox.cmpTransform.local.translateY(0.45);
       this.hitBoxes.appendChild(hitBox);
 
-      this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 3; // jumpsquat animation should last for 5 frames only
+      this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 2; // jumpsquat animation should last for 5 frames only
       this.animatedNodeSprite.getNodeSprite(ACTION.JUMP).spriteFrameInterval = 8;
       this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).activate(true);
       this.animatedNodeSprite.registerUpdate();
@@ -56,7 +52,6 @@ namespace MyGame {
       this.addEventListener(
         "animationFinished",
         (_event: Event) => {
-          // console.log("animationFinished");
           if (this.animatedNodeSprite.action == ACTION.JUMPSQUAT) {
             this.act(ACTION.JUMPSTART);
           } else

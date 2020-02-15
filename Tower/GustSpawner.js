@@ -7,7 +7,7 @@ var MyGame;
             super(MyGame.TYPE.GUST, Gust.sprites);
             this.lastFrameCollision = false;
             this.update = (_event) => {
-                let timeFrame = ƒ.Loop.timeFrameGame / 1000; // seconds
+                let timeFrame = ƒ.Loop.timeFrameGame * 0.001; // seconds
                 let distance = ƒ.Vector3.SCALE(this.speed, timeFrame);
                 this.cmpTransform.local.translate(distance);
                 this.checkCollision(distance);

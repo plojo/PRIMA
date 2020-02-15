@@ -59,8 +59,6 @@ namespace MyGame {
     ƒ.RenderManager.update();
     game.broadcastEvent(new CustomEvent("registerHitBox"));
 
-    // console.log(Block.hit[new ƒ.Vector3(0,0,0).toString()]);
-
     ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
     ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 60);
     
@@ -74,6 +72,8 @@ namespace MyGame {
       translation.y = player.mtxWorld.translation.y;
       cmpCamera.pivot.translation = translation;
 
+      // console.log(ƒ.Time.game.getTimers());
+
       viewport.draw();
 
       // crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
@@ -86,7 +86,6 @@ namespace MyGame {
     Font.generateSprites(getTexture("font"));
     Gust.generateSprites(getTexture("assets"));
     Tile.generateSprites(getTexture("assets"));
-    // console.log("a " + Actor.sprites + " | c " + Character.sprites + " | g " + Gust.sprites);
 
     function getTexture(_elementId: string): ƒ.TextureImage {
       let img: HTMLImageElement = <HTMLImageElement>document.getElementById(_elementId);
