@@ -4,7 +4,7 @@ declare namespace MyGame {
         PLATFORM = "Platform",
         FLOOR = "Floor",
         CEILING = "Ceiling",
-        WALLLEFT = "WallLeft",
+        WALL = "Wall",
         WALLRIGHT = "WallRight",
         GUST = "Gust",
         GUSTSPAWNER = "GustSpawner"

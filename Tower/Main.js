@@ -58,6 +58,7 @@ var MyGame;
         MyGame.Font.generateSprites(getTexture("font"));
         MyGame.Gust.generateSprites(getTexture("assets"));
         MyGame.Tile.generateSprites(getTexture("assets"));
+        MyGame.Platform.generateSprites(getTexture("assets"));
         // console.log("a " + Actor.sprites + " | c " + Character.sprites + " | g " + Gust.sprites);
         function getTexture(_elementId) {
             let img = document.getElementById(_elementId);

@@ -156,19 +156,19 @@ var MyGame;
         }
         checkCollision() {
             // narrowing down possible collisions
-            let position = this.mtxWorld.translation;
-            position = position.map((_value) => { return Math.floor(_value); });
-            let possibleCollisions = [];
-            for (let x = -1; x <= 1; x++) {
-                for (let y = -1; y <= 1; y++) {
-                    possibleCollisions =
-                        possibleCollisions
-                            .concat(MyGame.Block.hit[new ƒ.Vector3(position.x + x, position.y + y, 0).toString()])
-                            .filter((_value) => _value != null);
-                }
-            }
+            // let position: ƒ.Vector3 = this.mtxWorld.translation;
+            // position = position.map((_value: number) => { return Math.floor(_value); });
+            // let possibleCollisions: ƒ.Rectangle[] = [];
+            // for (let x: number = -1; x <= 1; x++) {
+            //   for (let y: number = -1; y <= 1; y++) {
+            //     possibleCollisions = 
+            //       possibleCollisions
+            //         .concat(Block.hit[new ƒ.Vector3(position.x + x, position.y + y, 0).toString()])
+            //         .filter((_value: ƒ.Rectangle) => _value != null);
+            //   }
+            // }
             // checking possible collisions
-            for (let rect of possibleCollisions) {
+            for (let rect of MyGame.Tile.hitBoxes) {
                 ƒ.RenderManager.update();
                 let tileHitBox = rect;
                 let playerHitBox = this.hitBoxVertical.getRectWorld();
@@ -212,7 +212,7 @@ var MyGame;
                 this.grounded = true;
             }
             else {
-                _translation.y = _tile.bottom - _hitBox.height;
+                _translation.y = _tile.top + _hitBox.height;
                 this.animatedNodeSprite.play(ACTION.FALL);
             }
             this.speed.y = 0;

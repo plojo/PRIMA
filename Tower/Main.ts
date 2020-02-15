@@ -86,6 +86,7 @@ namespace MyGame {
     Font.generateSprites(getTexture("font"));
     Gust.generateSprites(getTexture("assets"));
     Tile.generateSprites(getTexture("assets"));
+    Platform.generateSprites(getTexture("assets"));
     // console.log("a " + Actor.sprites + " | c " + Character.sprites + " | g " + Gust.sprites);
 
     function getTexture(_elementId: string): ƒ.TextureImage {
