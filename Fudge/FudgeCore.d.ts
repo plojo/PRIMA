@@ -1,95 +1,4 @@
 declare namespace FudgeCore {
-    type General = any;
-    interface Serialization {
-        [type: string]: General;
-    }
-    interface Serializable {
-        serialize(): Serialization;
-        deserialize(_serialization: Serialization): Serializable;
-    }
-    /**
-     * Handles the external serialization and deserialization of [[Serializable]] objects. The internal process is handled by the objects themselves.
-     * A [[Serialization]] object can be created from a [[Serializable]] object and a JSON-String may be created from that.
-     * Vice versa, a JSON-String can be parsed to a [[Serialization]] which can be deserialized to a [[Serializable]] object.
-     * ```plaintext
-     *  [Serializable] → (serialize) → [Serialization] → (stringify)
-     *                                                        ↓
-     *                                                    [String]
-     *                                                        ↓
-     *  [Serializable] ← (deserialize) ← [Serialization] ← (parse)
-     * ```
-     * While the internal serialize/deserialize methods of the objects care of the selection of information needed to recreate the object and its structure,
-     * the [[Serializer]] keeps track of the namespaces and classes in order to recreate [[Serializable]] objects. The general structure of a [[Serialization]] is as follows
-     * ```plaintext
-     * {
-     *      namespaceName.className: {
-     *          propertyName: propertyValue,
-     *          ...,
-     *          propertyNameOfReference: SerializationOfTheReferencedObject,
-     *          ...,
-     *          constructorNameOfSuperclass: SerializationOfSuperClass
-     *      }
-     * }
-     * ```
-     * Since the instance of the superclass is created automatically when an object is created,
-     * the SerializationOfSuperClass omits the the namespaceName.className key and consists only of its value.
-     * The constructorNameOfSuperclass is given instead as a property name in the serialization of the subclass.
-     */
-    abstract class Serializer {
-        /** In order for the Serializer to create class instances, it needs access to the appropriate namespaces */
-        private static namespaces;
-        /**
-         * Registers a namespace to the [[Serializer]], to enable automatic instantiation of classes defined within
-         * @param _namespace
-         */
-        static registerNamespace(_namespace: Object): void;
-        /**
-         * Returns a javascript object representing the serializable FUDGE-object given,
-         * including attached components, children, superclass-objects all information needed for reconstruction
-         * @param _object An object to serialize, implementing the [[Serializable]] interface
-         */
-        static serialize(_object: Serializable): Serialization;
-        /**
-         * Returns a FUDGE-object reconstructed from the information in the [[Serialization]] given,
-         * including attached components, children, superclass-objects
-         * @param _serialization
-         */
-        static deserialize(_serialization: Serialization): Serializable;
-        static prettify(_json: string): string;
-        /**
-         * Returns a formatted, human readable JSON-String, representing the given [[Serializaion]] that may have been created by [[Serializer]].serialize
-         * @param _serialization
-         */
-        static stringify(_serialization: Serialization): string;
-        /**
-         * Returns a [[Serialization]] created from the given JSON-String. Result may be passed to [[Serializer]].deserialize
-         * @param _json
-         */
-        static parse(_json: string): Serialization;
-        /**
-         * Creates an object of the class defined with the full path including the namespaceName(s) and the className seperated by dots(.)
-         * @param _path
-         */
-        private static reconstruct;
-        /**
-         * Returns the full path to the class of the object, if found in the registered namespaces
-         * @param _object
-         */
-        private static getFullPath;
-        /**
-         * Returns the namespace-object defined within the full path, if registered
-         * @param _path
-         */
-        private static getNamespace;
-        /**
-         * Finds the namespace-object in properties of the parent-object (e.g. window), if present
-         * @param _namespace
-         * @param _parent
-         */
-        private static findNamespaceIn;
-    }
-}
-declare namespace FudgeCore {
     interface MapEventTypeToListener {
         [eventType: string]: EventListener[];
     }
@@ -108,7 +17,7 @@ declare namespace FudgeCore {
         /** dispatched to a [[Component]] when its being deactivated */
         COMPONENT_DEACTIVATE = "componentDeactivate",
         /** dispatched to a child [[Node]] and its ancestors after it was appended to a parent */
-        CHILD_APPEND = "childAdd",
+        CHILD_APPEND = "childAppend",
         /** dispatched to a child [[Node]] and its ancestors just before its being removed from its parent */
         CHILD_REMOVE = "childRemove",
         /** dispatched to a [[Mutable]] when its being mutated */
@@ -168,6 +77,10 @@ declare namespace FudgeCore {
         readonly forUserInterface: null;
     }
     /**
+     * Collect applicable attributes of the instance and copies of their values in a Mutator-object
+     */
+    function getMutatorOfArbitrary(_object: Object): Mutator;
+    /**
      * Base class for all types being mutable using [[Mutator]]-objects, thus providing and using interfaces created at runtime.
      * Mutables provide a [[Mutator]] that is build by collecting all object-properties that are either of a primitive type or again Mutable.
      * Subclasses can either reduce the standard [[Mutator]] built by this base class by deleting properties or implement an individual getMutator-method.
@@ -179,7 +92,7 @@ declare namespace FudgeCore {
          * Retrieves the type of this mutable subclass as the name of the runtime class
          * @returns The type of the mutable
          */
-        readonly type: string;
+        get type(): string;
         /**
          * Collect applicable attributes of the instance and copies of their values in a Mutator-object
          */
@@ -290,8 +203,9 @@ declare namespace FudgeCore {
          * @param _name name of the event to remove.
          */
         removeEvent(_name: string): void;
-        readonly getLabels: Enumerator;
-        fps: number;
+        get getLabels(): Enumerator;
+        get fps(): number;
+        set fps(_fps: number);
         /**
          * (Re-)Calculate the total time of the Animation. Calculation-heavy, use only if actually needed.
          */
@@ -385,6 +299,97 @@ declare namespace FudgeCore {
     }
 }
 declare namespace FudgeCore {
+    type General = any;
+    interface Serialization {
+        [type: string]: General;
+    }
+    interface Serializable {
+        serialize(): Serialization;
+        deserialize(_serialization: Serialization): Serializable;
+    }
+    /**
+     * Handles the external serialization and deserialization of [[Serializable]] objects. The internal process is handled by the objects themselves.
+     * A [[Serialization]] object can be created from a [[Serializable]] object and a JSON-String may be created from that.
+     * Vice versa, a JSON-String can be parsed to a [[Serialization]] which can be deserialized to a [[Serializable]] object.
+     * ```plaintext
+     *  [Serializable] → (serialize) → [Serialization] → (stringify)
+     *                                                        ↓
+     *                                                    [String]
+     *                                                        ↓
+     *  [Serializable] ← (deserialize) ← [Serialization] ← (parse)
+     * ```
+     * While the internal serialize/deserialize methods of the objects care of the selection of information needed to recreate the object and its structure,
+     * the [[Serializer]] keeps track of the namespaces and classes in order to recreate [[Serializable]] objects. The general structure of a [[Serialization]] is as follows
+     * ```plaintext
+     * {
+     *      namespaceName.className: {
+     *          propertyName: propertyValue,
+     *          ...,
+     *          propertyNameOfReference: SerializationOfTheReferencedObject,
+     *          ...,
+     *          constructorNameOfSuperclass: SerializationOfSuperClass
+     *      }
+     * }
+     * ```
+     * Since the instance of the superclass is created automatically when an object is created,
+     * the SerializationOfSuperClass omits the the namespaceName.className key and consists only of its value.
+     * The constructorNameOfSuperclass is given instead as a property name in the serialization of the subclass.
+     */
+    abstract class Serializer {
+        /** In order for the Serializer to create class instances, it needs access to the appropriate namespaces */
+        private static namespaces;
+        /**
+         * Registers a namespace to the [[Serializer]], to enable automatic instantiation of classes defined within
+         * @param _namespace
+         */
+        static registerNamespace(_namespace: Object): void;
+        /**
+         * Returns a javascript object representing the serializable FUDGE-object given,
+         * including attached components, children, superclass-objects all information needed for reconstruction
+         * @param _object An object to serialize, implementing the [[Serializable]] interface
+         */
+        static serialize(_object: Serializable): Serialization;
+        /**
+         * Returns a FUDGE-object reconstructed from the information in the [[Serialization]] given,
+         * including attached components, children, superclass-objects
+         * @param _serialization
+         */
+        static deserialize(_serialization: Serialization): Serializable;
+        static prettify(_json: string): string;
+        /**
+         * Returns a formatted, human readable JSON-String, representing the given [[Serializaion]] that may have been created by [[Serializer]].serialize
+         * @param _serialization
+         */
+        static stringify(_serialization: Serialization): string;
+        /**
+         * Returns a [[Serialization]] created from the given JSON-String. Result may be passed to [[Serializer]].deserialize
+         * @param _json
+         */
+        static parse(_json: string): Serialization;
+        /**
+         * Creates an object of the class defined with the full path including the namespaceName(s) and the className seperated by dots(.)
+         * @param _path
+         */
+        private static reconstruct;
+        /**
+         * Returns the full path to the class of the object, if found in the registered namespaces
+         * @param _object
+         */
+        private static getFullPath;
+        /**
+         * Returns the namespace-object defined within the full path, if registered
+         * @param _path
+         */
+        private static getNamespace;
+        /**
+         * Finds the namespace-object in properties of the parent-object (e.g. window), if present
+         * @param _namespace
+         * @param _parent
+         */
+        private static findNamespaceIn;
+    }
+}
+declare namespace FudgeCore {
     /**
      * Calculates the values between [[AnimationKey]]s.
      * Represented internally by a cubic function (`f(x) = ax³ + bx² + cx + d`).
@@ -405,8 +410,8 @@ declare namespace FudgeCore {
          * @returns the value at the given time
          */
         evaluate(_time: number): number;
-        setKeyIn: AnimationKey;
-        setKeyOut: AnimationKey;
+        set setKeyIn(_keyIn: AnimationKey);
+        set setKeyOut(_keyOut: AnimationKey);
         /**
          * (Re-)Calculates the parameters of the cubic function.
          * See https://math.stackexchange.com/questions/3173469/calculate-cubic-equation-from-two-points-and-two-slopes-variably
@@ -434,11 +439,16 @@ declare namespace FudgeCore {
         private slopeIn;
         private slopeOut;
         constructor(_time?: number, _value?: number, _slopeIn?: number, _slopeOut?: number, _constant?: boolean);
-        Time: number;
-        Value: number;
-        Constant: boolean;
-        SlopeIn: number;
-        SlopeOut: number;
+        get Time(): number;
+        set Time(_time: number);
+        get Value(): number;
+        set Value(_value: number);
+        get Constant(): boolean;
+        set Constant(_constant: boolean);
+        get SlopeIn(): number;
+        set SlopeIn(_slope: number);
+        get SlopeOut(): number;
+        set SlopeOut(_slope: number);
         /**
          * Static comparation function to use in an array sort function to sort the keys by their time.
          * @param _a the animation key to check
@@ -488,7 +498,7 @@ declare namespace FudgeCore {
          * @returns the AnimationKey at the index if it exists, null otherwise.
          */
         getKey(_index: number): AnimationKey;
-        readonly length: number;
+        get length(): number;
         serialize(): Serialization;
         deserialize(_serialization: Serialization): Serializable;
         protected reduceMutator(_mutator: Mutator): void;
@@ -500,291 +510,46 @@ declare namespace FudgeCore {
 }
 declare namespace FudgeCore {
     /**
-     * Describes the [[Audio]] class in which all Audio Data is stored.
-     * Audio will be given to the [[ComponentAudio]] for further usage.
-     * @authors Thomas Dorner, HFU, 2019
+     * Holds an audio-buffer in the [[AudioManager]].default to be used with [[ComponentAudio]]
+     * @authors Thomas Dorner, HFU, 2019 | Jirka Dell'Oro-Friedl, HFU, 2020
      */
-    class Audio {
-        url: string;
-        audioBuffer: AudioBuffer;
-        private bufferSource;
-        private localGain;
-        private localGainValue;
-        private isLooping;
+    class Audio extends AudioBuffer {
         /**
-         * Constructor for the [[Audio]] Class
-         * @param _audioContext from [[AudioSettings]]
-         * @param _gainValue 0 for muted | 1 for max volume
+         * Asynchronously loads the audio (mp3) from the given url
          */
-        constructor(_audioSettings: AudioSettings, _url: string, _gainValue: number, _loop: boolean);
-        init(_audioSettings: AudioSettings, _url: string, _gainValue: number, _loop: boolean): Promise<void>;
-        initBufferSource(_audioSettings: AudioSettings): void;
-        setBufferSourceNode(_bufferSourceNode: AudioBufferSourceNode): void;
-        getBufferSourceNode(): AudioBufferSourceNode;
-        setLocalGain(_localGain: GainNode): void;
-        getLocalGain(): GainNode;
-        setLocalGainValue(_localGainValue: number): void;
-        getLocalGainValue(): number;
-        setLooping(_isLooping: boolean): void;
-        getLooping(): boolean;
-        setBufferSource(_buffer: AudioBuffer): void;
-        getBufferSource(): AudioBuffer;
-        /**
-         * createAudio builds an [[Audio]] to use with the [[ComponentAudio]]
-         * @param _audioContext from [[AudioSettings]]
-         * @param _audioBuffer from [[AudioSessionData]]
-         */
-        private createAudio;
-        private beginLoop;
+        static load(_url: string): Promise<Audio>;
     }
 }
 declare namespace FudgeCore {
     /**
-     * Add an [[AudioDelay]] to an [[Audio]]
-     * @authors Thomas Dorner, HFU, 2019
+     * Extends the standard AudioContext for integration with [[Node]]-branches
      */
-    class AudioDelay {
-        audioDelay: DelayNode;
-        private delay;
-        constructor(_audioSettings: AudioSettings, _delay: number);
-        setDelay(_audioSettings: AudioSettings, _delay: number): void;
-        getDelay(): number;
-    }
-}
-declare namespace FudgeCore {
-    /**
-     * All possible Filter Types of an Audio Filter
-     */
-    type FILTER_TYPE = "lowpass" | "highpass" | "bandpass" | "lowshelf" | "highshelf" | "peaking" | "notch" | "allpass";
-    /**
-     * Add an [[AudioFilter]] to an [[Audio]]
-     * @authors Thomas Dorner, HFU, 2019
-     */
-    export class AudioFilter {
-        audioFilter: BiquadFilterNode;
-        private filterType;
-        constructor(_audioSettings: AudioSettings, _filterType: FILTER_TYPE, _frequency: number, _gain: number, _quality: number);
-        initFilter(_audioSettings: AudioSettings, _filterType: FILTER_TYPE, _frequency: number, _gain: number, _quality: number): void;
-        setFilterType(_filterType: FILTER_TYPE): void;
-        getFilterType(): FILTER_TYPE;
-        setFrequency(_audioSettings: AudioSettings, _frequency: number): void;
-        getFrequency(): number;
-        setGain(_audioSettings: AudioSettings, _gain: number): void;
-        getGain(): number;
-        setQuality(_quality: number): void;
-        getQuality(): number;
-    }
-    export {};
-}
-declare namespace FudgeCore {
-    /**
-     * Panning Model Type for 3D localisation of a [[ComponentAudio]].
-     * @param HRFT Usually used for 3D world space, this will be the default setting
-     */
-    type PANNING_MODEL_TYPE = "equalpower" | "HRTF";
-    /**
-     * Distance Model Type for 3D localisation of a [[ComponentAudio]].
-     * @param inverse Usually used for volume drop of sound in 3D world space
-     */
-    type DISTANCE_MODEL_TYPE = "linear" | "inverse" | "exponential";
-    /**
-     * [[AudioLocalisation]] describes the Audio Panner used in [[ComponentAudio]],
-     * which contains data for Position, Orientation and other data needed to localize the Audio in a 3D space.
-     * @authors Thomas Dorner, HFU, 2019
-     */
-    export class AudioLocalisation {
-        pannerNode: PannerNode;
-        private panningModel;
-        private distanceModel;
-        private refDistance;
-        private maxDistance;
-        private rolloffFactor;
-        private coneInnerAngle;
-        private coneOuterAngle;
-        private coneOuterGain;
-        private position;
-        private orientation;
+    class AudioManager extends AudioContext {
+        /** The default context that may be used throughout the project without the need to create others */
+        static readonly default: AudioManager;
+        /** The master volume all AudioNodes in the context should attach to */
+        readonly gain: GainNode;
+        private branch;
+        private cmpListener;
+        constructor(contextOptions?: AudioContextOptions);
+        set volume(_value: number);
+        get volume(): number;
         /**
-         * Constructor for the [[AudioLocalisation]] Class
-         * @param _audioContext from [[AudioSettings]]
+         * Determines branch to listen to. Each [[ComponentAudio]] in the branch will connect to this contexts master gain, all others disconnect.
          */
-        constructor(_audioSettings: AudioSettings);
-        updatePositions(_position: Vector3, _orientation: Vector3): void;
+        listenTo: (_branch: Node) => void;
         /**
-        * We will call setPannerPosition whenever there is a need to change Positions.
-        * All the position values should be identical to the current Position this is attached to.
-        *
-        *      |
-        *      o---
-        *    /  __
-        *      |_| Position
-        *
-        */
-        setPannerPosition(_position: Vector3): void;
-        getPannerPosition(): Vector3;
-        /**
-         * Set Position for orientation target
-         *
-         *      |
-         *      o---
-         *    /  __
-         *      |_|
-         *        \
-         *       Target
+         * Retrieve the branch currently listening to
          */
-        setPannerOrientation(_orientation: Vector3): void;
-        getPannerOrientation(): Vector3;
-        setDistanceModel(_distanceModelType: DISTANCE_MODEL_TYPE): void;
-        getDistanceModel(): DISTANCE_MODEL_TYPE;
-        setPanningModel(_panningModelType: PANNING_MODEL_TYPE): void;
-        getPanningModel(): PANNING_MODEL_TYPE;
-        setRefDistance(_refDistance: number): void;
-        getRefDistance(): number;
-        setMaxDistance(_maxDistance: number): void;
-        getMaxDistance(): number;
-        setRolloffFactor(_rolloffFactor: number): void;
-        getRolloffFactor(): number;
-        setConeInnerAngle(_coneInnerAngle: number): void;
-        getConeInnerAngle(): number;
-        setConeOuterAngle(_coneOuterAngle: number): void;
-        getConeOuterAngle(): number;
-        setConeOuterGain(_coneOuterGain: number): void;
-        getConeOuterGain(): number;
+        getBranchListeningTo: () => Node;
         /**
-         * Show all Settings inside of [[AudioLocalisation]].
-         * Use for Debugging purposes.
+         * Set the [[ComponentAudioListener]] that serves the spatial location and orientation for this contexts listener
          */
-        showLocalisationSettings(): void;
-        private initDefaultValues;
-    }
-    export {};
-}
-declare namespace FudgeCore {
-    /**
-     * Enumerator for all possible Oscillator Types
-     */
-    type OSCILLATOR_TYPE = "sine" | "square" | "sawtooth" | "triangle" | "custom";
-    /**
-     * Interface to create Custom Oscillator Types.
-     * Start-/Endpoint of a custum curve e.g. sine curve.
-     * Both parameters need to be inbetween -1 and 1.
-     * @param startpoint startpoint of a curve
-     * @param endpoint Endpoint of a curve
-     */
-    interface OscillatorWave {
-        startpoint: number;
-        endpoint: number;
-    }
-    /**
-     * Add an [[AudioFilter]] to an [[Audio]]
-     * @authors Thomas Dorner, HFU, 2019
-     */
-    export class AudioOscillator {
-        audioOscillator: OscillatorNode;
-        private frequency;
-        private oscillatorType;
-        private oscillatorWave;
-        private localGain;
-        private localGainValue;
-        constructor(_audioSettings: AudioSettings, _oscillatorType?: OSCILLATOR_TYPE);
-        setOscillatorType(_oscillatorType: OSCILLATOR_TYPE): void;
-        getOscillatorType(): OSCILLATOR_TYPE;
-        createPeriodicWave(_audioSettings: AudioSettings, _real: OscillatorWave, _imag: OscillatorWave): void;
-        setLocalGain(_localGain: GainNode): void;
-        getLocalGain(): GainNode;
-        setLocalGainValue(_localGainValue: number): void;
-        getLocalGainValue(): number;
-        setFrequency(_audioSettings: AudioSettings, _frequency: number): void;
-        getFrequency(): number;
-        createSnare(_audioSettings: AudioSettings): void;
-    }
-    export {};
-}
-declare namespace FudgeCore {
-    /**
-     * Interface to generate Data Pairs of URL and AudioBuffer
-     */
-    interface AudioData {
-        url: string;
-        buffer: AudioBuffer;
-    }
-    /**
-     * Describes Data Handler for all Audio Sources
-     * @authors Thomas Dorner, HFU, 2019
-     */
-    export class AudioSessionData {
-        dataArray: AudioData[];
+        listen: (_cmpListener: ComponentAudioListener) => void;
         /**
-         * Constructor of the [[AudioSessionData]] Class.
+         * Updates the spatial settings of the AudioNodes effected in the current branch
          */
-        constructor();
-        /**
-         * Decoding Audio Data
-         * Asynchronous Function to permit the loading of multiple Data Sources at the same time
-         * @param _audioContext AudioContext from AudioSettings
-         * @param _url URL as String for Data fetching
-         */
-        urlToBuffer(_audioContext: AudioContext, _url: string): Promise<AudioBuffer>;
-        /**
-         * Push URL into Data Array to create a Placeholder in which the Buffer can be placed at a later time
-         */
-        /**
-         *
-         * @param _url
-         * @param _audioBuffer
-         */
-        pushBufferInArray(_url: string, _audioBuffer: AudioBuffer): void;
-        /**
-         * Create a new log for the Data Array.
-         * Uses a url and creates a placeholder for the AudioBuffer.
-         * The AudioBuffer gets added as soon as it is created.
-         * @param _url Add a url to a wanted resource as a string
-         */
-        pushUrlInArray(_url: string): void;
-        /**
-         * Show all Data in Array.
-         * Use this for Debugging purposes.
-         */
-        showDataInArray(): void;
-        /**
-         * Error Message for Data Fetching
-         * @param e Error
-         */
-        private logErrorFetch;
-    }
-    export {};
-}
-declare namespace FudgeCore {
-    /**
-     * Describes Global Audio Settings.
-     * Is meant to be used as a Menu option.
-     * @authors Thomas Dorner, HFU, 2019
-     */
-    class AudioSettings {
-        masterGain: GainNode;
-        private masterGainValue;
-        private globalAudioContext;
-        private audioSessionData;
-        /**
-         * Constructor for the [[AudioSettings]] Class.
-         * Main class for all Audio Classes.
-         * Need to create this first, when working with sounds.
-         */
-        constructor();
-        setMasterGainValue(_masterGainValue: number): void;
-        getMasterGainValue(): number;
-        getAudioContext(): AudioContext;
-        setAudioContext(_audioContext: AudioContext): void;
-        getAudioSession(): AudioSessionData;
-        setAudioSession(_audioSession: AudioSessionData): void;
-        /**
-         * Pauses the progression of time of the AudioContext.
-         */
-        suspendAudioContext(): void;
-        /**
-         * Resumes the progression of time of the AudioContext after pausing it.
-         */
-        resumeAudioContext(): void;
+        update: () => void;
     }
 }
 declare namespace FudgeCore {
@@ -969,11 +734,11 @@ declare namespace FudgeCore {
         private container;
         private active;
         activate(_on: boolean): void;
-        readonly isActive: boolean;
+        get isActive(): boolean;
         /**
          * Is true, when only one instance of the component class can be attached to a node
          */
-        readonly isSingleton: boolean;
+        get isSingleton(): boolean;
         /**
          * Retrieves the node, this component is currently attached to
          * @returns The container node or null, if the component is not attached to
@@ -987,6 +752,173 @@ declare namespace FudgeCore {
         serialize(): Serialization;
         deserialize(_serialization: Serialization): Serializable;
         protected reduceMutator(_mutator: Mutator): void;
+    }
+}
+declare namespace FudgeCore {
+    interface TimeUnits {
+        hours?: number;
+        minutes?: number;
+        seconds?: number;
+        tenths?: number;
+        hundreds?: number;
+        thousands?: number;
+        fraction?: number;
+        asHours?: number;
+        asMinutes?: number;
+        asSeconds?: number;
+    }
+    interface Timers extends Object {
+        [id: number]: Timer;
+    }
+    /**
+     * Instances of this class generate a timestamp that correlates with the time elapsed since the start of the program but allows for resetting and scaling.
+     * Supports [[Timer]]s similar to window.setInterval but with respect to the scaled time.
+     * All time values are given in milliseconds
+     *
+     * @authors Jirka Dell'Oro-Friedl, HFU, 2019
+     */
+    class Time extends EventTargetƒ {
+        /** Standard game time starting automatically with the application */
+        static readonly game: Time;
+        private start;
+        private scale;
+        private offset;
+        private lastCallToElapsed;
+        private timers;
+        private idTimerNext;
+        constructor();
+        /**
+         * Returns the game-time-object which starts automatically and serves as base for various internal operations.
+         */
+        static getUnits(_milliseconds: number): TimeUnits;
+        /**
+         * Retrieves the current scaled timestamp of this instance in milliseconds
+         */
+        get(): number;
+        /**
+         * Returns the remaining time to the given point of time
+         */
+        getRemainder(_to: number): number;
+        /**
+         * (Re-) Sets the timestamp of this instance
+         * @param _time The timestamp to represent the current time (default 0.0)
+         */
+        set(_time?: number): void;
+        /**
+         * Sets the scaling of this time, allowing for slowmotion (<1) or fastforward (>1)
+         * @param _scale The desired scaling (default 1.0)
+         */
+        setScale(_scale?: number): void;
+        /**
+         * Retrieves the current scaling of this time
+         */
+        getScale(): number;
+        /**
+         * Retrieves the offset of this time
+         */
+        getOffset(): number;
+        /**
+         * Retrieves the scaled time in milliseconds passed since the last call to this method
+         * Automatically reset at every call to set(...) and setScale(...)
+         */
+        getElapsedSincePreviousCall(): number;
+        /**
+         * Returns a Promise<void> to be resolved after the time given. To be used with async/await
+         */
+        delay(_lapse: number): Promise<void>;
+        /**
+         * Stops and deletes all [[Timer]]s attached. Should be called before this Time-object leaves scope
+         */
+        clearAllTimers(): void;
+        /**
+         * Deletes [[Timer]] found using the internal id of the connected interval-object
+         * @param _id
+         */
+        deleteTimerByItsInternalId(_id: number): void;
+        /**
+         * Installs a timer at this time object
+         * @param _lapse The object-time to elapse between the calls to _callback
+         * @param _count The number of calls desired, 0 = Infinite
+         * @param _handler The function to call each the given lapse has elapsed
+         * @param _arguments Additional parameters to pass to callback function
+         */
+        setTimer(_lapse: number, _count: number, _handler: TimerHandler, ..._arguments: Object[]): number;
+        /**
+         * Deletes the timer with the id given by this time object
+         */
+        deleteTimer(_id: number): void;
+        /**
+         * Returns a copy of the list of timers currently installed on this time object
+         */
+        getTimers(): Timers;
+        /**
+         * Returns true if there are [[Timers]] installed to this
+         */
+        hasTimers(): boolean;
+        /**
+         * Recreates [[Timer]]s when scaling changes
+         */
+        private rescaleAllTimers;
+    }
+    /**
+     * Standard [[Time]]-instance. Starts running when Fudge starts up and may be used as the main game-time object
+     */
+    const time: Time;
+}
+declare namespace FudgeCore {
+    /**
+     * Determines the mode a loop runs in
+     */
+    enum LOOP_MODE {
+        /** Loop cycles controlled by window.requestAnimationFrame */
+        FRAME_REQUEST = "frameRequest",
+        /** Loop cycles with the given framerate in [[Time]].game */
+        TIME_GAME = "timeGame",
+        /** Loop cycles with the given framerate in realtime, independent of [[Time]].game */
+        TIME_REAL = "timeReal"
+    }
+    /**
+     * Core loop of a Fudge application. Initializes automatically and must be started explicitly.
+     * It then fires [[EVENT]].LOOP\_FRAME to all added listeners at each frame
+     *
+     * @author Jirka Dell'Oro-Friedl, HFU, 2019
+     */
+    class Loop extends EventTargetStatic {
+        /** The gametime the loop was started, overwritten at each start */
+        static timeStartGame: number;
+        /** The realtime the loop was started, overwritten at each start */
+        static timeStartReal: number;
+        /** The gametime elapsed since the last loop cycle */
+        static timeFrameGame: number;
+        /** The realtime elapsed since the last loop cycle */
+        static timeFrameReal: number;
+        private static timeLastFrameGame;
+        private static timeLastFrameReal;
+        private static timeLastFrameGameAvg;
+        private static timeLastFrameRealAvg;
+        private static running;
+        private static mode;
+        private static idIntervall;
+        private static idRequest;
+        private static fpsDesired;
+        private static framesToAverage;
+        private static syncWithAnimationFrame;
+        /**
+         * Starts the loop with the given mode and fps
+         * @param _mode
+         * @param _fps Is only applicable in TIME-modes
+         * @param _syncWithAnimationFrame Experimental and only applicable in TIME-modes. Should defer the loop-cycle until the next possible animation frame.
+         */
+        static start(_mode?: LOOP_MODE, _fps?: number, _syncWithAnimationFrame?: boolean): void;
+        /**
+         * Stops the loop
+         */
+        static stop(): void;
+        static getFpsGameAverage(): number;
+        static getFpsRealAverage(): number;
+        private static loop;
+        private static loopFrame;
+        private static loopTime;
     }
 }
 declare namespace FudgeCore {
@@ -1027,7 +959,7 @@ declare namespace FudgeCore {
         private speedScale;
         private lastTime;
         constructor(_animation?: Animation, _playmode?: ANIMATION_PLAYMODE, _playback?: ANIMATION_PLAYBACK);
-        speed: number;
+        set speed(_s: number);
         /**
          * Jumps to a certain time in the animation to play from there.
          * @param _time The time to jump to
@@ -1076,126 +1008,120 @@ declare namespace FudgeCore {
     }
 }
 declare namespace FudgeCore {
+    enum AUDIO_PANNER {
+        CONE_INNER_ANGLE = "coneInnerAngle",
+        CONE_OUTER_ANGLE = "coneOuterAngle",
+        CONE_OUTER_GAIN = "coneOuterGain",
+        DISTANCE_MODEL = "distanceModel",
+        MAX_DISTANCE = "maxDistance",
+        PANNING_MODEL = "panningModel",
+        REF_DISTANCE = "refDistance",
+        ROLLOFF_FACTOR = "rolloffFactor"
+    }
+    enum AUDIO_NODE_TYPE {
+        SOURCE = 0,
+        PANNER = 1,
+        GAIN = 2
+    }
     /**
-     * Attaches a [[ComponentAudio]] to a [[Node]].
-     * Only a single [[Audio]] can be used within a single [[ComponentAudio]]
-     * @authors Thomas Dorner, HFU, 2019
+     * Builds a minimal audio graph (by default in [[AudioManager]].default) and synchronizes it with the containing [[Node]]
+     * ```plaintext
+     * ┌ AudioManager(.default) ────────────────────────┐
+     * │ ┌ ComponentAudio ───────────────────┐          │
+     * │ │    ┌──────┐   ┌──────┐   ┌──────┐ │ ┌──────┐ │
+     * │ │    │source│ → │panner│ → │ gain │ → │ gain │ │
+     * │ │    └──────┘   └──────┘   └──────┘ │ └──────┘ │
+     * │ └───────────────────────────────────┘          │
+     * └────────────────────────────────────────────────┘
+     * ```
+     * @authors Thomas Dorner, HFU, 2019 | Jirka Dell'Oro-Friedl, HFU, 2019
      */
-    class ComponentAudio extends Component implements Serializable {
-        audio: Audio | null;
-        audioOscillator: AudioOscillator;
-        isLocalised: boolean;
-        isFiltered: boolean;
-        isDelayed: boolean;
+    class ComponentAudio extends Component {
+        /** places and directs the panner relative to the world transform of the [[Node]]  */
+        pivot: Matrix4x4;
         protected singleton: boolean;
-        private localisation;
-        private filter;
-        private delay;
+        private gain;
+        private panner;
+        private source;
+        private audioManager;
+        private playing;
+        private listened;
+        constructor(_audio?: Audio, _loop?: boolean, _start?: boolean, _audioManager?: AudioManager);
+        set audio(_audio: Audio);
+        get audio(): Audio;
+        set volume(_value: number);
+        get volume(): number;
         /**
-         * Create Component Audio for
-         * @param _audio
+         * Set the property of the panner to the given value. Use to manipulate range and rolloff etc.
          */
-        constructor(_audio?: Audio, _audioOscillator?: AudioOscillator);
+        setPanner(_property: AUDIO_PANNER, _value: number): void;
+        getMutatorOfNode(_type: AUDIO_NODE_TYPE): Mutator;
         /**
-         * set AudioFilter in ComponentAudio
-         * @param _filter AudioFilter
+         * Returns the specified AudioNode of the standard graph for further manipulation
          */
-        setFilter(_filter: AudioFilter): void;
-        getFilter(): AudioFilter;
-        setDelay(_delay: AudioDelay): void;
-        getDelay(): AudioDelay;
-        setLocalisation(_localisation: AudioLocalisation): void;
-        getLocalisation(): AudioLocalisation;
+        getAudioNode(_type: AUDIO_NODE_TYPE): AudioNode;
         /**
-         * Play Audio at current time of AudioContext
+         * Start or stop playing the audio
          */
-        playAudio(_audioSettings: AudioSettings, _offset?: number, _duration?: number): void;
+        play(_on: boolean): void;
+        get isPlaying(): boolean;
+        get isAttached(): boolean;
+        get isListened(): boolean;
         /**
-         * Adds an [[Audio]] to the [[ComponentAudio]]
-         * @param _audio Audio Data as [[Audio]]
+         * Inserts AudioNodes between the panner and the local gain of this [[ComponentAudio]]
+         * _input and _output may be the same AudioNode, if there is only one to insert,
+         * or may have multiple AudioNode between them to create an effect-graph.\
+         * Note that [[ComponentAudio]] does not keep track of inserted AudioNodes!
+         * ```plaintext
+         * ┌ AudioManager(.default) ──────────────────────────────────────────────────────┐
+         * │ ┌ ComponentAudio ─────────────────────────────────────────────────┐          │
+         * │ │    ┌──────┐   ┌──────┐   ┌──────┐          ┌───────┐   ┌──────┐ │ ┌──────┐ │
+         * │ │    │source│ → │panner│ → │_input│ → ...  → │_output│ → │ gain │ → │ gain │ │
+         * │ │    └──────┘   └──────┘   └──────┘          └───────┘   └──────┘ │ └──────┘ │
+         * │ └─────────────────────────────────────────────────────────────────┘          │
+         * └──────────────────────────────────────────────────────────────────────────────┘
+         * ```
          */
-        setAudio(_audio: Audio): void;
-        getAudio(): Audio;
-        serialize(): Serialization;
-        deserialize(_serialization: Serialization): Serializable;
-        protected reduceMutator(_mutator: Mutator): void;
+        insertAudioNodes(_input: AudioNode, _output: AudioNode): void;
         /**
-         * Final attachments for the Audio Nodes in following order.
-         * This method needs to be called whenever there is a change of parts in the [[ComponentAudio]].
-         * 1. Local Gain
-         * 2. Localisation
-         * 3. Filter
-         * 4. Delay
-         * 5. Master Gain
+         * Activate override. Connects or disconnects AudioNodes
          */
-        private connectAudioNodes;
+        activate(_on: boolean): void;
+        /**
+         * Connects this components gain-node to the gain node of the AudioManager this component runs on.
+         * Only call this method if the component is not attached to a [[Node]] but needs to be heard.
+         */
+        connect(_on: boolean): void;
+        private install;
+        private createSource;
+        private updateConnection;
+        /**
+         * Automatically connects/disconnects AudioNodes when adding/removing this component to/from a node.
+         * Therefore unused AudioNodes may be garbage collected when an unused component is collected
+         */
+        private handleAttach;
+        /**
+         * Automatically connects/disconnects AudioNodes when appending/removing the branch the component is in.
+         */
+        private handleBranch;
+        /**
+         * Updates the panner node, its position and direction, using the worldmatrix of the container and the pivot of this component.
+         */
+        private update;
     }
 }
 declare namespace FudgeCore {
     /**
-     * Attaches an [[AudioListener]] to the node
-     * @authors Thomas Dorner, HFU, 2019
+     * Serves to set the spatial location and orientation of AudioListeners relative to the
+     * world transform of the [[Node]] it is attached to.
+     * @authors Jirka Dell'Oro-Friedl, HFU, 2019
      */
     class ComponentAudioListener extends Component {
-        private audioListener;
-        private positionBase;
-        private positionUP;
-        private positionFW;
+        pivot: Matrix4x4;
         /**
-         * Constructor of the AudioListener class
-         * @param _audioContext Audio Context from AudioSessionData
+         * Updates the position and orientation of the given AudioListener
          */
-        constructor(_audioSettings: AudioSettings);
-        setAudioListener(_audioSettings: AudioSettings): void;
-        getAudioListener(): AudioListener;
-        /**
-         * We will call setAudioListenerPosition whenever there is a need to change Positions.
-         * All the position values should be identical to the current Position this is attached to.
-         *
-         *     __|___
-         *    |  |  |
-         *    |  °--|--
-         *    |/____|
-         *   /
-         *
-         */
-        setListenerPosition(_position: Vector3): void;
-        getListenerPosition(): Vector3;
-        /**
-         * FUDGE SYSTEM
-         *
-         *      UP (Y)
-         *       ^
-         *     __|___
-         *    |  |  |
-         *    |  O--|--> FORWARD (Z)
-         *    |_____|
-         */
-        setListenerPositionForward(_position: Vector3): void;
-        getListenerPositionForward(): Vector3;
-        /**
-         *      UP (Z)
-         *       ^
-         *     __|___
-         *    |  |  |
-         *    |  O--|--> FORWARD (X)
-         *    |_____|
-         */
-        setListenerPostitionUp(_position: Vector3): void;
-        getListenerPositionUp(): Vector3;
-        /**
-         * Set all positional Values based on a single Position
-         * @param _position position of the Object
-         */
-        updatePositions(_position: Vector3): void;
-        /**
-         * Show all Settings inside of [[ComponentAudioListener]].
-         * Method only for Debugging Purposes.
-         */
-        showListenerSettings(): void;
-        serialize(): Serialization;
-        deserialize(_serialization: Serialization): Serializable;
-        protected reduceMutator(_mutator: Mutator): void;
+        update(_listener: AudioListener): void;
     }
 }
 declare namespace FudgeCore {
@@ -1236,7 +1162,7 @@ declare namespace FudgeCore {
          * Returns the multiplikation of the worldtransformation of the camera container with the projection matrix
          * @returns the world-projection-matrix
          */
-        readonly ViewProjectionMatrix: Matrix4x4;
+        get ViewProjectionMatrix(): Matrix4x4;
         /**
          * Set the camera to perspective projection. The world origin is in the center of the canvaselement.
          * @param _aspect The aspect ratio between width and height of projectionspace.(Default = canvas.clientWidth / canvas.ClientHeight)
@@ -1689,27 +1615,35 @@ declare namespace FudgeCore {
          */
         setPositionAndSize(_x?: number, _y?: number, _width?: number, _height?: number, _origin?: ORIGIN2D): void;
         pointToRect(_point: Vector2, _target: Rectangle): Vector2;
-        x: number;
-        y: number;
-        width: number;
-        height: number;
+        get x(): number;
+        get y(): number;
+        get width(): number;
+        get height(): number;
         /**
          * Return the leftmost expansion, respecting also negative values of width
          */
-        left: number;
+        get left(): number;
         /**
          * Return the topmost expansion, respecting also negative values of height
          */
-        top: number;
+        get top(): number;
         /**
          * Return the rightmost expansion, respecting also negative values of width
          */
-        right: number;
+        get right(): number;
         /**
          * Return the lowest expansion, respecting also negative values of height
          */
-        bottom: number;
-        readonly copy: Rectangle;
+        get bottom(): number;
+        set x(_x: number);
+        set y(_y: number);
+        set width(_width: number);
+        set height(_height: number);
+        set left(_value: number);
+        set top(_value: number);
+        set right(_value: number);
+        set bottom(_value: number);
+        get copy(): Rectangle;
         /**
          * Returns true if the given point is inside of this rectangle or on the border
          * @param _point
@@ -1823,7 +1757,7 @@ declare namespace FudgeCore {
         /**
          * Returns true if this viewport currently has focus and thus receives keyboard events
          */
-        readonly hasFocus: boolean;
+        get hasFocus(): boolean;
         /**
          * Switch the viewports focus on or off. Only one viewport in one FUDGE instance can have the focus, thus receiving keyboard events.
          * So a viewport currently having the focus will lose it, when another one receives it. The viewports fire [[Event]]s accordingly.
@@ -1887,6 +1821,16 @@ declare namespace FudgeCore {
          * @param _fudgeNode The node to create a scenegraphentry for.
          */
         private createSceneGraph;
+    }
+}
+declare namespace FudgeCore {
+    const enum EVENT_AUDIO {
+        /** broadcast to a [[Node]] and all [[Nodes]] in the branch it's the root of after it was appended to a parent */
+        CHILD_APPEND = "childAppendToAudioBranch",
+        /** broadcast to a [[Node]] and all [[Nodes]] in the branch it's the root of just before its being removed from its parent */
+        CHILD_REMOVE = "childRemoveFromAudioBranch",
+        /** broadcast to a [[Node]] and all [[Nodes]] in the branch to update the panners in AudioComponents */
+        UPDATE = "updateAudioBranch"
     }
 }
 declare namespace FudgeCore {
@@ -2214,19 +2158,22 @@ declare namespace FudgeCore {
          * - get: a copy of the calculated translation vector
          * - set: effect the matrix ignoring its rotation and scaling
          */
-        translation: Vector2;
+        get translation(): Vector2;
+        set translation(_translation: Vector2);
         /**
          * - get: a copy of the calculated rotation vector
          * - set: effect the matrix
          */
-        rotation: number;
+        get rotation(): number;
+        set rotation(_rotation: number);
         /**
          * - get: a copy of the calculated scale vector
          * - set: effect the matrix
          */
-        scaling: Vector2;
+        get scaling(): Vector2;
+        set scaling(_scaling: Vector2);
         static PROJECTION(_width: number, _height: number): Matrix3x3;
-        static readonly IDENTITY: Matrix3x3;
+        static get IDENTITY(): Matrix3x3;
         /**
          * Returns a matrix that translates coordinates along the x-, y- and z-axis according to the given vector.
          */
@@ -2316,21 +2263,24 @@ declare namespace FudgeCore {
          * - get: a copy of the calculated translation vector
          * - set: effect the matrix ignoring its rotation and scaling
          */
-        translation: Vector3;
+        get translation(): Vector3;
+        set translation(_translation: Vector3);
         /**
          * - get: a copy of the calculated rotation vector
          * - set: effect the matrix
          */
-        rotation: Vector3;
+        get rotation(): Vector3;
+        set rotation(_rotation: Vector3);
         /**
          * - get: a copy of the calculated scale vector
          * - set: effect the matrix
          */
-        scaling: Vector3;
+        get scaling(): Vector3;
+        set scaling(_scaling: Vector3);
         /**
          * Retrieve a new identity matrix
          */
-        static readonly IDENTITY: Matrix4x4;
+        static get IDENTITY(): Matrix4x4;
         /**
          * Computes and returns the product of two passed matrices.
          * @param _a The matrix to multiply.
@@ -2477,6 +2427,7 @@ declare namespace FudgeCore {
      * @author Jirka Dell'Oro-Friedl, HFU, 2019
      */
     class Random {
+        static default: Random;
         private generate;
         /**
          * Create an instance of [[Random]]. If desired, creates a PRNG with it and feeds the given seed.
@@ -2513,6 +2464,10 @@ declare namespace FudgeCore {
          */
         getIndex<T>(_array: Array<T>): number;
         /**
+         * Returns removes a randomly selected element from the given array and returns it
+         */
+        splice<T>(_array: Array<T>): T;
+        /**
          * Returns a randomly selected key from the given Map-instance
          */
         getKey<T, U>(_map: Map<T, U>): T;
@@ -2542,16 +2497,18 @@ declare namespace FudgeCore {
     class Vector2 extends Mutable {
         private data;
         constructor(_x?: number, _y?: number);
-        x: number;
-        y: number;
+        get x(): number;
+        get y(): number;
+        set x(_x: number);
+        set y(_y: number);
         /**
          * Returns the length of the vector
          */
-        readonly magnitude: number;
+        get magnitude(): number;
         /**
          * Returns the square of the magnitude of the vector without calculating a square root. Faster for simple proximity evaluation.
          */
-        readonly magnitudeSquared: number;
+        get magnitudeSquared(): number;
         /**
          * A shorthand for writing `new Vector2(0, 0)`.
          * @returns A new vector with the values (0, 0)
@@ -2665,7 +2622,7 @@ declare namespace FudgeCore {
         /**
          * @returns A deep copy of the vector.
          */
-        readonly copy: Vector2;
+        get copy(): Vector2;
         transform(_matrix: Matrix3x3, _includeTranslation?: boolean): void;
         /**
          * Adds a z-component to the vector and returns a new Vector3
@@ -2690,17 +2647,20 @@ declare namespace FudgeCore {
     class Vector3 extends Mutable {
         private data;
         constructor(_x?: number, _y?: number, _z?: number);
-        x: number;
-        y: number;
-        z: number;
+        get x(): number;
+        get y(): number;
+        get z(): number;
+        set x(_x: number);
+        set y(_y: number);
+        set z(_z: number);
         /**
          * Returns the length of the vector
          */
-        readonly magnitude: number;
+        get magnitude(): number;
         /**
          * Returns the square of the magnitude of the vector without calculating a square root. Faster for simple proximity evaluation.
          */
-        readonly magnitudeSquared: number;
+        get magnitudeSquared(): number;
         /**
          * Creates and returns a vector with the given length pointing in x-direction
          */
@@ -2781,7 +2741,7 @@ declare namespace FudgeCore {
         normalize(_length?: number): void;
         set(_x?: number, _y?: number, _z?: number): void;
         get(): Float32Array;
-        readonly copy: Vector3;
+        get copy(): Vector3;
         transform(_matrix: Matrix4x4, _includeTranslation?: boolean): void;
         /**
          * Drops the z-component and returns a Vector2 consisting of the x- and y-components
@@ -2880,6 +2840,27 @@ declare namespace FudgeCore {
 }
 declare namespace FudgeCore {
     /**
+     * Generate a UV Sphere with a given number of sectors and stacks (clamped at 128*128)
+     * Implementation based on http://www.songho.ca/opengl/gl_sphere.html
+     * @authors Jirka Dell'Oro-Friedl, Simon Storl-Schulke, HFU, 2020
+     */
+    class MeshSphere extends Mesh {
+        private _sectors;
+        get sectors(): number;
+        private _stacks;
+        get stacks(): number;
+        private _normals;
+        private _textureUVs;
+        constructor(_sectors?: number, _stacks?: number);
+        create(): void;
+        protected createVertices(): Float32Array;
+        protected createIndices(): Uint16Array;
+        protected createTextureUVs(): Float32Array;
+        protected createFaceNormals(): Float32Array;
+    }
+}
+declare namespace FudgeCore {
+    /**
      * Generate two quads placed back to back, the one facing in negative Z-direction is textured reversed
      * ```plaintext
      *        0 __ 3
@@ -2921,7 +2902,7 @@ declare namespace FudgeCore {
          */
         constructor(_name: string);
         activate(_on: boolean): void;
-        readonly isActive: boolean;
+        get isActive(): boolean;
         /**
          * Returns a reference to this nodes parent node
          */
@@ -2933,7 +2914,7 @@ declare namespace FudgeCore {
         /**
          * Shortcut to retrieve this nodes [[ComponentTransform]]
          */
-        readonly cmpTransform: ComponentTransform;
+        get cmpTransform(): ComponentTransform;
         /**
          * Shortcut to retrieve the local [[Matrix4x4]] attached to this nodes [[ComponentTransform]]
          * Returns null if no [[ComponentTransform]] is attached
@@ -2973,8 +2954,9 @@ declare namespace FudgeCore {
         /**
          * Generator yielding the node and all successors in the branch below for iteration
          */
-        readonly branch: IterableIterator<Node>;
+        get branch(): IterableIterator<Node>;
         isUpdated(_timestampUpdate: number): boolean;
+        isDescendantOf(_ancestor: Node): boolean;
         /**
          * Applies a Mutator from [[Animation]] to all its components and transfers it to its children.
          * @param _mutator The mutator generated from an [[Animation]]
@@ -3016,6 +2998,13 @@ declare namespace FudgeCore {
          */
         addEventListener(_type: EVENT | string, _handler: EventListener, _capture?: boolean): void;
         /**
+         * Removes an event listener from the node. The signatur must match the one used with addEventListener
+         * @param _type The type of the event, should be an enumerated value of NODE_EVENT, can be any string
+         * @param _handler The function to call when the event reaches this node
+         * @param _capture When true, the listener listens in the capture phase, when the event travels deeper into the hierarchy of nodes.
+         */
+        removeEventListener(_type: EVENT | string, _handler: EventListener, _capture?: boolean): void;
+        /**
          * Dispatches a synthetic event to target. This implementation always returns true (standard: return true only if either event's cancelable attribute value is false or its preventDefault() method was not invoked)
          * The event travels into the hierarchy to this node dispatching the event, invoking matching handlers of the nodes ancestors listening to the capture phase,
          * than the matching handler of the target node in the target phase, and back out of the hierarchy in the bubbling phase, invoking appropriate handlers of the anvestors
@@ -3029,11 +3018,6 @@ declare namespace FudgeCore {
          */
         broadcastEvent(_event: Event): void;
         private broadcastEventRecursive;
-        /**
-         * Sets the parent of this node to be the supplied node. Will be called on the child that is appended to this node by appendChild().
-         * @param _parent The parent to be set for this node.
-         */
-        private setParent;
         private getBranchGenerator;
     }
 }
@@ -3296,173 +3280,6 @@ declare namespace FudgeCore {
     }
 }
 declare namespace FudgeCore {
-    interface TimeUnits {
-        hours?: number;
-        minutes?: number;
-        seconds?: number;
-        tenths?: number;
-        hundreds?: number;
-        thousands?: number;
-        fraction?: number;
-        asHours?: number;
-        asMinutes?: number;
-        asSeconds?: number;
-    }
-    interface Timers extends Object {
-        [id: number]: Timer;
-    }
-    /**
-     * Instances of this class generate a timestamp that correlates with the time elapsed since the start of the program but allows for resetting and scaling.
-     * Supports [[Timer]]s similar to window.setInterval but with respect to the scaled time.
-     * All time values are given in milliseconds
-     *
-     * @authors Jirka Dell'Oro-Friedl, HFU, 2019
-     */
-    class Time extends EventTargetƒ {
-        private static gameTime;
-        private start;
-        private scale;
-        private offset;
-        private lastCallToElapsed;
-        private timers;
-        private idTimerNext;
-        constructor();
-        /**
-         * Returns the game-time-object which starts automatically and serves as base for various internal operations.
-         */
-        static readonly game: Time;
-        static getUnits(_milliseconds: number): TimeUnits;
-        /**
-         * Retrieves the current scaled timestamp of this instance in milliseconds
-         */
-        get(): number;
-        /**
-         * Returns the remaining time to the given point of time
-         */
-        getRemainder(_to: number): number;
-        /**
-         * (Re-) Sets the timestamp of this instance
-         * @param _time The timestamp to represent the current time (default 0.0)
-         */
-        set(_time?: number): void;
-        /**
-         * Sets the scaling of this time, allowing for slowmotion (<1) or fastforward (>1)
-         * @param _scale The desired scaling (default 1.0)
-         */
-        setScale(_scale?: number): void;
-        /**
-         * Retrieves the current scaling of this time
-         */
-        getScale(): number;
-        /**
-         * Retrieves the offset of this time
-         */
-        getOffset(): number;
-        /**
-         * Retrieves the scaled time in milliseconds passed since the last call to this method
-         * Automatically reset at every call to set(...) and setScale(...)
-         */
-        getElapsedSincePreviousCall(): number;
-        /**
-         * Returns a Promise<void> to be resolved after the time given. To be used with async/await
-         */
-        delay(_lapse: number): Promise<void>;
-        /**
-         * Stops and deletes all [[Timer]]s attached. Should be called before this Time-object leaves scope
-         */
-        clearAllTimers(): void;
-        /**
-         * Deletes [[Timer]] found using the internal id of the connected interval-object
-         * @param _id
-         */
-        deleteTimerByItsInternalId(_id: number): void;
-        /**
-         * Installs a timer at this time object
-         * @param _lapse The object-time to elapse between the calls to _callback
-         * @param _count The number of calls desired, 0 = Infinite
-         * @param _handler The function to call each the given lapse has elapsed
-         * @param _arguments Additional parameters to pass to callback function
-         */
-        setTimer(_lapse: number, _count: number, _handler: TimerHandler, ..._arguments: Object[]): number;
-        /**
-         * Deletes the timer with the id given by this time object
-         */
-        deleteTimer(_id: number): void;
-        /**
-         * Returns a copy of the list of timers currently installed on this time object
-         */
-        getTimers(): Timers;
-        /**
-         * Returns true if there are [[Timers]] installed to this
-         */
-        hasTimers(): boolean;
-        /**
-         * Recreates [[Timer]]s when scaling changes
-         */
-        private rescaleAllTimers;
-    }
-    /**
-     * Standard [[Time]]-instance. Starts running when Fudge starts up and may be used as the main game-time object
-     */
-    const time: Time;
-}
-declare namespace FudgeCore {
-    /**
-     * Determines the mode a loop runs in
-     */
-    enum LOOP_MODE {
-        /** Loop cycles controlled by window.requestAnimationFrame */
-        FRAME_REQUEST = "frameRequest",
-        /** Loop cycles with the given framerate in [[Time]].game */
-        TIME_GAME = "timeGame",
-        /** Loop cycles with the given framerate in realtime, independent of [[Time]].game */
-        TIME_REAL = "timeReal"
-    }
-    /**
-     * Core loop of a Fudge application. Initializes automatically and must be started explicitly.
-     * It then fires [[EVENT]].LOOP\_FRAME to all added listeners at each frame
-     *
-     * @author Jirka Dell'Oro-Friedl, HFU, 2019
-     */
-    class Loop extends EventTargetStatic {
-        /** The gametime the loop was started, overwritten at each start */
-        static timeStartGame: number;
-        /** The realtime the loop was started, overwritten at each start */
-        static timeStartReal: number;
-        /** The gametime elapsed since the last loop cycle */
-        static timeFrameGame: number;
-        /** The realtime elapsed since the last loop cycle */
-        static timeFrameReal: number;
-        private static timeLastFrameGame;
-        private static timeLastFrameReal;
-        private static timeLastFrameGameAvg;
-        private static timeLastFrameRealAvg;
-        private static running;
-        private static mode;
-        private static idIntervall;
-        private static idRequest;
-        private static fpsDesired;
-        private static framesToAverage;
-        private static syncWithAnimationFrame;
-        /**
-         * Starts the loop with the given mode and fps
-         * @param _mode
-         * @param _fps Is only applicable in TIME-modes
-         * @param _syncWithAnimationFrame Experimental and only applicable in TIME-modes. Should defer the loop-cycle until the next possible animation frame.
-         */
-        static start(_mode?: LOOP_MODE, _fps?: number, _syncWithAnimationFrame?: boolean): void;
-        /**
-         * Stops the loop
-         */
-        static stop(): void;
-        static getFpsGameAverage(): number;
-        static getFpsRealAverage(): number;
-        private static loop;
-        private static loopFrame;
-        private static loopTime;
-    }
-}
-declare namespace FudgeCore {
     /**
      * Defines the signature of handler functions for [[TimerEventƒ]]s, very similar to usual event handler
      */
@@ -3495,11 +3312,11 @@ declare namespace FudgeCore {
         /**
          * Returns the window-id of the timer, which was returned by setInterval
          */
-        readonly id: number;
+        get id(): number;
         /**
          * Returns the time-intervall for calls to the handler
          */
-        readonly lapse: number;
+        get lapse(): number;
         /**
          * Attaches a copy of this at its current state to the same [[Time]]-instance. Used internally when rescaling [[Time]]
          */
