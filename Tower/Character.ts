@@ -25,7 +25,7 @@ namespace MyGame {
     public acceleration: ƒ.Vector3 = new ƒ.Vector3(0, -Character.gravity, 0);
     public speed: ƒ.Vector3 = ƒ.Vector3.ZERO();
 
-    private posLast: ƒ.Vector3;
+    // private posLast: ƒ.Vector3;
     private grounded: boolean;
     private jumpStart: boolean = false;
 
@@ -172,22 +172,24 @@ namespace MyGame {
       this.speed.y = this.absMinSigned(this.speed.y, Character.speedMax.y);
       // console.log("speed: " + this.speed.x);
 
-      this.posLast = this.cmpTransform.local.translation;
+      // this.posLast = this.cmpTransform.local.translation;
       let distance: ƒ.Vector3 = ƒ.Vector3.SCALE(this.speed, timeFrame);
 
       distance.x = this.absMinSigned(distance.x, Character.distanceMax.x);
       distance.y = this.absMinSigned(distance.y, Character.distanceMax.y);
-
-      this.cmpTransform.local.translate(distance);
       this.grounded = false;
-      this.checkCollision();
+      this.checkCollision(distance);
+      this.cmpTransform.local.translate(distance);
+
+
+      // console.log("y: " + this.cmpTransform.local.translation.y);
     }
 
     private absMinSigned(x: number, y: number): number {
       return Math.sign(x) * Math.min(Math.abs(x), Math.abs(y));
     }
 
-    private checkCollision(): void {
+    private checkCollision(_distance: ƒ.Vector3): void {
       // narrowing down possible collisions
       // let position: ƒ.Vector3 = this.mtxWorld.translation;
       // position = position.map((_value: number) => { return Math.floor(_value); });
@@ -203,51 +205,41 @@ namespace MyGame {
       // }
 
       // checking possible collisions
-      for (let rect of Tile.hitBoxes) {
-        ƒ.RenderManager.update();
-        let tileHitBox: ƒ.Rectangle = rect;
-        let playerHitBox: ƒ.Rectangle = this.hitBoxVertical.getRectWorld();
-        let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
+      let playerHitBoxVertical: ƒ.Rectangle = this.hitBoxVertical.getRectWorld();
+      // console.log(" " + playerHitBoxVertical.position.toString());
+      playerHitBoxVertical.position.add(_distance.toVector2());
+      // console.log("a " + playerHitBoxVertical.position.toString());
+      let playerHitBoxHorizontal: ƒ.Rectangle = this.hitBoxHorizontal.getRectWorld();
+     
+      playerHitBoxHorizontal.position.add(_distance.toVector2());
 
-        if (playerHitBox.collides(tileHitBox)) {
-          // console.log("ver");
-          this.resolveCollisionVertical(translation, playerHitBox, tileHitBox);
+      for (let rect of Tile.hitBoxes) {
+        let tileHitBox: ƒ.Rectangle = rect;
+        let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
+        if (playerHitBoxVertical.collides(tileHitBox)) {
+          console.log("ver");
+          this.resolveCollisionVertical(translation, playerHitBoxVertical, tileHitBox);
+          playerHitBoxHorizontal.position = playerHitBoxVertical.position;
+          _distance.y = 0;
         } else {
-          playerHitBox = this.hitBoxHorizontal.getRectWorld();
-          if (playerHitBox.collides(tileHitBox)) {
-            // console.log("hor");
-            this.resolveCollisionHorizontal(translation, playerHitBox, tileHitBox);
+          if (playerHitBoxHorizontal.collides(tileHitBox)) {
+            console.log("hor");
+            this.resolveCollisionHorizontal(translation, playerHitBoxHorizontal, tileHitBox);
+            playerHitBoxVertical.position = playerHitBoxHorizontal.position;
+            _distance.x = 0;
           }
         }
         this.cmpTransform.local.translation = translation;
       }
-      // for (let tile of staticObjects.getChildren()) {
-      //   for (let block of tile.getChildren()) {
-      //     ƒ.RenderManager.update();
-      //     let tileHitBox: ƒ.Rectangle = (<Block>block).hitBox.getRectWorld();
-      //     let playerHitBox: ƒ.Rectangle = this.hitBoxVertical.getRectWorld();
-      //     let translation: ƒ.Vector3 = this.cmpTransform.local.translation;
-
-      //     if (playerHitBox.collides(tileHitBox)) {
-      //       // console.log("ver");
-      //       this.resolveCollisionVertical(translation, playerHitBox, tileHitBox);
-      //     } else {
-      //       playerHitBox = this.hitBoxHorizontal.getRectWorld();
-      //       if (playerHitBox.collides(tileHitBox)) {
-      //         // console.log("hor");
-      //         this.resolveCollisionHorizontal(translation, playerHitBox, tileHitBox);
-      //       }
-      //     }
-      //     this.cmpTransform.local.translation = translation;
-      //   }
-      // }
     }
 
     private resolveCollisionVertical(_translation: ƒ.Vector3, _hitBox: ƒ.Rectangle, _tile: ƒ.Rectangle): void {
-      if (this.posLast.y >= _tile.top) {
+      if (_translation.y >= _tile.top) {
+        _hitBox.position.y = _tile.bottom + _hitBox.height / 2;
         _translation.y = _tile.bottom;
         this.grounded = true;
       } else {
+        _hitBox.position.y = _tile.top + _hitBox.height / 2;
         _translation.y = _tile.top + _hitBox.height;
         this.animatedNodeSprite.play(ACTION.FALL);
       }
@@ -255,9 +247,11 @@ namespace MyGame {
     }
 
     private resolveCollisionHorizontal(_translation: ƒ.Vector3, _hitBox: ƒ.Rectangle, _tile: ƒ.Rectangle): void {
-      if (this.posLast.x <= _tile.left) {
+      if (_translation.x <= _tile.left) {
+        _hitBox.position.x = _tile.left - _hitBox.width / 2;
         _translation.x = _tile.left - _hitBox.width / 2;
       } else {
+        _hitBox.position.x = _tile.right + _hitBox.width / 2;
         _translation.x = _tile.right + _hitBox.width / 2;
       }
       this.speed.x = 0;

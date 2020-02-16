@@ -21,13 +21,12 @@ declare namespace MyGame {
         private static accelerationMidAir;
         acceleration: ƒ.Vector3;
         speed: ƒ.Vector3;
-        private posLast;
         private grounded;
         private jumpStart;
         constructor(_name: string);
         static generateSprites(_txtImage: ƒ.TextureImage): void;
-        readonly hitBoxVertical: HitBox;
-        readonly hitBoxHorizontal: HitBox;
+        get hitBoxVertical(): HitBox;
+        get hitBoxHorizontal(): HitBox;
         act(_action: ACTION, _direction?: DIRECTION): void;
         protected update: (_event: ƒ.Eventƒ) => void;
         private absMinSigned;
