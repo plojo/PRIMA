@@ -27,6 +27,8 @@ var MyGame;
         //   game.appendChild(nodeSprite);
         // }
         MyGame.LevelGenerator.generateLevel("level.json");
+        console.log(MyGame.game);
+        MyGame.Audio.start(MyGame.game);
         // ƒ.Time.game.setScale(0.2);
         let cmpCamera = new MyGame.ƒ.ComponentCamera();
         cmpCamera.pivot.translateZ(28);
@@ -78,10 +80,12 @@ var MyGame;
         }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.A]) {
             MyGame.player.act(MyGame.ACTION.WALK, MyGame.DIRECTION.LEFT);
+            MyGame.Audio.play(MyGame.AUDIO.MOVE);
             return;
         }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.D]) {
             MyGame.player.act(MyGame.ACTION.WALK, MyGame.DIRECTION.RIGHT);
+            MyGame.Audio.play(MyGame.AUDIO.MOVE);
             return;
         }
         MyGame.player.act(MyGame.ACTION.IDLE);
