@@ -28,7 +28,7 @@ var MyGame;
         // }
         MyGame.LevelGenerator.generateLevel("level.json");
         console.log(MyGame.game);
-        MyGame.Audio.start(MyGame.game);
+        MyGame.Audio.start();
         // ƒ.Time.game.setScale(0.2);
         let cmpCamera = new MyGame.ƒ.ComponentCamera();
         cmpCamera.pivot.translateZ(28);

@@ -45,7 +45,7 @@ namespace MyGame {
     LevelGenerator.generateLevel("level.json");
 
     console.log(game);
-    Audio.start(game);
+    Audio.start();
 
     // ƒ.Time.game.setScale(0.2);
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();

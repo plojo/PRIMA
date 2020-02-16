@@ -12,9 +12,9 @@ namespace MyGame {
       private static components: Map<AUDIO, ƒ.ComponentAudio> = new Map();
       private static readonly node: Audio = new Audio("Audio");
       
-      public static start(_game: ƒ.Node): void {
+      public static start(): void {
         Audio.appendAudio();
-        _game.appendChild(Audio.node);
+        game.appendChild(Audio.node);
         ƒ.AudioManager.default.listenTo(Audio.node);
       }
   

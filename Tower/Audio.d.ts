@@ -9,7 +9,7 @@ declare namespace MyGame {
     class Audio extends ƒ.Node {
         private static components;
         private static readonly node;
-        static start(_game: ƒ.Node): void;
+        static start(): void;
         static play(_audio: AUDIO, _on?: boolean): void;
         private static appendAudio;
     }

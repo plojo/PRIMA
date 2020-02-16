@@ -10,9 +10,9 @@ var MyGame;
         AUDIO["MOVE"] = "Sound/Move.wav";
     })(AUDIO = MyGame.AUDIO || (MyGame.AUDIO = {}));
     class Audio extends ƒ.Node {
-        static start(_game) {
+        static start() {
             Audio.appendAudio();
-            _game.appendChild(Audio.node);
+            MyGame.game.appendChild(Audio.node);
             ƒ.AudioManager.default.listenTo(Audio.node);
         }
         static play(_audio, _on = true) {
