@@ -11,6 +11,7 @@ declare namespace MyGame {
         SPEEDFAST = "SPEEDFAST",
         CURSOR = "Cursor",
         PAUSED = "Paused",
+        RESUME = "Resume",
         BACKGROUND = "Background",
         MENU = "Menu",
         LEFTROW = "LeftRow",
@@ -22,9 +23,15 @@ declare namespace MyGame {
         static generateSprites(_txtImage: ƒ.TextureImage): void;
     }
     class Menu extends ƒ.Node {
+        rowOffsetY: number;
+        gameSpeed: number;
         private leftRowOptions;
         private selection;
+        private soundOptions;
+        private speedOptions;
         constructor();
         navigate(_direction: number): void;
+        triggerAction(): void;
+        private getSpeed;
     }
 }

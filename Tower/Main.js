@@ -20,6 +20,7 @@ var MyGame;
         gui = new MyGame.ƒ.Node("GUI");
         gui.addComponent(new MyGame.ƒ.ComponentTransform());
         MyGame.menu = new MyGame.Menu();
+        MyGame.menu.gameSpeed = 1;
         MyGame.game.appendChild(MyGame.player);
         MyGame.game.appendChild(MyGame.level);
         MyGame.game.appendChild(gui);
@@ -44,10 +45,8 @@ var MyGame;
         document.addEventListener("keyup", handleKeyboard);
         MyGame.ƒ.RenderManager.update();
         MyGame.game.broadcastEvent(new CustomEvent("registerHitBox"));
-        // console.log(Block.hit[new ƒ.Vector3(0,0,0).toString()]);
         MyGame.ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
         MyGame.ƒ.Loop.start(MyGame.ƒ.LOOP_MODE.TIME_GAME, 60);
-        // start();
         function update(_event) {
             processInput();
             let translation = gui.cmpTransform.local.translation;
@@ -74,7 +73,7 @@ var MyGame;
     function handleKeyboard(_event) {
         let running = MyGame.ƒ.Time.game.getScale() != 0;
         if (_event.code == MyGame.ƒ.KEYBOARD_CODE.ESC && _event.type == "keydown") {
-            MyGame.ƒ.Time.game.setScale(running ? 0 : 1);
+            MyGame.ƒ.Time.game.setScale(running ? 0 : MyGame.menu.gameSpeed);
             MyGame.menu.activate(running);
             viewport.draw();
         }
@@ -87,13 +86,16 @@ var MyGame;
             if (_event.code == MyGame.ƒ.KEYBOARD_CODE.S && _event.type == "keydown") {
                 MyGame.menu.navigate(-1);
             }
+            if (_event.code == MyGame.ƒ.KEYBOARD_CODE.SPACE && _event.type == "keydown") {
+                MyGame.menu.triggerAction();
+            }
             viewport.draw();
         }
     }
     function processInput() {
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.SPACE]) {
             MyGame.player.act(MyGame.ACTION.JUMP);
-            MyGame.Audio.play(MyGame.AUDIO.JUMP);
+            // Audio.play(AUDIO.JUMP);
         }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.A]) {
             MyGame.player.act(MyGame.ACTION.WALK, MyGame.DIRECTION.LEFT);
@@ -102,36 +104,11 @@ var MyGame;
         }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.D]) {
             MyGame.player.act(MyGame.ACTION.WALK, MyGame.DIRECTION.RIGHT);
-            // Audio.play(AUDIO.MOVE);
+            // setInterval(function () {
+            //   Audio.play(AUDIO.MOVE);
+            // }, 3000);
             return;
         }
         MyGame.player.act(MyGame.ACTION.IDLE);
     }
-    // function hndKeyDown(_event: KeyboardEvent): void {
-    //   if (_event.code == ƒ.KEYBOARD_CODE.SPACE) {
-    //     updateView();
-    //   }
-    // }
-    // function updateView(): void {
-    //   viewport.draw();
-    // }
-    // async function start(): Promise<void> {
-    //   ƒ.Debug.log("Wait for space");
-    //   await waitForKeyPress(ƒ.KEYBOARD_CODE.SPACE);
-    //   ƒ.Debug.log("Space pressed");
-    //   let domMenu: HTMLElement = document.querySelector("div#Menu");
-    //   domMenu.style.visibility = "hidden";
-    //   window.addEventListener("keydown", hndKeyDown);
-    // }
-    // async function waitForKeyPress(_code: ƒ.KEYBOARD_CODE): Promise<void> {
-    //   return new Promise(_resolve => {
-    //     window.addEventListener("keydown", hndKeyDown);
-    //     function hndKeyDown(_event: KeyboardEvent): void {
-    //       if (_event.code == _code) {
-    //         window.removeEventListener("keydown", hndKeyDown);
-    //         _resolve();
-    //       }
-    //     }
-    //   });
-    // }
 })(MyGame || (MyGame = {}));
