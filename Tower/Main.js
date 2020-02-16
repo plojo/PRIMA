@@ -77,6 +77,7 @@ var MyGame;
     function processInput() {
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.SPACE]) {
             MyGame.player.act(MyGame.ACTION.JUMP);
+            MyGame.Audio.play(MyGame.AUDIO.JUMP);
         }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.A]) {
             MyGame.player.act(MyGame.ACTION.WALK, MyGame.DIRECTION.LEFT);
@@ -85,7 +86,9 @@ var MyGame;
         }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.D]) {
             MyGame.player.act(MyGame.ACTION.WALK, MyGame.DIRECTION.RIGHT);
-            MyGame.Audio.play(MyGame.AUDIO.MOVE);
+            setInterval(function () {
+                MyGame.Audio.play(MyGame.AUDIO.MOVE);
+            }, 3000);
             return;
         }
         MyGame.player.act(MyGame.ACTION.IDLE);

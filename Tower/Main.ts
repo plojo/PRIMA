@@ -109,6 +109,7 @@ namespace MyGame {
   function processInput(): void {
     if (keysPressed[ƒ.KEYBOARD_CODE.SPACE]) {
       player.act(ACTION.JUMP);
+      Audio.play(AUDIO.JUMP);
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.A]) {
       player.act(ACTION.WALK, DIRECTION.LEFT);
@@ -117,7 +118,9 @@ namespace MyGame {
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.D]) {
       player.act(ACTION.WALK, DIRECTION.RIGHT);
-      Audio.play(AUDIO.MOVE);
+      setInterval(function(){
+        Audio.play(AUDIO.MOVE);
+      }, 3000);
       return;
     }
 

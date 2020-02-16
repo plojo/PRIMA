@@ -4,10 +4,10 @@ var MyGame;
     var ƒ = FudgeCore;
     let AUDIO;
     (function (AUDIO) {
-        AUDIO["START"] = "Sound/Start.mp3";
-        AUDIO["PLAY"] = "Sound/Play.mp3";
-        AUDIO["JUMP"] = "Sound/Hit.mp3";
-        AUDIO["MOVE"] = "Sound/Move.wav";
+        // START = "sounds/Start.mp3",
+        // PLAY = "sounds/Play.mp3",
+        AUDIO["JUMP"] = "sounds/Jump.wav";
+        AUDIO["MOVE"] = "sounds/Move.mp3";
     })(AUDIO = MyGame.AUDIO || (MyGame.AUDIO = {}));
     class Audio extends ƒ.Node {
         static start() {
@@ -20,8 +20,8 @@ var MyGame;
             Audio.components.get(_audio).play(_on);
         }
         static async appendAudio() {
-            Audio.components.set(AUDIO.START, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.START), true, true));
-            Audio.components.set(AUDIO.PLAY, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.PLAY), true, false));
+            // Audio.components.set(AUDIO.START, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.START), true, true));
+            // Audio.components.set(AUDIO.PLAY, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.PLAY), true, false));
             Audio.components.set(AUDIO.JUMP, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.JUMP), false, false));
             Audio.components.set(AUDIO.MOVE, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.MOVE), false, false));
             Audio.components.forEach(element => Audio.node.addComponent(element));
