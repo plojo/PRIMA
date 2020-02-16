@@ -13,6 +13,8 @@ namespace MyGame {
   export let dynamicObjects: ƒ.Node;
   export let staticObjects: ƒ.Node;
   export let player: Character;
+  export let menu: Menu;
+  let gui: ƒ.Node;
 
   let viewport: ƒ.Viewport;
 
@@ -22,7 +24,7 @@ namespace MyGame {
 
     generateSprites();
 
-    ƒ.RenderManager.initialize(true, false);
+    ƒ.RenderManager.initialize(true, false); // Transparence is weired
 
     game = new ƒ.Node("Game");
     player = new Character("Player");
@@ -30,28 +32,31 @@ namespace MyGame {
     level = new ƒ.Node("Level");
     staticObjects = new ƒ.Node("StaticObjects");
     dynamicObjects = new ƒ.Node("DynamicObjects");
+    gui = new ƒ.Node("GUI");
+    gui.addComponent(new ƒ.ComponentTransform());
+    menu = new Menu();
 
     game.appendChild(player);
     game.appendChild(level);
+    game.appendChild(gui);
+    gui.appendChild(menu);
     level.appendChild(staticObjects);
     level.appendChild(dynamicObjects);
 
-    // for (let sprite of Font.sprites) {
-    //   let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
-    //   // nodeSprite.showFrame(1);
-    //   // nodeSprite.activate(false);
-    //   game.appendChild(nodeSprite);
-    // }
     LevelGenerator.generateLevel("level.json");
 
-    console.log(game);
-    Audio.start();
+    // console.log(game);
+    // Audio.start();
 
-    // ƒ.Time.game.setScale(0.2);
+    // let cmpLightAmbient: ƒ.ComponentLight = new ƒ.ComponentLight(new ƒ.LightAmbient(new ƒ.Color(0.25, 0.25, 0.25, 1)));
+    // game.addComponent(cmpLightAmbient);
+
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
     cmpCamera.pivot.translateZ(28);
     cmpCamera.pivot.lookAt(ƒ.Vector3.ZERO());
+    // cmpCamera.pivot.rotateY(60, true);
     cmpCamera.backgroundColor = ƒ.Color.CSS("aliceblue");
+    gui.addComponent(cmpCamera);
 
     viewport = new ƒ.Viewport();
     viewport.initialize("Viewport", game, cmpCamera, canvas);
@@ -73,10 +78,10 @@ namespace MyGame {
 
     function update(_event: ƒ.Eventƒ): void {
       processInput();
-      let translation: ƒ.Vector3 = cmpCamera.pivot.translation;
+      let translation: ƒ.Vector3 = gui.cmpTransform.local.translation;
       translation.x = player.mtxWorld.translation.x;
       translation.y = player.mtxWorld.translation.y;
-      cmpCamera.pivot.translation = translation;
+      gui.cmpTransform.local.translation = translation;
 
       viewport.draw();
 
@@ -87,7 +92,7 @@ namespace MyGame {
 
   function generateSprites(): void {
     Character.generateSprites(getTexture("player"));
-    Font.generateSprites(getTexture("font"));
+    MenuComponent.generateSprites(getTexture("menu"));
     Gust.generateSprites(getTexture("assets"));
     Tile.generateSprites(getTexture("assets"));
 
@@ -100,9 +105,23 @@ namespace MyGame {
   }
 
   function handleKeyboard(_event: KeyboardEvent): void {
-    keysPressed[_event.code] = (_event.type == "keydown");
+    let running: boolean = ƒ.Time.game.getScale() != 0;
+
     if (_event.code == ƒ.KEYBOARD_CODE.ESC && _event.type == "keydown") {
-      ƒ.Time.game.setScale(ƒ.Time.game.getScale() == 1 ? 0 : 1);
+      ƒ.Time.game.setScale(running ? 0 : 1);
+      menu.activate(running);
+      viewport.draw();
+    }
+    if (running)
+      keysPressed[_event.code] = (_event.type == "keydown");
+    else {
+      if (_event.code == ƒ.KEYBOARD_CODE.W && _event.type == "keydown") {
+        menu.navigate(1);
+      }
+      if (_event.code == ƒ.KEYBOARD_CODE.S && _event.type == "keydown") {
+        menu.navigate(-1);
+      }
+      viewport.draw();
     }
   }
 
@@ -112,12 +131,12 @@ namespace MyGame {
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.A]) {
       player.act(ACTION.WALK, DIRECTION.LEFT);
-      Audio.play(AUDIO.MOVE);
+      // Audio.play(AUDIO.MOVE);
       return;
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.D]) {
       player.act(ACTION.WALK, DIRECTION.RIGHT);
-      Audio.play(AUDIO.MOVE);
+      // Audio.play(AUDIO.MOVE);
       return;
     }
 

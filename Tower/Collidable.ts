@@ -7,9 +7,9 @@ namespace MyGame {
             super(_name);
             this.addComponent(new ƒ.ComponentTransform());
 
-            this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material(_name, ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("blue", 0.2)))));
-            let cmpMesh: ƒ.ComponentMesh = new ƒ.ComponentMesh(new ƒ.MeshSprite());
-            this.addComponent(cmpMesh);
+            // this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material(_name, ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("blue", 0.9)))));
+            // let cmpMesh: ƒ.ComponentMesh = new ƒ.ComponentMesh(new ƒ.MeshSprite());
+            // this.addComponent(cmpMesh);
         }
 
         public getRectWorld(): ƒ.Rectangle {

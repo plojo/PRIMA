@@ -5,4 +5,5 @@ declare namespace MyGame {
     let dynamicObjects: ƒ.Node;
     let staticObjects: ƒ.Node;
     let player: Character;
+    let menu: Menu;
 }

@@ -6,9 +6,9 @@ var MyGame;
         constructor(_name = "Collidable") {
             super(_name);
             this.addComponent(new ƒ.ComponentTransform());
-            this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material(_name, ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("blue", 0.2)))));
-            let cmpMesh = new ƒ.ComponentMesh(new ƒ.MeshSprite());
-            this.addComponent(cmpMesh);
+            // this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material(_name, ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("blue", 0.9)))));
+            // let cmpMesh: ƒ.ComponentMesh = new ƒ.ComponentMesh(new ƒ.MeshSprite());
+            // this.addComponent(cmpMesh);
         }
         getRectWorld() {
             let rect = ƒ.Rectangle.GET(0, 0, 100, 100);
