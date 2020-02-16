@@ -44,6 +44,9 @@ namespace MyGame {
     // }
     LevelGenerator.generateLevel("level.json");
 
+    console.log(game);
+    Audio.start(game);
+
     // ƒ.Time.game.setScale(0.2);
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
     cmpCamera.pivot.translateZ(28);
@@ -109,10 +112,12 @@ namespace MyGame {
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.A]) {
       player.act(ACTION.WALK, DIRECTION.LEFT);
+      Audio.play(AUDIO.MOVE);
       return;
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.D]) {
       player.act(ACTION.WALK, DIRECTION.RIGHT);
+      Audio.play(AUDIO.MOVE);
       return;
     }
 
