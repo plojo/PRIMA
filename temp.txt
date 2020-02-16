@@ -1,0 +1,436 @@
+namespace MyGame {
+
+  import ƒ = FudgeCore;
+  export enum MENUCOMPONENT {
+    PLAY = "Play",
+    SOUND = "Sound",
+    ON = "On",
+    OFF = "Off",
+    SPEED = "Speed",
+    SPEEDSLOW = "SPEEDSLOW",
+    SPEEDNORMAL = "SPEEDNORMAL",
+    SPEEDFAST = "SPEEDFAST",
+    CURSOR = "Cursor",
+    PAUSED = "Paused",
+    RESUME = "Resume",
+    BACKGROUND = "Background",
+    MENU = "Menu",
+    LEFTROW = "LeftRow",
+    RIGHTROW = "RightRow",
+    TITLE = "Title"
+  }
+
+  export class MenuComponent extends NodeSprite {
+    protected static sprites: Map<MENUCOMPONENT, Sprite>;
+
+    constructor(_menuComponent: MENUCOMPONENT) {
+      super(_menuComponent, MenuComponent.sprites.get(_menuComponent));
+      this.addComponent(new ƒ.ComponentTransform());
+    }
+
+    public static generateSprites(_txtImage: ƒ.TextureImage): void {
+      this.sprites = new Map<MENUCOMPONENT, Sprite>();
+      let resolutionQuad: number = 16;
+
+      let menuComponentType: MENUCOMPONENT = MENUCOMPONENT.PAUSED;
+      let sprite: Sprite = new Sprite(menuComponentType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 79, 48, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTER);
+      this.sprites.set(menuComponentType, sprite);
+
+      menuComponentType = MENUCOMPONENT.PLAY;
+      sprite = new Sprite(menuComponentType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 32, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
+      this.sprites.set(menuComponentType, sprite);
+
+      menuComponentType = MENUCOMPONENT.SOUND;
+      sprite = new Sprite(menuComponentType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 9, 40, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
+      this.sprites.set(menuComponentType, sprite);
+
+      menuComponentType = MENUCOMPONENT.ON;
+      sprite = new Sprite(menuComponentType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 18, 16, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
+      this.sprites.set(menuComponentType, sprite);
+
+      menuComponentType = MENUCOMPONENT.OFF;
+      sprite = new Sprite(menuComponentType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 27, 24, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
+      this.sprites.set(menuComponentType, sprite);
+
+      menuComponentType = MENUCOMPONENT.SPEED;
+      sprite = new Sprite(menuComponentType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 36, 40, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
+      this.sprites.set(menuComponentType, sprite);
+
+      menuComponentType = MENUCOMPONENT.SPEEDNORMAL;
+      sprite = new Sprite(menuComponentType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 45, 16, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
+      this.sprites.set(menuComponentType, sprite);
+
+      menuComponentType = MENUCOMPONENT.SPEEDFAST;
+      sprite = new Sprite(menuComponentType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 54, 16, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
+      this.sprites.set(menuComponentType, sprite);
+
+      menuComponentType = MENUCOMPONENT.SPEEDSLOW;
+      sprite = new Sprite(menuComponentType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 63, 28, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
+      this.sprites.set(menuComponentType, sprite);
+
+      menuComponentType = MENUCOMPONENT.RESUME;
+      sprite = new Sprite(menuComponentType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 88, 49, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
+      this.sprites.set(menuComponentType, sprite);
+
+      menuComponentType = MENUCOMPONENT.TITLE;
+      sprite = new Sprite(menuComponentType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 97, 39, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTER);
+      this.sprites.set(menuComponentType, sprite);
+
+      menuComponentType = MENUCOMPONENT.CURSOR;
+      sprite = new Sprite(menuComponentType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 72, 8, 8), 2, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
+      this.sprites.set(menuComponentType, sprite);
+      
+
+      // buttonType = MENUCOMPONENT.BACKGROUND;
+      // sprite = new Sprite(buttonType);
+      // sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(40, 0, 27, 27), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTER);
+      // this.sprites.set(buttonType, sprite);
+    }
+  }
+
+  export abstract class Menu extends ƒ.Node {
+    public gameSpeed: number;
+    protected selection: number = 0;
+    protected currentOffsetY: number;
+    protected leftRowOptions: number;
+    protected soundOptions: MenuComponent[] = [];
+    protected speedOptions: MenuComponent[] = [];
+
+    private rowOffsetY: number = 1.5;
+
+    constructor(_name: string, _title: MENUCOMPONENT) {
+      super(_name);
+      this.addComponent(new ƒ.ComponentTransform());
+      this.cmpTransform.local.translateZ(10);
+
+      let component: MenuComponent = new MenuComponent(_title);
+      component.cmpTransform.local.translation = new ƒ.Vector3(0, 4, 0);
+      this.appendChild(component);
+
+      let leftRow: ƒ.Node = new ƒ.Node(MENUCOMPONENT.LEFTROW);
+      leftRow.addComponent(new ƒ.ComponentTransform());
+      leftRow.cmpTransform.local.translation = new ƒ.Vector3(-3, 2.5, 0);
+      this.appendChild(leftRow);
+
+      let rightRow: ƒ.Node = new ƒ.Node(MENUCOMPONENT.RIGHTROW);
+      rightRow.addComponent(new ƒ.ComponentTransform());
+      rightRow.cmpTransform.local.translation = new ƒ.Vector3(1.5, 2.5, 0);
+      this.appendChild(rightRow);
+
+      this.currentOffsetY = 0;
+
+      component = new MenuComponent(MENUCOMPONENT.CURSOR);
+      component.cmpTransform.local.translation = new ƒ.Vector3(-0.7, this.currentOffsetY, 0);
+      leftRow.appendChild(component);
+    }
+
+    protected get cursor(): MenuComponent {
+      return <MenuComponent>this.getChildrenByName(MENUCOMPONENT.CURSOR)[0];
+    }
+
+    protected get leftRow(): MenuComponent {
+      return <MenuComponent>this.getChildrenByName(MENUCOMPONENT.LEFTROW)[0];
+    }
+
+    protected get rightRow(): MenuComponent {
+      return <MenuComponent>this.getChildrenByName(MENUCOMPONENT.RIGHTROW)[0];
+    }
+
+    public navigate(_direction: number): void {
+      this.selection -= _direction;
+      if (this.selection < 0)
+        this.selection += this.leftRowOptions;
+      this.selection = this.selection % this.leftRowOptions;
+      let cursor: ƒ.Node = this.getChildrenByName(MENUCOMPONENT.LEFTROW)[0].getChildrenByName(MENUCOMPONENT.CURSOR)[0];
+      let translation: ƒ.Vector3 = cursor.cmpTransform.local.translation;
+      translation.y = -this.selection * this.rowOffsetY;
+      cursor.cmpTransform.local.translation = translation;
+    }
+
+    public triggerAction(): void {
+      switch (this.selection) {
+        case 0:
+          this.action0();
+          break;
+        case 1:
+          this.action1();
+          break;
+        case 2:
+          this.action2();
+      }
+    }
+
+    protected abstract action0(): void;
+
+    protected createOptions(): void {
+      let component: MenuComponent = new MenuComponent(MENUCOMPONENT.SOUND);
+      component.cmpTransform.local.translation = new ƒ.Vector3(0, this.currentOffsetY -= this.rowOffsetY, 0);
+      this.leftRow.appendChild(component);
+
+      component = new MenuComponent(MENUCOMPONENT.SPEED);
+      component.cmpTransform.local.translation = new ƒ.Vector3(0, this.currentOffsetY -= this.rowOffsetY, 0);
+      this.leftRow.appendChild(component);
+
+      this.currentOffsetY = 0;
+
+      component = new MenuComponent(MENUCOMPONENT.ON);
+      component.cmpTransform.local.translation = new ƒ.Vector3(0, this.currentOffsetY -= this.rowOffsetY, 0);
+      this.rightRow.appendChild(component);
+      this.soundOptions.push(component);
+
+      component = new MenuComponent(MENUCOMPONENT.OFF);
+      component.cmpTransform.local.translation = new ƒ.Vector3(0, this.currentOffsetY, 0);
+      component.activate(false);
+      this.rightRow.appendChild(component);
+      this.soundOptions.push(component);
+
+      component = new MenuComponent(MENUCOMPONENT.SPEEDSLOW);
+      component.cmpTransform.local.translation = new ƒ.Vector3(0, this.currentOffsetY -= this.rowOffsetY, 0);
+      component.activate(false);
+      this.rightRow.appendChild(component);
+      this.speedOptions.push(component);
+
+      component = new MenuComponent(MENUCOMPONENT.SPEEDNORMAL);
+      component.cmpTransform.local.translation = new ƒ.Vector3(0, this.currentOffsetY, 0);
+      this.rightRow.appendChild(component);
+      this.speedOptions.push(component);
+
+      component = new MenuComponent(MENUCOMPONENT.SPEEDFAST);
+      component.cmpTransform.local.translation = new ƒ.Vector3(0, this.currentOffsetY, 0);
+      component.activate(false);
+      this.rightRow.appendChild(component);
+      this.speedOptions.push(component);
+    }
+
+    private action1(): void {
+      for (const menuComponent of this.soundOptions) {
+        menuComponent.activate(!menuComponent.isActive);
+      }
+      // TODO: Add Adio disable
+    }
+
+    private action2(): void {
+      let selectionIndex: number = this.speedOptions.findIndex((value: MenuComponent) => value.isActive);
+      selectionIndex += 1;
+      selectionIndex %= this.speedOptions.length;
+      this.speedOptions.forEach((element: MenuComponent, index: Number) => {
+        element.activate(index == selectionIndex);
+      });
+      this.gameSpeed = this.getSpeed(selectionIndex);
+    }
+
+    private getSpeed(_option: number): number {
+      switch (_option) {
+        case 0:
+          return 0.5;
+        case 1:
+          return 1;
+        case 2:
+          return 2;
+        default:
+          return 1;
+      }
+    }
+  }
+
+  export class PauseMenu extends Menu {
+    constructor() {
+      super(MENUCOMPONENT.MENU, MENUCOMPONENT.PAUSED);
+
+      let component: MenuComponent = new MenuComponent(MENUCOMPONENT.RESUME);
+      component.cmpTransform.local.translation = new ƒ.Vector3(0, this.currentOffsetY, 0);
+      this.leftRow.appendChild(component);
+
+      this.createOptions();
+      this.leftRowOptions = this.leftRow.getChildren().length - 1;
+
+      this.activate(false);
+    }
+
+    protected action0(): void {
+      this.activate(false);
+      ƒ.Time.game.setScale(this.gameSpeed);
+    }
+  }
+
+  export class TitleMenu extends Menu {
+    private startAction: () => void;
+
+    constructor(_startAction: () => void) {
+      super(MENUCOMPONENT.MENU, MENUCOMPONENT.TITLE);
+      this.startAction = _startAction;
+
+      let component: MenuComponent = new MenuComponent(MENUCOMPONENT.PLAY);
+      component.cmpTransform.local.translation = new ƒ.Vector3(0, this.currentOffsetY, 0);
+      this.leftRow.appendChild(component);
+
+      this.createOptions();
+      this.leftRowOptions = this.leftRow.getChildren().length - 1;
+
+      this.activate(true);
+    }
+
+    protected action0(): void {
+      this.startAction();
+      ƒ.Time.game.setScale(this.gameSpeed);
+    }
+  }
+}
+
+
+
+namespace MyGame {
+  export import ƒ = FudgeCore;
+
+  window.addEventListener("load", test);
+
+  interface KeyPressed {
+    [code: string]: boolean;
+  }
+  let keysPressed: KeyPressed = {};
+
+  export let game: ƒ.Node;
+  export let level: ƒ.Node;
+  export let dynamicObjects: ƒ.Node;
+  export let staticObjects: ƒ.Node;
+  export let player: Character;
+  export let menu: Menu;
+  let gui: ƒ.Node;
+
+  let viewport: ƒ.Viewport;
+
+  function test(): void {
+    let canvas: HTMLCanvasElement = document.querySelector("canvas");
+    ƒ.RenderManager.initialize(true, false); // Transparence is weired
+    generateSprites();
+
+    game = new ƒ.Node("Game");
+    player = new Character("Player");
+    player.cmpTransform.local.translate(new ƒ.Vector3(3, 3, 0));
+    level = new ƒ.Node("Level");
+    staticObjects = new ƒ.Node("StaticObjects");
+    dynamicObjects = new ƒ.Node("DynamicObjects");
+    gui = new ƒ.Node("GUI");
+    gui.addComponent(new ƒ.ComponentTransform());
+    menu = new TitleMenu(startGame);
+    menu.gameSpeed = 1;
+
+    game.appendChild(player);
+    game.appendChild(level);
+    game.appendChild(gui);
+    gui.appendChild(menu);
+    level.appendChild(staticObjects);
+    level.appendChild(dynamicObjects);
+
+    LevelGenerator.generateLevel("level.json");
+    game.broadcastEvent(new CustomEvent("registerHitBox"));
+    // console.log(game);
+    // Audio.start();
+
+    let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
+    cmpCamera.pivot.translateZ(28);
+    cmpCamera.pivot.lookAt(ƒ.Vector3.ZERO());
+    cmpCamera.backgroundColor = ƒ.Color.CSS("aliceblue");
+    gui.addComponent(cmpCamera);
+  
+    viewport = new ƒ.Viewport();
+    viewport.initialize("Viewport", game, cmpCamera, canvas);
+    
+    document.addEventListener("keydown", handleKeyboard);
+    document.addEventListener("keyup", handleKeyboard);
+
+    ƒ.RenderManager.update();
+
+    ƒ.Time.game.setScale(0);
+    ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
+    ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 60);
+
+    gui.cmpTransform.local.translateX(-20);
+    viewport.draw();
+
+    function update(_event: ƒ.Eventƒ): void {
+      processInput();
+      let translation: ƒ.Vector3 = gui.cmpTransform.local.translation;
+      translation.x = player.mtxWorld.translation.x;
+      translation.y = player.mtxWorld.translation.y;
+      gui.cmpTransform.local.translation = translation;
+
+      viewport.draw();
+    }
+
+    function startGame(): void {
+      let pauseMenu: PauseMenu = new PauseMenu();
+      pauseMenu.gameSpeed = menu.gameSpeed;
+    }
+  }
+
+  function generateSprites(): void {
+    Character.generateSprites(getTexture("player"));
+    MenuComponent.generateSprites(getTexture("menu"));
+    Gust.generateSprites(getTexture("assets"));
+    Tile.generateSprites(getTexture("assets"));
+
+    function getTexture(_elementId: string): ƒ.TextureImage {
+      let img: HTMLImageElement = <HTMLImageElement>document.getElementById(_elementId);
+      let txtPlayer: ƒ.TextureImage = new ƒ.TextureImage();
+      txtPlayer.image = img;
+      return txtPlayer;
+    }
+  }
+
+
+  function handleKeyboard(_event: KeyboardEvent): void {
+    let paused: boolean = ƒ.Time.game.getScale() == 0;
+    keysPressed[_event.code] = (_event.type == "keydown");
+    if (_event.code == ƒ.KEYBOARD_CODE.ESC && _event.type == "keydown") {
+      ƒ.Time.game.setScale(paused ? menu.gameSpeed : 0);
+      menu.activate(!paused);
+      viewport.draw();
+    }
+    if (paused) {
+      if (_event.code == ƒ.KEYBOARD_CODE.W && _event.type == "keydown") {
+        menu.navigate(1);
+      }
+      if (_event.code == ƒ.KEYBOARD_CODE.S && _event.type == "keydown") {
+        menu.navigate(-1);
+      }
+      if (_event.code == ƒ.KEYBOARD_CODE.SPACE && _event.type == "keydown") {
+        menu.triggerAction();
+      }
+      viewport.draw();
+    }
+  }
+
+  function processInput(): void {
+    if (keysPressed[ƒ.KEYBOARD_CODE.SPACE]) {
+      player.act(ACTION.JUMP);
+      // Audio.play(AUDIO.JUMP);
+    }
+    if (keysPressed[ƒ.KEYBOARD_CODE.A]) {
+      player.act(ACTION.WALK, DIRECTION.LEFT);
+      // Audio.play(AUDIO.MOVE);
+      return;
+    }
+    if (keysPressed[ƒ.KEYBOARD_CODE.D]) {
+      player.act(ACTION.WALK, DIRECTION.RIGHT);
+      // setInterval(function () {
+      //   Audio.play(AUDIO.MOVE);
+      // }, 3000);
+      return;
+    }
+
+    player.act(ACTION.IDLE);
+  }
+}

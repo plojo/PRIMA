@@ -20,15 +20,12 @@ namespace MyGame {
 
   function test(): void {
     let canvas: HTMLCanvasElement = document.querySelector("canvas");
-    // let crc2: CanvasRenderingContext2D = canvas.getContext("2d");
-
-    generateSprites();
-
     ƒ.RenderManager.initialize(true, false); // Transparence is weired
+    generateSprites();
 
     game = new ƒ.Node("Game");
     player = new Character("Player");
-    player.cmpTransform.local.translate(new ƒ.Vector3(3, 3, 0));
+    player.cmpTransform.local.translate(new ƒ.Vector3(6, 3, 0));
     level = new ƒ.Node("Level");
     staticObjects = new ƒ.Node("StaticObjects");
     dynamicObjects = new ƒ.Node("DynamicObjects");
@@ -46,16 +43,13 @@ namespace MyGame {
 
     LevelGenerator.generateLevel("level.json");
 
+
     // console.log(game);
     // Audio.start();
-
-    // let cmpLightAmbient: ƒ.ComponentLight = new ƒ.ComponentLight(new ƒ.LightAmbient(new ƒ.Color(0.25, 0.25, 0.25, 1)));
-    // game.addComponent(cmpLightAmbient);
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
     cmpCamera.pivot.translateZ(28);
     cmpCamera.pivot.lookAt(ƒ.Vector3.ZERO());
-    // cmpCamera.pivot.rotateY(60, true);
     cmpCamera.backgroundColor = ƒ.Color.CSS("aliceblue");
     gui.addComponent(cmpCamera);
 
@@ -67,8 +61,8 @@ namespace MyGame {
     document.addEventListener("keyup", handleKeyboard);
 
     ƒ.RenderManager.update();
-    game.broadcastEvent(new CustomEvent("registerHitBox"));
-
+    game.broadcastEvent(new CustomEvent("registerUpdate"));
+    ƒ.Time.game.setScale(0);
     ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
     ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 60);
 
@@ -80,9 +74,6 @@ namespace MyGame {
       gui.cmpTransform.local.translation = translation;
 
       viewport.draw();
-
-      // crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
-      // crc2.strokeRect(-1, canvas.height / 2, canvas.width + 2, canvas.height);
     }
   }
 

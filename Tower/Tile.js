@@ -9,7 +9,7 @@ var MyGame;
             let hitBox = new MyGame.Collidable("HitBox");
             hitBox.cmpTransform.local = ƒ.Matrix4x4.MULTIPLICATION(hitBox.cmpTransform.local, this.cmpMesh.pivot);
             this.appendChild(hitBox);
-            this.addEventListener("registerHitBox", (_event) => {
+            this.addEventListener("registerUpdate", (_event) => {
                 Tile.hitBoxes.push(this.hitBox.getRectWorld());
             }, true);
         }

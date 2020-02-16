@@ -8,12 +8,11 @@ var MyGame;
     let viewport;
     function test() {
         let canvas = document.querySelector("canvas");
-        // let crc2: CanvasRenderingContext2D = canvas.getContext("2d");
-        generateSprites();
         MyGame.ƒ.RenderManager.initialize(true, false); // Transparence is weired
+        generateSprites();
         MyGame.game = new MyGame.ƒ.Node("Game");
         MyGame.player = new MyGame.Character("Player");
-        MyGame.player.cmpTransform.local.translate(new MyGame.ƒ.Vector3(3, 3, 0));
+        MyGame.player.cmpTransform.local.translate(new MyGame.ƒ.Vector3(6, 3, 0));
         MyGame.level = new MyGame.ƒ.Node("Level");
         MyGame.staticObjects = new MyGame.ƒ.Node("StaticObjects");
         MyGame.dynamicObjects = new MyGame.ƒ.Node("DynamicObjects");
@@ -30,12 +29,9 @@ var MyGame;
         MyGame.LevelGenerator.generateLevel("level.json");
         // console.log(game);
         // Audio.start();
-        // let cmpLightAmbient: ƒ.ComponentLight = new ƒ.ComponentLight(new ƒ.LightAmbient(new ƒ.Color(0.25, 0.25, 0.25, 1)));
-        // game.addComponent(cmpLightAmbient);
         let cmpCamera = new MyGame.ƒ.ComponentCamera();
         cmpCamera.pivot.translateZ(28);
         cmpCamera.pivot.lookAt(MyGame.ƒ.Vector3.ZERO());
-        // cmpCamera.pivot.rotateY(60, true);
         cmpCamera.backgroundColor = MyGame.ƒ.Color.CSS("aliceblue");
         gui.addComponent(cmpCamera);
         viewport = new MyGame.ƒ.Viewport();
@@ -44,7 +40,8 @@ var MyGame;
         document.addEventListener("keydown", handleKeyboard);
         document.addEventListener("keyup", handleKeyboard);
         MyGame.ƒ.RenderManager.update();
-        MyGame.game.broadcastEvent(new CustomEvent("registerHitBox"));
+        MyGame.game.broadcastEvent(new CustomEvent("registerUpdate"));
+        MyGame.ƒ.Time.game.setScale(0);
         MyGame.ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
         MyGame.ƒ.Loop.start(MyGame.ƒ.LOOP_MODE.TIME_GAME, 60);
         function update(_event) {
@@ -54,8 +51,6 @@ var MyGame;
             translation.y = MyGame.player.mtxWorld.translation.y;
             gui.cmpTransform.local.translation = translation;
             viewport.draw();
-            // crc2.strokeRect(-1, -1, canvas.width / 2, canvas.height + 2);
-            // crc2.strokeRect(-1, canvas.height / 2, canvas.width + 2, canvas.height);
         }
     }
     function generateSprites() {

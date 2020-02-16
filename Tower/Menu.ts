@@ -16,7 +16,8 @@ namespace MyGame {
     BACKGROUND = "Background",
     MENU = "Menu",
     LEFTROW = "LeftRow",
-    RIGHTROW = "RightRow"
+    RIGHTROW = "RightRow",
+    TITLE = "Title"
   }
 
   export class MenuComponent extends NodeSprite {
@@ -81,6 +82,11 @@ namespace MyGame {
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 88, 49, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
       this.sprites.set(buttonType, sprite);
 
+      buttonType = MENUCOMPONENT.TITLE;
+      sprite = new Sprite(buttonType);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 97, 39, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTER);
+      this.sprites.set(buttonType, sprite);
+
       buttonType = MENUCOMPONENT.CURSOR;
       sprite = new Sprite(buttonType);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 72, 8, 8), 2, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
@@ -102,14 +108,12 @@ namespace MyGame {
     private soundOptions: MenuComponent[] = [];
     private speedOptions: MenuComponent[] = [];
 
+    private actionStart: () => void;
 
     constructor() {
       super(MENUCOMPONENT.MENU);
       this.addComponent(new ƒ.ComponentTransform());
       this.cmpTransform.local.translateZ(10);
-      // let leftRowOffsetX: number = -2;
-
-
       // let background: ƒ.Node = new ƒ.Node(BUTTON.BACKGROUND);
       // background.addComponent(new ƒ.ComponentTransform());
       // background.cmpTransform.local.translation = new ƒ.Vector3(0, 0, -1);
@@ -119,28 +123,33 @@ namespace MyGame {
       // background.addComponent(cmpMesh);
       // this.appendChild(background);
 
-      let component: MenuComponent = new MenuComponent(MENUCOMPONENT.PAUSED);
+      let component: MenuComponent = new MenuComponent(MENUCOMPONENT.TITLE);
       component.cmpTransform.local.translation = new ƒ.Vector3(0, 4, 0);
       this.appendChild(component);
 
-      let currentOffsetY: number = 0;
+      component = new MenuComponent(MENUCOMPONENT.PAUSED);
+      component.cmpTransform.local.translation = new ƒ.Vector3(0, 4, 0);
+      component.activate(false);
+      this.appendChild(component);
 
+      let currentOffsetY: number = 0;
 
       let leftRow: ƒ.Node = new ƒ.Node(MENUCOMPONENT.LEFTROW);
       leftRow.addComponent(new ƒ.ComponentTransform());
       leftRow.cmpTransform.local.translation = new ƒ.Vector3(-3, 2.5, 0);
       this.appendChild(leftRow);
 
-      // component = new MenuComponent(MENUCOMPONENT.PLAY); 
-      // component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY -= this.rowOffsetY, 0);
-      // leftRow.appendChild(component);
-
       component = new MenuComponent(MENUCOMPONENT.CURSOR);
       component.cmpTransform.local.translation = new ƒ.Vector3(-0.7, currentOffsetY, 0);
       leftRow.appendChild(component);
 
+      component = new MenuComponent(MENUCOMPONENT.PLAY);
+      component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY, 0);
+      leftRow.appendChild(component);
+
       component = new MenuComponent(MENUCOMPONENT.RESUME);
       component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY, 0);
+      component.activate(false);
       leftRow.appendChild(component);
 
       component = new MenuComponent(MENUCOMPONENT.SOUND);
@@ -151,7 +160,7 @@ namespace MyGame {
       component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY -= this.rowOffsetY, 0);
       leftRow.appendChild(component);
 
-      this.leftRowOptions = leftRow.getChildren().length - 1;
+      this.leftRowOptions = leftRow.getChildren().length - 2;
 
       let rightRow: ƒ.Node = new ƒ.Node(MENUCOMPONENT.RIGHTROW);
       rightRow.addComponent(new ƒ.ComponentTransform());
@@ -193,7 +202,20 @@ namespace MyGame {
       // button.cmpTransform.local.scale(new ƒ.Vector3(15, 15, 0));
       // game.appendChild(button);
 
-      this.activate(false);
+      this.actionStart = () => {
+        this.getChildrenByName(MENUCOMPONENT.PAUSED)[0].activate(true);
+        leftRow.getChildrenByName(MENUCOMPONENT.RESUME)[0].activate(true);
+
+        this.removeChild(this.getChildrenByName(MENUCOMPONENT.TITLE)[0]);
+        leftRow.removeChild(leftRow.getChildrenByName(MENUCOMPONENT.PLAY)[0]);
+
+        this.actionStart = () => {
+          this.activate(false);
+          ƒ.Time.game.setScale(this.gameSpeed);
+        };
+        
+        this.actionStart();
+      };
     }
 
     public navigate(_direction: number): void {
@@ -210,8 +232,8 @@ namespace MyGame {
     public triggerAction(): void {
       switch (this.selection) {
         case 0:
-          this.activate(false);
-          ƒ.Time.game.setScale(this.gameSpeed);
+          console.log("go");
+          this.actionStart();
           break;
         case 1:
           for (const menuComponent of this.soundOptions) {

@@ -19,6 +19,7 @@ var MyGame;
         MENUCOMPONENT["MENU"] = "Menu";
         MENUCOMPONENT["LEFTROW"] = "LeftRow";
         MENUCOMPONENT["RIGHTROW"] = "RightRow";
+        MENUCOMPONENT["TITLE"] = "Title";
     })(MENUCOMPONENT = MyGame.MENUCOMPONENT || (MyGame.MENUCOMPONENT = {}));
     class MenuComponent extends MyGame.NodeSprite {
         constructor(_menuComponent) {
@@ -68,6 +69,10 @@ var MyGame;
             sprite = new MyGame.Sprite(buttonType);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 88, 49, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
             this.sprites.set(buttonType, sprite);
+            buttonType = MENUCOMPONENT.TITLE;
+            sprite = new MyGame.Sprite(buttonType);
+            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 97, 39, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTER);
+            this.sprites.set(buttonType, sprite);
             buttonType = MENUCOMPONENT.CURSOR;
             sprite = new MyGame.Sprite(buttonType);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 72, 8, 8), 2, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
@@ -88,7 +93,6 @@ var MyGame;
             this.speedOptions = [];
             this.addComponent(new ƒ.ComponentTransform());
             this.cmpTransform.local.translateZ(10);
-            // let leftRowOffsetX: number = -2;
             // let background: ƒ.Node = new ƒ.Node(BUTTON.BACKGROUND);
             // background.addComponent(new ƒ.ComponentTransform());
             // background.cmpTransform.local.translation = new ƒ.Vector3(0, 0, -1);
@@ -97,22 +101,27 @@ var MyGame;
             // let cmpMesh: ƒ.ComponentMesh = new ƒ.ComponentMesh(new ƒ.MeshQuad());
             // background.addComponent(cmpMesh);
             // this.appendChild(background);
-            let component = new MenuComponent(MENUCOMPONENT.PAUSED);
+            let component = new MenuComponent(MENUCOMPONENT.TITLE);
             component.cmpTransform.local.translation = new ƒ.Vector3(0, 4, 0);
+            this.appendChild(component);
+            component = new MenuComponent(MENUCOMPONENT.PAUSED);
+            component.cmpTransform.local.translation = new ƒ.Vector3(0, 4, 0);
+            component.activate(false);
             this.appendChild(component);
             let currentOffsetY = 0;
             let leftRow = new ƒ.Node(MENUCOMPONENT.LEFTROW);
             leftRow.addComponent(new ƒ.ComponentTransform());
             leftRow.cmpTransform.local.translation = new ƒ.Vector3(-3, 2.5, 0);
             this.appendChild(leftRow);
-            // component = new MenuComponent(MENUCOMPONENT.PLAY); 
-            // component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY -= this.rowOffsetY, 0);
-            // leftRow.appendChild(component);
             component = new MenuComponent(MENUCOMPONENT.CURSOR);
             component.cmpTransform.local.translation = new ƒ.Vector3(-0.7, currentOffsetY, 0);
             leftRow.appendChild(component);
+            component = new MenuComponent(MENUCOMPONENT.PLAY);
+            component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY, 0);
+            leftRow.appendChild(component);
             component = new MenuComponent(MENUCOMPONENT.RESUME);
             component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY, 0);
+            component.activate(false);
             leftRow.appendChild(component);
             component = new MenuComponent(MENUCOMPONENT.SOUND);
             component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY -= this.rowOffsetY, 0);
@@ -120,7 +129,7 @@ var MyGame;
             component = new MenuComponent(MENUCOMPONENT.SPEED);
             component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY -= this.rowOffsetY, 0);
             leftRow.appendChild(component);
-            this.leftRowOptions = leftRow.getChildren().length - 1;
+            this.leftRowOptions = leftRow.getChildren().length - 2;
             let rightRow = new ƒ.Node(MENUCOMPONENT.RIGHTROW);
             rightRow.addComponent(new ƒ.ComponentTransform());
             rightRow.cmpTransform.local.translation = new ƒ.Vector3(1.5, 2.5, 0);
@@ -153,7 +162,17 @@ var MyGame;
             // button.cmpTransform.local.translation = new ƒ.Vector3(0, 0, -5);
             // button.cmpTransform.local.scale(new ƒ.Vector3(15, 15, 0));
             // game.appendChild(button);
-            this.activate(false);
+            this.actionStart = () => {
+                this.getChildrenByName(MENUCOMPONENT.PAUSED)[0].activate(true);
+                leftRow.getChildrenByName(MENUCOMPONENT.RESUME)[0].activate(true);
+                this.removeChild(this.getChildrenByName(MENUCOMPONENT.TITLE)[0]);
+                leftRow.removeChild(leftRow.getChildrenByName(MENUCOMPONENT.PLAY)[0]);
+                this.actionStart = () => {
+                    this.activate(false);
+                    ƒ.Time.game.setScale(this.gameSpeed);
+                };
+                this.actionStart();
+            };
         }
         navigate(_direction) {
             this.selection -= _direction;
@@ -168,8 +187,8 @@ var MyGame;
         triggerAction() {
             switch (this.selection) {
                 case 0:
-                    this.activate(false);
-                    ƒ.Time.game.setScale(this.gameSpeed);
+                    console.log("go");
+                    this.actionStart();
                     break;
                 case 1:
                     for (const menuComponent of this.soundOptions) {

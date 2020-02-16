@@ -13,7 +13,7 @@ namespace MyGame {
       hitBox.cmpTransform.local = ƒ.Matrix4x4.MULTIPLICATION(hitBox.cmpTransform.local, this.cmpMesh.pivot);
       this.appendChild(hitBox);
 
-      this.addEventListener("registerHitBox", (_event: Event) => {
+      this.addEventListener("registerUpdate", (_event: Event) => {
         Tile.hitBoxes.push(this.hitBox.getRectWorld());
       }, true);
     }

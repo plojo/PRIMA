@@ -15,7 +15,8 @@ declare namespace MyGame {
         BACKGROUND = "Background",
         MENU = "Menu",
         LEFTROW = "LeftRow",
-        RIGHTROW = "RightRow"
+        RIGHTROW = "RightRow",
+        TITLE = "Title"
     }
     class MenuComponent extends NodeSprite {
         protected static sprites: Map<MENUCOMPONENT, Sprite>;
@@ -29,6 +30,7 @@ declare namespace MyGame {
         private selection;
         private soundOptions;
         private speedOptions;
+        private actionStart;
         constructor();
         navigate(_direction: number): void;
         triggerAction(): void;
