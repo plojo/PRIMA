@@ -2,8 +2,8 @@
 var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
-    class HitBox extends ƒ.Node {
-        constructor(_name = "HitBox") {
+    class Collidable extends ƒ.Node {
+        constructor(_name = "Collidable") {
             super(_name);
             this.addComponent(new ƒ.ComponentTransform());
             this.addComponent(new ƒ.ComponentMaterial(new ƒ.Material(_name, ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("blue", 0.2)))));
@@ -23,5 +23,5 @@ var MyGame;
             return rect;
         }
     }
-    MyGame.HitBox = HitBox;
+    MyGame.Collidable = Collidable;
 })(MyGame || (MyGame = {}));

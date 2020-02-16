@@ -1,9 +1,9 @@
 namespace MyGame {
     import ƒ = FudgeCore;
 
-    export class HitBox extends ƒ.Node {
+    export class Collidable extends ƒ.Node {
         
-        public constructor(_name: string = "HitBox") {
+        public constructor(_name: string = "Collidable") {
             super(_name);
             this.addComponent(new ƒ.ComponentTransform());
 
