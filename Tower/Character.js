@@ -170,25 +170,25 @@ var MyGame;
             // }
             // checking possible collisions
             let playerHitBoxVertical = this.hitBoxVertical.getRectWorld();
-            // console.log(" " + playerHitBoxVertical.position.toString());
-            playerHitBoxVertical.position.add(_distance.toVector2());
-            // console.log("a " + playerHitBoxVertical.position.toString());
             let playerHitBoxHorizontal = this.hitBoxHorizontal.getRectWorld();
+            // console.log("ver: " + playerHitBoxVertical.position.toString() + " | hori: " + playerHitBoxHorizontal.position.toString());
+            playerHitBoxVertical.position.add(_distance.toVector2());
             playerHitBoxHorizontal.position.add(_distance.toVector2());
+            // console.log("             ver: " + playerHitBoxVertical.position.toString() + " | hori: " + playerHitBoxHorizontal.position.toString());
             for (let rect of MyGame.Tile.hitBoxes) {
                 let tileHitBox = rect;
                 let translation = this.cmpTransform.local.translation;
                 if (playerHitBoxVertical.collides(tileHitBox)) {
-                    console.log("ver");
+                    // console.log("ver");
                     this.resolveCollisionVertical(translation, playerHitBoxVertical, tileHitBox);
-                    playerHitBoxHorizontal.position = playerHitBoxVertical.position;
+                    playerHitBoxHorizontal.position.y = playerHitBoxVertical.position.y;
                     _distance.y = 0;
                 }
                 else {
                     if (playerHitBoxHorizontal.collides(tileHitBox)) {
-                        console.log("hor");
+                        // console.log("hor");
                         this.resolveCollisionHorizontal(translation, playerHitBoxHorizontal, tileHitBox);
-                        playerHitBoxVertical.position = playerHitBoxHorizontal.position;
+                        playerHitBoxVertical.position.x = playerHitBoxHorizontal.position.x;
                         _distance.x = 0;
                     }
                 }
