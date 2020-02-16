@@ -27,7 +27,7 @@ declare namespace MyGame {
         sprite: Sprite;
         frameCurrent: number;
         spriteFrameInterval: number;
-        private cmpMesh;
+        protected cmpMesh: ƒ.ComponentMesh;
         private cmpMaterial;
         private direction;
         constructor(_name: string, _sprite: Sprite);

@@ -32,21 +32,6 @@ var MyGame;
                     tile.cmpTransform.local.translate(new MyGame.ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
                     MyGame.staticObjects.appendChild(tile);
                     break;
-                // case TYPE.CEILING: {
-                //     let tileJSON: TileJSON = <TileJSON>_object;
-                //     let tile: Tile = new Tile(_object.type, tileJSON.length, ORIENTATION.RIGHT);
-                //     tile.cmpTransform.local.translate(new ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
-                //     staticObjects.appendChild(tile);
-                //     break;
-                // }
-                // case TYPE.WALLLEFT:
-                // case TYPE.WALLRIGHT: {
-                //     let tileJSON: TileJSON = <TileJSON>_object;
-                //     let tile: Tile = new Tile(_object.type, tileJSON.length, ORIENTATION.UP, false);
-                //     tile.cmpTransform.local.translate(new ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
-                //     staticObjects.appendChild(tile);
-                //     break;
-                // }   
                 case TYPE.GUSTSPAWNER:
                     let gustSpawnerJSON = _object;
                     let gustSpawner = new MyGame.GustSpawner(gustSpawnerJSON.parameter.offset, gustSpawnerJSON.parameter.interval, gustSpawnerJSON.parameter.lifespan, gustSpawnerJSON.parameter.speed);

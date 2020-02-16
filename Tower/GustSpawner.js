@@ -13,7 +13,7 @@ var MyGame;
                 this.checkCollision(distance);
             };
             this.speed = _speed;
-            let hitBox = new MyGame.HitBox("HitBox");
+            let hitBox = new MyGame.Collidable("HitBox");
             this.appendChild(hitBox);
             this.registerUpdate();
             ƒ.Time.game.setTimer(_lifespan, 1, () => {

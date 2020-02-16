@@ -9,7 +9,7 @@ namespace MyGame {
             super(TYPE.GUST, Gust.sprites);
             this.speed = _speed;
 
-            let hitBox: HitBox = new HitBox("HitBox");
+            let hitBox: Collidable = new Collidable("HitBox");
             this.appendChild(hitBox);
 
             this.registerUpdate();
@@ -28,8 +28,8 @@ namespace MyGame {
             this.sprites.push(sprite);
         }
 
-        private get hitBox(): HitBox {
-            return <HitBox>this.getChildrenByName("HitBox")[0];
+        private get hitBox(): Collidable {
+            return <Collidable>this.getChildrenByName("HitBox")[0];
         }
 
         protected update = (_event: ƒ.Eventƒ): void => {

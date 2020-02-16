@@ -25,11 +25,12 @@ namespace MyGame {
     ƒ.RenderManager.initialize(true, false);
 
     game = new ƒ.Node("Game");
-    player = new Character("Hare");
+    player = new Character("Player");
+    player.cmpTransform.local.translate(new ƒ.Vector3(3, 3, 0));
     level = new ƒ.Node("Level");
     staticObjects = new ƒ.Node("StaticObjects");
     dynamicObjects = new ƒ.Node("DynamicObjects");
-  
+
     game.appendChild(player);
     game.appendChild(level);
     level.appendChild(staticObjects);
@@ -45,7 +46,7 @@ namespace MyGame {
 
     // ƒ.Time.game.setScale(0.2);
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
-    cmpCamera.pivot.translateZ(14);
+    cmpCamera.pivot.translateZ(28);
     cmpCamera.pivot.lookAt(ƒ.Vector3.ZERO());
     cmpCamera.backgroundColor = ƒ.Color.CSS("aliceblue");
 
@@ -63,7 +64,7 @@ namespace MyGame {
 
     ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
     ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 60);
-    
+
 
     // start();
 
@@ -86,8 +87,6 @@ namespace MyGame {
     Font.generateSprites(getTexture("font"));
     Gust.generateSprites(getTexture("assets"));
     Tile.generateSprites(getTexture("assets"));
-    Platform.generateSprites(getTexture("assets"));
-    // console.log("a " + Actor.sprites + " | c " + Character.sprites + " | g " + Gust.sprites);
 
     function getTexture(_elementId: string): ƒ.TextureImage {
       let img: HTMLImageElement = <HTMLImageElement>document.getElementById(_elementId);

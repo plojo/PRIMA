@@ -19,14 +19,15 @@ declare namespace MyGame {
         private static friction;
         private static accelerationGround;
         private static accelerationMidAir;
+        private static jumpSpeed;
         acceleration: ƒ.Vector3;
         speed: ƒ.Vector3;
         private grounded;
         private jumpStart;
         constructor(_name: string);
         static generateSprites(_txtImage: ƒ.TextureImage): void;
-        get hitBoxVertical(): HitBox;
-        get hitBoxHorizontal(): HitBox;
+        readonly hitBoxVertical: Collidable;
+        readonly hitBoxHorizontal: Collidable;
         act(_action: ACTION, _direction?: DIRECTION): void;
         protected update: (_event: ƒ.Eventƒ) => void;
         private absMinSigned;

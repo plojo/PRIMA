@@ -38,22 +38,20 @@ var MyGame;
                 this.cmpTransform.local.translate(distance);
                 // console.log("y: " + this.cmpTransform.local.translation.y);
             };
-            let hitBox = new MyGame.HitBox("HitBoxVertical");
-            //let hitBox: Collidable = new Tile("lime");
-            // hitBox.name = "HitBoxVertical";
-            hitBox.cmpTransform.local.scaleY(0.9);
-            hitBox.cmpTransform.local.scaleX(0.19);
-            hitBox.cmpTransform.local.translateY(0.45);
+            let hitBox = new MyGame.Collidable("HitBoxVertical");
+            // hitBox.cmpTransform.local = ƒ.Matrix4x4.MULTIPLICATION(hitBox.cmpTransform.local,  this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).cmpMesh.pivot);
+            hitBox.cmpTransform.local.scaleY(1.8);
+            hitBox.cmpTransform.local.scaleX(0.39);
+            hitBox.cmpTransform.local.translateY(0.9);
             this.hitBoxes.appendChild(hitBox);
-            hitBox = new MyGame.HitBox("HitBoxHorizontal");
-            //hitBox = new Tile("pink");
-            // hitBox.name = "HitBoxHorizontal";
-            hitBox.cmpTransform.local.scaleY(0.7);
-            hitBox.cmpTransform.local.scaleX(0.40);
-            hitBox.cmpTransform.local.translateY(0.45);
+            hitBox = new MyGame.Collidable("HitBoxHorizontal");
+            // hitBox.cmpTransform.local = ƒ.Matrix4x4.MULTIPLICATION(hitBox.cmpTransform.local,  this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).cmpMesh.pivot);
+            hitBox.cmpTransform.local.scaleY(1.4);
+            hitBox.cmpTransform.local.scaleX(0.80);
+            hitBox.cmpTransform.local.translateY(0.9);
             this.hitBoxes.appendChild(hitBox);
             this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 3; // jumpsquat animation should last for 5 frames only
-            this.animatedNodeSprite.getNodeSprite(ACTION.JUMP).spriteFrameInterval = 8;
+            this.animatedNodeSprite.getNodeSprite(ACTION.JUMP).spriteFrameInterval = 7;
             this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).activate(true);
             this.animatedNodeSprite.registerUpdate();
             this.addEventListener("animationFinished", (_event) => {
@@ -75,7 +73,7 @@ var MyGame;
         }
         static generateSprites(_txtImage) {
             this.sprites = [];
-            let resolutionQuad = 32;
+            let resolutionQuad = 16;
             let sprite = new MyGame.Sprite(ACTION.IDLE);
             sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(10, 0, 30, 36), 4, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
             this.sprites.push(sprite);
@@ -123,7 +121,7 @@ var MyGame;
                         this.act(ACTION.JUMPSQUAT);
                     }
                     else {
-                        this.speed.y = 4;
+                        this.speed.y = Character.jumpSpeed;
                         this.animatedNodeSprite.play(_action);
                     }
                     return;
@@ -157,17 +155,7 @@ var MyGame;
         }
         checkCollision(_distance) {
             // narrowing down possible collisions
-            // let position: ƒ.Vector3 = this.mtxWorld.translation;
-            // position = position.map((_value: number) => { return Math.floor(_value); });
-            // let possibleCollisions: ƒ.Rectangle[] = [];
-            // for (let x: number = -1; x <= 1; x++) {
-            //   for (let y: number = -1; y <= 1; y++) {
-            //     possibleCollisions = 
-            //       possibleCollisions
-            //         .concat(Block.hit[new ƒ.Vector3(position.x + x, position.y + y, 0).toString()])
-            //         .filter((_value: ƒ.Rectangle) => _value != null);
-            //   }
-            // }
+            // not anymore 0.0
             // checking possible collisions
             let playerHitBoxVertical = this.hitBoxVertical.getRectWorld();
             let playerHitBoxHorizontal = this.hitBoxHorizontal.getRectWorld();
@@ -181,14 +169,12 @@ var MyGame;
                 if (playerHitBoxVertical.collides(tileHitBox)) {
                     // console.log("ver");
                     this.resolveCollisionVertical(translation, playerHitBoxVertical, tileHitBox);
-                    playerHitBoxHorizontal.position.y = playerHitBoxVertical.position.y;
                     _distance.y = 0;
                 }
                 else {
                     if (playerHitBoxHorizontal.collides(tileHitBox)) {
                         // console.log("hor");
                         this.resolveCollisionHorizontal(translation, playerHitBoxHorizontal, tileHitBox);
-                        playerHitBoxVertical.position.x = playerHitBoxHorizontal.position.x;
                         _distance.x = 0;
                     }
                 }
@@ -197,12 +183,10 @@ var MyGame;
         }
         resolveCollisionVertical(_translation, _hitBox, _tile) {
             if (_translation.y >= _tile.top) {
-                _hitBox.position.y = _tile.bottom + _hitBox.height / 2;
                 _translation.y = _tile.bottom;
                 this.grounded = true;
             }
             else {
-                _hitBox.position.y = _tile.top + _hitBox.height / 2;
                 _translation.y = _tile.top + _hitBox.height;
                 this.animatedNodeSprite.play(ACTION.FALL);
             }
@@ -210,21 +194,21 @@ var MyGame;
         }
         resolveCollisionHorizontal(_translation, _hitBox, _tile) {
             if (_translation.x <= _tile.left) {
-                _hitBox.position.x = _tile.left - _hitBox.width / 2;
                 _translation.x = _tile.left - _hitBox.width / 2;
             }
             else {
-                _hitBox.position.x = _tile.right + _hitBox.width / 2;
                 _translation.x = _tile.right + _hitBox.width / 2;
             }
             this.speed.x = 0;
         }
     }
-    Character.speedMax = new ƒ.Vector2(3, 15); // units per second
-    Character.distanceMax = new ƒ.Vector2(0.1, 0.1);
-    Character.gravity = 10; //units per square second
+    // one unit = one meter
+    Character.speedMax = new ƒ.Vector2(6, 30); // units per second
+    Character.distanceMax = new ƒ.Vector2(0.2, 0.2);
+    Character.gravity = 20; //units per square second
     Character.friction = 5 * Character.speedMax.x; // = 15 //units per square second
     Character.accelerationGround = 10 * Character.speedMax.x; // = 30 //units per square second, used to calculate ground movement
     Character.accelerationMidAir = 1.5 * Character.speedMax.x; // 4.5 //units per square second, used to calculate mid air movement
+    Character.jumpSpeed = 8;
     MyGame.Character = Character;
 })(MyGame || (MyGame = {}));

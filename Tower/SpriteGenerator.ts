@@ -108,7 +108,7 @@ namespace MyGame {
     public sprite: Sprite;
     public frameCurrent: number = 0;
     public spriteFrameInterval: number = 10; // 
-    private cmpMesh: ƒ.ComponentMesh;
+    protected cmpMesh: ƒ.ComponentMesh;
     private cmpMaterial: ƒ.ComponentMaterial;
     private direction: number = 1;
 

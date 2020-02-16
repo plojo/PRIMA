@@ -8,6 +8,13 @@
       }
     },
     {
+      "type": "Platform",
+      "translation": {
+        "x": 7.5,
+        "y": 2
+      }
+    },
+    {
       "type": "Wall",
       "translation": {
         "x": 0,
@@ -17,29 +24,29 @@
     {
       "type": "Wall",
       "translation": {
-        "x": 11,
+        "x": 22,
         "y": 0
       }
     },
     {
       "type": "Floor",
       "translation": {
-        "x": 5.2,
+        "x": 0,
         "y": 0
       }
     },
     {
       "type": "GustSpawner",
       "translation": {
-        "x": 4,
-        "y": 0
+        "x": 0,
+        "y": 3.5
       },
       "parameter": {
         "offset": 100,
         "interval": 2,
-        "rotation": 0,
+        "rotation": 270,
         "lifespan": 5,
-        "speed": 4
+        "speed": 8
       }
     }
   ]

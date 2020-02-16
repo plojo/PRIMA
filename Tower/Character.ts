@@ -15,41 +15,40 @@ namespace MyGame {
   }
 
   export class Character extends Actor {
-    private static readonly speedMax: ƒ.Vector2 = new ƒ.Vector2(3, 15); // units per second
-    private static readonly distanceMax: ƒ.Vector2 = new ƒ.Vector2(0.1, 0.1);
-    private static gravity: number = 10; //units per square second
+    // one unit = one meter
+    private static readonly speedMax: ƒ.Vector2 = new ƒ.Vector2(6, 30); // units per second
+    private static readonly distanceMax: ƒ.Vector2 = new ƒ.Vector2(0.2, 0.2);
+    private static gravity: number = 20; //units per square second
     private static friction: number = 5 * Character.speedMax.x; // = 15 //units per square second
     private static accelerationGround: number = 10 * Character.speedMax.x; // = 30 //units per square second, used to calculate ground movement
     private static accelerationMidAir: number = 1.5 * Character.speedMax.x; // 4.5 //units per square second, used to calculate mid air movement
+    private static jumpSpeed: number = 8;
 
     public acceleration: ƒ.Vector3 = new ƒ.Vector3(0, -Character.gravity, 0);
     public speed: ƒ.Vector3 = ƒ.Vector3.ZERO();
 
-    // private posLast: ƒ.Vector3;
     private grounded: boolean;
     private jumpStart: boolean = false;
 
     constructor(_name: string) {
       super(_name, Character.sprites);
 
-      let hitBox: HitBox = new HitBox("HitBoxVertical");
-      //let hitBox: Collidable = new Tile("lime");
-      // hitBox.name = "HitBoxVertical";
-      hitBox.cmpTransform.local.scaleY(0.9);
-      hitBox.cmpTransform.local.scaleX(0.19);
-      hitBox.cmpTransform.local.translateY(0.45);
+      let hitBox: Collidable = new Collidable("HitBoxVertical");
+      // hitBox.cmpTransform.local = ƒ.Matrix4x4.MULTIPLICATION(hitBox.cmpTransform.local,  this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).cmpMesh.pivot);
+      hitBox.cmpTransform.local.scaleY(1.8);
+      hitBox.cmpTransform.local.scaleX(0.39);
+      hitBox.cmpTransform.local.translateY(0.9);
       this.hitBoxes.appendChild(hitBox);
 
-      hitBox = new HitBox("HitBoxHorizontal");
-      //hitBox = new Tile("pink");
-      // hitBox.name = "HitBoxHorizontal";
-      hitBox.cmpTransform.local.scaleY(0.7);
-      hitBox.cmpTransform.local.scaleX(0.40);
-      hitBox.cmpTransform.local.translateY(0.45);
+      hitBox = new Collidable("HitBoxHorizontal");
+      // hitBox.cmpTransform.local = ƒ.Matrix4x4.MULTIPLICATION(hitBox.cmpTransform.local,  this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).cmpMesh.pivot);
+      hitBox.cmpTransform.local.scaleY(1.4);
+      hitBox.cmpTransform.local.scaleX(0.80);
+      hitBox.cmpTransform.local.translateY(0.9);
       this.hitBoxes.appendChild(hitBox);
 
       this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 3; // jumpsquat animation should last for 5 frames only
-      this.animatedNodeSprite.getNodeSprite(ACTION.JUMP).spriteFrameInterval = 8;
+      this.animatedNodeSprite.getNodeSprite(ACTION.JUMP).spriteFrameInterval = 7;
       this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).activate(true);
       this.animatedNodeSprite.registerUpdate();
 
@@ -76,7 +75,7 @@ namespace MyGame {
 
     public static generateSprites(_txtImage: ƒ.TextureImage): void {
       this.sprites = [];
-      let resolutionQuad: number = 32;
+      let resolutionQuad: number = 16;
       let sprite: Sprite = new Sprite(ACTION.IDLE);
       sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(10, 0, 30, 36), 4, ƒ.Vector2.X(20), resolutionQuad, ƒ.ORIGIN2D.BOTTOMCENTER);
       this.sprites.push(sprite);
@@ -98,12 +97,12 @@ namespace MyGame {
       this.sprites.push(sprite);
     }
 
-    public get hitBoxVertical(): HitBox {
-      return <HitBox>this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
+    public get hitBoxVertical(): Collidable {
+      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
     }
 
-    public get hitBoxHorizontal(): HitBox {
-      return <HitBox>this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
+    public get hitBoxHorizontal(): Collidable {
+      return <Collidable>this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
     }
 
     public act(_action: ACTION, _direction?: DIRECTION): void {
@@ -131,7 +130,7 @@ namespace MyGame {
           if (!this.jumpStart) {
             this.act(ACTION.JUMPSQUAT);
           } else {
-            this.speed.y = 4;
+            this.speed.y = Character.jumpSpeed;
             this.animatedNodeSprite.play(_action);
           }
           return;
@@ -191,18 +190,7 @@ namespace MyGame {
 
     private checkCollision(_distance: ƒ.Vector3): void {
       // narrowing down possible collisions
-      // let position: ƒ.Vector3 = this.mtxWorld.translation;
-      // position = position.map((_value: number) => { return Math.floor(_value); });
-
-      // let possibleCollisions: ƒ.Rectangle[] = [];
-      // for (let x: number = -1; x <= 1; x++) {
-      //   for (let y: number = -1; y <= 1; y++) {
-      //     possibleCollisions = 
-      //       possibleCollisions
-      //         .concat(Block.hit[new ƒ.Vector3(position.x + x, position.y + y, 0).toString()])
-      //         .filter((_value: ƒ.Rectangle) => _value != null);
-      //   }
-      // }
+      // not anymore 0.0
 
       // checking possible collisions
       let playerHitBoxVertical: ƒ.Rectangle = this.hitBoxVertical.getRectWorld();
@@ -218,13 +206,11 @@ namespace MyGame {
         if (playerHitBoxVertical.collides(tileHitBox)) {
           // console.log("ver");
           this.resolveCollisionVertical(translation, playerHitBoxVertical, tileHitBox);
-          playerHitBoxHorizontal.position.y = playerHitBoxVertical.position.y;
           _distance.y = 0;
         } else {
           if (playerHitBoxHorizontal.collides(tileHitBox)) {
             // console.log("hor");
             this.resolveCollisionHorizontal(translation, playerHitBoxHorizontal, tileHitBox);
-            playerHitBoxVertical.position.x = playerHitBoxHorizontal.position.x;
             _distance.x = 0;
           }
         }
@@ -234,11 +220,9 @@ namespace MyGame {
 
     private resolveCollisionVertical(_translation: ƒ.Vector3, _hitBox: ƒ.Rectangle, _tile: ƒ.Rectangle): void {
       if (_translation.y >= _tile.top) {
-        _hitBox.position.y = _tile.bottom + _hitBox.height / 2;
         _translation.y = _tile.bottom;
         this.grounded = true;
       } else {
-        _hitBox.position.y = _tile.top + _hitBox.height / 2;
         _translation.y = _tile.top + _hitBox.height;
         this.animatedNodeSprite.play(ACTION.FALL);
       }
@@ -247,10 +231,8 @@ namespace MyGame {
 
     private resolveCollisionHorizontal(_translation: ƒ.Vector3, _hitBox: ƒ.Rectangle, _tile: ƒ.Rectangle): void {
       if (_translation.x <= _tile.left) {
-        _hitBox.position.x = _tile.left - _hitBox.width / 2;
         _translation.x = _tile.left - _hitBox.width / 2;
       } else {
-        _hitBox.position.x = _tile.right + _hitBox.width / 2;
         _translation.x = _tile.right + _hitBox.width / 2;
       }
       this.speed.x = 0;

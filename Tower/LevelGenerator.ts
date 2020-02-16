@@ -16,11 +16,6 @@ namespace MyGame {
         y: number;
     }
 
-    // interface ScaleJSON {
-    //     x: number;
-    //     y: number;
-    // }
-
     interface ParameterJSON {
         offset: number;
         interval: number;
@@ -32,10 +27,6 @@ namespace MyGame {
     interface GenericJSON {
         type: string;
         translation: TranslationJSON;
-    }
-
-    interface TileJSON extends GenericJSON {
-        length: number;
     }
 
     interface GustSpawnerJSON extends GenericJSON {
@@ -67,21 +58,6 @@ namespace MyGame {
                     tile.cmpTransform.local.translate(new ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
                     staticObjects.appendChild(tile);
                     break;
-                // case TYPE.CEILING: {
-                //     let tileJSON: TileJSON = <TileJSON>_object;
-                //     let tile: Tile = new Tile(_object.type, tileJSON.length, ORIENTATION.RIGHT);
-                //     tile.cmpTransform.local.translate(new ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
-                //     staticObjects.appendChild(tile);
-                //     break;
-                // }
-                // case TYPE.WALLLEFT:
-                // case TYPE.WALLRIGHT: {
-                //     let tileJSON: TileJSON = <TileJSON>_object;
-                //     let tile: Tile = new Tile(_object.type, tileJSON.length, ORIENTATION.UP, false);
-                //     tile.cmpTransform.local.translate(new ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
-                //     staticObjects.appendChild(tile);
-                //     break;
-                // }   
                 case TYPE.GUSTSPAWNER:
                     let gustSpawnerJSON: GustSpawnerJSON = <GustSpawnerJSON>_object;
                     let gustSpawner: GustSpawner = new GustSpawner(gustSpawnerJSON.parameter.offset, gustSpawnerJSON.parameter.interval, gustSpawnerJSON.parameter.lifespan, gustSpawnerJSON.parameter.speed);
