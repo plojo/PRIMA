@@ -93,6 +93,7 @@ var MyGame;
     function processInput() {
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.SPACE]) {
             MyGame.player.act(MyGame.ACTION.JUMP);
+            MyGame.Audio.play(MyGame.AUDIO.JUMP);
         }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.A]) {
             MyGame.player.act(MyGame.ACTION.WALK, MyGame.DIRECTION.LEFT);

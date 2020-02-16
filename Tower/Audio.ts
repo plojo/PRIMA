@@ -2,10 +2,10 @@ namespace MyGame {
     import ƒ = FudgeCore;
   
     export enum AUDIO {
-      START = "Sound/Start.mp3",
-      PLAY = "Sound/Play.mp3",
-      JUMP = "Sound/Hit.mp3",
-      MOVE = "Sound/Move.wav"
+      // START = "sounds/Start.mp3",
+      // PLAY = "sounds/Play.mp3",
+      JUMP = "sounds/Jump.wav",
+      MOVE = "sounds/Move.mp3"
     }
 
     export class Audio extends ƒ.Node {
@@ -25,8 +25,8 @@ namespace MyGame {
 
   
       private static async appendAudio(): Promise<void> {
-        Audio.components.set(AUDIO.START, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.START), true, true));
-        Audio.components.set(AUDIO.PLAY, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.PLAY), true, false));
+        // Audio.components.set(AUDIO.START, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.START), true, true));
+        // Audio.components.set(AUDIO.PLAY, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.PLAY), true, false));
         Audio.components.set(AUDIO.JUMP, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.JUMP), false, false));
         Audio.components.set(AUDIO.MOVE, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.MOVE), false, false));  
         Audio.components.forEach(element => Audio.node.addComponent(element));
