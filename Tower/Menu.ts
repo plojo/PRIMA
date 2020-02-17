@@ -15,8 +15,8 @@ namespace MyGame {
     RESUME = "Resume",
     BACKGROUND = "Background",
     MENU = "Menu",
-    LEFTROW = "LeftRow",
-    RIGHTROW = "RightRow",
+    LEFTCOLUMN = "LeftColumn",
+    RIGHTCOLUMN = "RightColumn",
     TITLE = "Title"
   }
 
@@ -89,7 +89,7 @@ namespace MyGame {
 
       buttonType = MENUCOMPONENT.CURSOR;
       sprite = new Sprite(buttonType);
-      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 72, 8, 8), 2, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 72, 8, 7), 2, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
       this.sprites.set(buttonType, sprite);
 
       // buttonType = MENUCOMPONENT.BACKGROUND;
@@ -103,7 +103,7 @@ namespace MyGame {
     public rowOffsetY: number = 1.5;
     public gameSpeed: number;
 
-    private leftRowOptions: number;
+    private leftColumnOptionAmount: number;
     private selection: number = 0;
     private soundOptions: MenuComponent[] = [];
     private speedOptions: MenuComponent[] = [];
@@ -114,14 +114,6 @@ namespace MyGame {
       super(MENUCOMPONENT.MENU);
       this.addComponent(new ƒ.ComponentTransform());
       this.cmpTransform.local.translateZ(10);
-      // let background: ƒ.Node = new ƒ.Node(BUTTON.BACKGROUND);
-      // background.addComponent(new ƒ.ComponentTransform());
-      // background.cmpTransform.local.translation = new ƒ.Vector3(0, 0, -1);
-      // background.cmpTransform.local.scale(new ƒ.Vector3(15, 15, 0));
-      // background.addComponent(new ƒ.ComponentMaterial(new ƒ.Material("Transparent", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("black", 0.5)))));
-      // let cmpMesh: ƒ.ComponentMesh = new ƒ.ComponentMesh(new ƒ.MeshQuad());
-      // background.addComponent(cmpMesh);
-      // this.appendChild(background);
 
       let component: MenuComponent = new MenuComponent(MENUCOMPONENT.TITLE);
       component.cmpTransform.local.translation = new ƒ.Vector3(0, 4, 0);
@@ -134,80 +126,77 @@ namespace MyGame {
 
       let currentOffsetY: number = 0;
 
-      let leftRow: ƒ.Node = new ƒ.Node(MENUCOMPONENT.LEFTROW);
-      leftRow.addComponent(new ƒ.ComponentTransform());
-      leftRow.cmpTransform.local.translation = new ƒ.Vector3(-3, 2.5, 0);
-      this.appendChild(leftRow);
+      let leftColumn: ƒ.Node = new ƒ.Node(MENUCOMPONENT.LEFTCOLUMN);
+      leftColumn.addComponent(new ƒ.ComponentTransform());
+      leftColumn.cmpTransform.local.translation = new ƒ.Vector3(-3, 2.5, 0);
+      this.appendChild(leftColumn);
 
       component = new MenuComponent(MENUCOMPONENT.CURSOR);
       component.cmpTransform.local.translation = new ƒ.Vector3(-0.7, currentOffsetY, 0);
-      leftRow.appendChild(component);
+      leftColumn.appendChild(component);
 
       component = new MenuComponent(MENUCOMPONENT.PLAY);
       component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY, 0);
-      leftRow.appendChild(component);
+      leftColumn.appendChild(component);
 
       component = new MenuComponent(MENUCOMPONENT.RESUME);
       component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY, 0);
       component.activate(false);
-      leftRow.appendChild(component);
+      leftColumn.appendChild(component);
 
       component = new MenuComponent(MENUCOMPONENT.SOUND);
       component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY -= this.rowOffsetY, 0);
-      leftRow.appendChild(component);
+      leftColumn.appendChild(component);
 
       component = new MenuComponent(MENUCOMPONENT.SPEED);
       component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY -= this.rowOffsetY, 0);
-      leftRow.appendChild(component);
+      leftColumn.appendChild(component);
 
-      this.leftRowOptions = leftRow.getChildren().length - 2;
+      this.leftColumnOptionAmount = leftColumn.getChildren().filter((menuComponent: ƒ.Node) => {
+        return menuComponent.isActive && menuComponent.name != MENUCOMPONENT.CURSOR;
+      }).length;
 
-      let rightRow: ƒ.Node = new ƒ.Node(MENUCOMPONENT.RIGHTROW);
-      rightRow.addComponent(new ƒ.ComponentTransform());
-      rightRow.cmpTransform.local.translation = new ƒ.Vector3(1.5, 2.5, 0);
-      this.appendChild(rightRow);
+      let rightColumn: ƒ.Node = new ƒ.Node(MENUCOMPONENT.RIGHTCOLUMN);
+      rightColumn.addComponent(new ƒ.ComponentTransform());
+      rightColumn.cmpTransform.local.translation = new ƒ.Vector3(1.5, 2.5, 0);
+      this.appendChild(rightColumn);
 
       currentOffsetY = 0;
 
       component = new MenuComponent(MENUCOMPONENT.ON);
       component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY -= this.rowOffsetY, 0);
-      rightRow.appendChild(component);
+      rightColumn.appendChild(component);
       this.soundOptions.push(component);
 
       component = new MenuComponent(MENUCOMPONENT.OFF);
       component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY, 0);
       component.activate(false);
-      rightRow.appendChild(component);
+      rightColumn.appendChild(component);
       this.soundOptions.push(component);
 
       component = new MenuComponent(MENUCOMPONENT.SPEEDSLOW);
       component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY -= this.rowOffsetY, 0);
       component.activate(false);
-      rightRow.appendChild(component);
+      rightColumn.appendChild(component);
       this.speedOptions.push(component);
 
       component = new MenuComponent(MENUCOMPONENT.SPEEDNORMAL);
       component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY, 0);
-      rightRow.appendChild(component);
+      rightColumn.appendChild(component);
       this.speedOptions.push(component);
 
       component = new MenuComponent(MENUCOMPONENT.SPEEDFAST);
       component.cmpTransform.local.translation = new ƒ.Vector3(0, currentOffsetY, 0);
       component.activate(false);
-      rightRow.appendChild(component);
+      rightColumn.appendChild(component);
       this.speedOptions.push(component);
-
-      // button = new Button(BUTTON.BACKGROUND); 
-      // button.cmpTransform.local.translation = new ƒ.Vector3(0, 0, -5);
-      // button.cmpTransform.local.scale(new ƒ.Vector3(15, 15, 0));
-      // game.appendChild(button);
 
       this.actionStart = () => {
         this.getChildrenByName(MENUCOMPONENT.PAUSED)[0].activate(true);
-        leftRow.getChildrenByName(MENUCOMPONENT.RESUME)[0].activate(true);
+        leftColumn.getChildrenByName(MENUCOMPONENT.RESUME)[0].activate(true);
 
         this.removeChild(this.getChildrenByName(MENUCOMPONENT.TITLE)[0]);
-        leftRow.removeChild(leftRow.getChildrenByName(MENUCOMPONENT.PLAY)[0]);
+        leftColumn.removeChild(leftColumn.getChildrenByName(MENUCOMPONENT.PLAY)[0]);
 
         this.actionStart = () => {
           this.activate(false);
@@ -221,9 +210,9 @@ namespace MyGame {
     public navigate(_direction: number): void {
       this.selection -= _direction;
       if (this.selection < 0)
-        this.selection += this.leftRowOptions;
-      this.selection = this.selection % this.leftRowOptions;
-      let cursor: ƒ.Node = this.getChildrenByName(MENUCOMPONENT.LEFTROW)[0].getChildrenByName(MENUCOMPONENT.CURSOR)[0];
+        this.selection += this.leftColumnOptionAmount;
+      this.selection = this.selection % this.leftColumnOptionAmount;
+      let cursor: ƒ.Node = this.getChildrenByName(MENUCOMPONENT.LEFTCOLUMN)[0].getChildrenByName(MENUCOMPONENT.CURSOR)[0];
       let translation: ƒ.Vector3 = cursor.cmpTransform.local.translation;
       translation.y = -this.selection * this.rowOffsetY;
       cursor.cmpTransform.local.translation = translation;

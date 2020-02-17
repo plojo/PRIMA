@@ -14,8 +14,8 @@ declare namespace MyGame {
         RESUME = "Resume",
         BACKGROUND = "Background",
         MENU = "Menu",
-        LEFTROW = "LeftRow",
-        RIGHTROW = "RightRow",
+        LEFTCOLUMN = "LeftColumn",
+        RIGHTCOLUMN = "RightColumn",
         TITLE = "Title"
     }
     class MenuComponent extends NodeSprite {
@@ -26,7 +26,7 @@ declare namespace MyGame {
     class Menu extends ƒ.Node {
         rowOffsetY: number;
         gameSpeed: number;
-        private leftRowOptions;
+        private leftColumnOptionAmount;
         private selection;
         private soundOptions;
         private speedOptions;
