@@ -49,6 +49,7 @@ namespace MyGame {
 
         protected removeUpdate(): void {
             ƒ.Loop.removeEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
+            this.animatedNodeSprite.removeUpdate();
         }
     }
 }

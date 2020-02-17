@@ -14,8 +14,12 @@ var MyGame;
             };
             this.speed = _speed;
             let hitBox = new MyGame.Collidable("HitBox");
+            hitBox.cmpTransform.local.scaleY(1.5);
+            hitBox.cmpTransform.local.scaleX(1.5);
             this.appendChild(hitBox);
             this.registerUpdate();
+            this.animatedNodeSprite.getNodeSprite(MyGame.ACTION.IDLE).activate(true);
+            this.animatedNodeSprite.play(MyGame.ACTION.IDLE);
             ƒ.Time.game.setTimer(_lifespan, 1, () => {
                 this.removeUpdate();
                 this.getParent().removeChild(this);
@@ -23,8 +27,8 @@ var MyGame;
         }
         static generateSprites(_txtImage) {
             this.sprites = [];
-            let sprite = new MyGame.Sprite(MyGame.TYPE.GUST);
-            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
+            let sprite = new MyGame.Sprite(MyGame.ACTION.IDLE);
+            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 42, 40), 1, ƒ.Vector2.ZERO(), 16, ƒ.ORIGIN2D.CENTER);
             this.sprites.push(sprite);
         }
         get hitBox() {
@@ -58,7 +62,7 @@ var MyGame;
                 let timeFrame = ƒ.Loop.timeFrameGame;
                 this.elapsedTime += timeFrame;
                 if (this.elapsedTime >= this.interval) {
-                    let gust = new Gust(ƒ.Vector3.Y(this.gustSpeed), this.gustLifespan);
+                    let gust = new Gust(ƒ.Vector3.X(this.gustSpeed), this.gustLifespan);
                     this.appendChild(gust);
                     this.elapsedTime = 0;
                 }

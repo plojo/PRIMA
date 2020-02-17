@@ -97,7 +97,6 @@ namespace MyGame {
     function update(_event: ƒ.Eventƒ): void {
       followPlayer();
       processInput();
-      
 
       viewport.draw();
     }
@@ -106,7 +105,7 @@ namespace MyGame {
   function generateSprites(): void {
     Character.generateSprites(getTexture("player"));
     MenuComponent.generateSprites(getTexture("menu"));
-    Gust.generateSprites(getTexture("assets"));
+    Gust.generateSprites(getTexture("gust"));
     Tile.generateSprites(getTexture("assets"));
 
     function getTexture(_elementId: string): ƒ.TextureImage {

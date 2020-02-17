@@ -76,7 +76,7 @@ var MyGame;
     function generateSprites() {
         MyGame.Character.generateSprites(getTexture("player"));
         MyGame.MenuComponent.generateSprites(getTexture("menu"));
-        MyGame.Gust.generateSprites(getTexture("assets"));
+        MyGame.Gust.generateSprites(getTexture("gust"));
         MyGame.Tile.generateSprites(getTexture("assets"));
         function getTexture(_elementId) {
             let img = document.getElementById(_elementId);

@@ -37,6 +37,7 @@ var MyGame;
         }
         removeUpdate() {
             ƒ.Loop.removeEventListener("loopFrame" /* LOOP_FRAME */, this.update);
+            this.animatedNodeSprite.removeUpdate();
         }
     }
     MyGame.Actor = Actor;

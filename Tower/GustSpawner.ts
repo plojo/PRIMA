@@ -10,9 +10,14 @@ namespace MyGame {
             this.speed = _speed;
 
             let hitBox: Collidable = new Collidable("HitBox");
+            hitBox.cmpTransform.local.scaleY(1.5);
+            hitBox.cmpTransform.local.scaleX(1.5);
             this.appendChild(hitBox);
 
             this.registerUpdate();
+
+            this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).activate(true);
+            this.animatedNodeSprite.play(ACTION.IDLE);
 
             ƒ.Time.game.setTimer(_lifespan, 1, () => {
                 this.removeUpdate();
@@ -23,8 +28,8 @@ namespace MyGame {
 
         public static generateSprites(_txtImage: ƒ.TextureImage): void {
             this.sprites = [];
-            let sprite: Sprite = new Sprite(TYPE.GUST);
-            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 60, 80), 4, ƒ.Vector2.ZERO(), 64, ƒ.ORIGIN2D.BOTTOMCENTER);
+            let sprite: Sprite = new Sprite(ACTION.IDLE);
+            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 42, 40), 1, ƒ.Vector2.ZERO(), 16, ƒ.ORIGIN2D.CENTER);
             this.sprites.push(sprite);
         }
 
@@ -78,7 +83,7 @@ namespace MyGame {
             let timeFrame: number = ƒ.Loop.timeFrameGame;
             this.elapsedTime += timeFrame;
             if (this.elapsedTime >= this.interval) {
-                let gust: Gust = new Gust(ƒ.Vector3.Y(this.gustSpeed), this.gustLifespan);
+                let gust: Gust = new Gust(ƒ.Vector3.X(this.gustSpeed), this.gustLifespan);
                 this.appendChild(gust);
                 this.elapsedTime = 0;
             }
