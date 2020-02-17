@@ -47,30 +47,22 @@ namespace MyGame {
       }
     }
 
-    public generateByGrid(_texture: ƒ.TextureImage, _startRect: ƒ.Rectangle, _frames: number, _borderSize: ƒ.Vector2, _resolutionQuad: number, _origin: ƒ.ORIGIN2D, _upwards: boolean = false): void {
+    public generateByGrid(_texture: ƒ.TextureImage, _startRect: ƒ.Rectangle, _frames: number, _borderSize: ƒ.Vector2, _resolutionQuad: number, _origin: ƒ.ORIGIN2D): void {
       let rect: ƒ.Rectangle = _startRect.copy;
       let rects: ƒ.Rectangle[] = [];
       while (_frames--) {
         rects.push(rect.copy);
-        if (_upwards) {
-          rect.position.y -= _startRect.size.y + _borderSize.y; //this solution is rather hacky but time is of the essence
-          // if (rect.bottom > _texture.image.height)
-          //   continue;
-          // _startRect.position.x += _startRect.size.x + _borderSize.x;
-          // rect = _startRect.copy;
-          // if (rect.right < _texture.image.width)
-          //   break;
-        } else {
-          rect.position.x += _startRect.size.x + _borderSize.x;
 
-          if (rect.right < _texture.image.width)
-            continue;
+        rect.position.x += _startRect.size.x + _borderSize.x;
 
-          _startRect.position.y += _startRect.size.y + _borderSize.y;
-          rect = _startRect.copy;
-          if (rect.bottom > _texture.image.height)
-            break;
-        }
+        if (rect.right < _texture.image.width)
+          continue;
+
+        _startRect.position.y += _startRect.size.y + _borderSize.y;
+        rect = _startRect.copy;
+        if (rect.bottom > _texture.image.height)
+          break;
+
       }
 
       // rects.forEach((_rect: ƒ.Rectangle) => ƒ.Debug.log(_rect.toString()));

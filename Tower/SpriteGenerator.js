@@ -35,29 +35,18 @@ var MyGame;
                 count++;
             }
         }
-        generateByGrid(_texture, _startRect, _frames, _borderSize, _resolutionQuad, _origin, _upwards = false) {
+        generateByGrid(_texture, _startRect, _frames, _borderSize, _resolutionQuad, _origin) {
             let rect = _startRect.copy;
             let rects = [];
             while (_frames--) {
                 rects.push(rect.copy);
-                if (_upwards) {
-                    rect.position.y -= _startRect.size.y + _borderSize.y; //this solution is rather hacky but time is of the essence
-                    // if (rect.bottom > _texture.image.height)
-                    //   continue;
-                    // _startRect.position.x += _startRect.size.x + _borderSize.x;
-                    // rect = _startRect.copy;
-                    // if (rect.right < _texture.image.width)
-                    //   break;
-                }
-                else {
-                    rect.position.x += _startRect.size.x + _borderSize.x;
-                    if (rect.right < _texture.image.width)
-                        continue;
-                    _startRect.position.y += _startRect.size.y + _borderSize.y;
-                    rect = _startRect.copy;
-                    if (rect.bottom > _texture.image.height)
-                        break;
-                }
+                rect.position.x += _startRect.size.x + _borderSize.x;
+                if (rect.right < _texture.image.width)
+                    continue;
+                _startRect.position.y += _startRect.size.y + _borderSize.y;
+                rect = _startRect.copy;
+                if (rect.bottom > _texture.image.height)
+                    break;
             }
             // rects.forEach((_rect: ƒ.Rectangle) => ƒ.Debug.log(_rect.toString()));
             this.generate(_texture, rects, _resolutionQuad, _origin);
