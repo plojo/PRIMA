@@ -5,19 +5,12 @@
       "leftBound": 0,
       "rightBound": 31,
       "lowerBound": 0,
-      "upperBound": 20
+      "upperBound": 100
     },
     {
       "type": "Platform",
       "translation": {
         "x": 3,
-        "y": 2
-      }
-    },
-    {
-      "type": "Platform",
-      "translation": {
-        "x": 7.5,
         "y": 2
       }
     },
@@ -50,15 +43,113 @@
       }
     },
     {
-      "type": "GustSpawner",
+      "type": "Floor",
+      "translation": {
+        "x": 3,
+        "y": -1
+      }
+    },
+    {
+      "type": "Floor",
+      "translation": {
+        "x": 9,
+        "y": 0
+      }
+    },
+    {
+      "type": "Floor",
+      "translation": {
+        "x": 9,
+        "y": -1
+      }
+    },
+    {
+      "type": "Wall",
+      "translation": {
+        "x": 17,
+        "y": -10
+      }
+    },
+    {
+      "type": "Floor",
+      "translation": {
+        "x": 20,
+        "y": 7.85
+      }
+    },
+    {
+      "type": "Platform",
+      "translation": {
+        "x": 15,
+        "y": 15
+      }
+    },
+    {
+      "type": "Platform",
+      "translation": {
+        "x": 15,
+        "y": 12
+      }
+    },
+    {
+      "type": "Platform",
+      "translation": {
+        "x": 20,
+        "y": 8.5
+      }
+    },
+    {
+      "type": "Wall",
       "translation": {
         "x": 0,
-        "y": 3.5
+        "y": 18
+      }
+    },
+    {
+      "type": "Wall",
+      "translation": {
+        "x": 28,
+        "y": 18
+      }
+    },
+    {
+      "type": "Platform",
+      "translation": {
+        "x": 3,
+        "y": 16
+      }
+    },
+    {
+      "type": "Floor",
+      "translation": {
+        "x": 6,
+        "y": 20
+      }
+    },
+    {
+      "type": "GustSpawner",
+      "translation": {
+        "x": 28,
+        "y": 8.5
       },
       "parameter": {
         "offset": 100,
         "interval": 2,
-        "rotation": 270,
+        "rotation": 90,
+        "lifespan": 5,
+        "speed": 8
+      }
+    },
+    {
+      "type": "GustSpawner",
+      "translation": {
+        "x": 28,
+        "y": 18.5
+      },
+      "parameter": {
+        "offset": 100,
+        "interval": 2,
+        "rotation": 90,
         "lifespan": 5,
         "speed": 8
       }
