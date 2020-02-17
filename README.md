@@ -1,13 +1,15 @@
 # PRIMA
 
-**Wichtiger Hinweis** Drücke F11 für Vollbildmodus, bei **Performanceproblemen einfach das Browserfenster verkleinern**.
+## Wichtige Hinweis
+ - F11 für Vollbildmodus
+ - bei **Performance Problemen einfach das Browserfenster verkleinern**
+ - das Level ist schwierig aber nicht unschaffbar
+ 
+## Links
  - [Lauffähiges Spiel](https://plojo.github.io/PRIMA/Tower/index.html)
  - [Quellcode](https://github.com/plojo/PRIMA/tree/master/Tower)
  - [Designdokument](https://github.com/plojo/PRIMA/blob/master/Tower/documents/Designdokument.pdf)
  - [Installations- und Bedienungsanleitung](https://github.com/plojo/PRIMA/blob/master/Tower/documents/Anleitung.pdf)
-
-## Hinweis
-
 
 
 ## Checkliste für Leistungsnachweis
