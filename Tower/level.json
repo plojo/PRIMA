@@ -67,7 +67,14 @@
       "type": "Wall",
       "translation": {
         "x": 16.5,
-        "y": -10
+        "y": -11
+      }
+    },
+    {
+      "type": "Platform",
+      "translation": {
+        "x": 16.5,
+        "y": 7.85
       }
     },
     {
