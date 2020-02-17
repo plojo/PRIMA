@@ -129,16 +129,13 @@ namespace MyGame {
   function processInput(): void {
     if (keysPressed[ƒ.KEYBOARD_CODE.SPACE]) {
       player.act(ACTION.JUMP);
-      Audio.play(AUDIO.JUMP);
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.A]) {
       player.act(ACTION.WALK, DIRECTION.LEFT);
-      Audio.play(AUDIO.MOVE);
       return;
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.D]) {
       player.act(ACTION.WALK, DIRECTION.RIGHT);
-      Audio.play(AUDIO.MOVE);
       return;
     }
 

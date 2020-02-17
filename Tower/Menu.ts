@@ -198,6 +198,8 @@ namespace MyGame {
         this.removeChild(this.getChildrenByName(MENUCOMPONENT.TITLE)[0]);
         leftColumn.removeChild(leftColumn.getChildrenByName(MENUCOMPONENT.PLAY)[0]);
 
+        Audio.play(AUDIO.MUSIC);
+
         this.actionStart = () => {
           this.activate(false);
           ƒ.Time.game.setScale(this.gameSpeed);
@@ -208,6 +210,7 @@ namespace MyGame {
     }
 
     public navigate(_direction: number): void {
+      Audio.play(AUDIO.CURSOR);
       this.selection -= _direction;
       if (this.selection < 0)
         this.selection += this.leftColumnOptionAmount;
@@ -221,14 +224,13 @@ namespace MyGame {
     public triggerAction(): void {
       switch (this.selection) {
         case 0:
-          console.log("go");
           this.actionStart();
           break;
         case 1:
           for (const menuComponent of this.soundOptions) {
             menuComponent.activate(!menuComponent.isActive);
           }
-          // TODO: Add Adio disable
+          Audio.switch();
           break;
         case 2:
           let selectionIndex: number = this.speedOptions.findIndex((value: MenuComponent) => value.isActive);

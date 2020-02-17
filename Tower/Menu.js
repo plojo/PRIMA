@@ -157,6 +157,7 @@ var MyGame;
                 leftColumn.getChildrenByName(MENUCOMPONENT.RESUME)[0].activate(true);
                 this.removeChild(this.getChildrenByName(MENUCOMPONENT.TITLE)[0]);
                 leftColumn.removeChild(leftColumn.getChildrenByName(MENUCOMPONENT.PLAY)[0]);
+                MyGame.Audio.play(MyGame.AUDIO.MUSIC);
                 this.actionStart = () => {
                     this.activate(false);
                     ƒ.Time.game.setScale(this.gameSpeed);
@@ -165,6 +166,7 @@ var MyGame;
             };
         }
         navigate(_direction) {
+            MyGame.Audio.play(MyGame.AUDIO.CURSOR);
             this.selection -= _direction;
             if (this.selection < 0)
                 this.selection += this.leftColumnOptionAmount;
@@ -177,14 +179,13 @@ var MyGame;
         triggerAction() {
             switch (this.selection) {
                 case 0:
-                    console.log("go");
                     this.actionStart();
                     break;
                 case 1:
                     for (const menuComponent of this.soundOptions) {
                         menuComponent.activate(!menuComponent.isActive);
                     }
-                    // TODO: Add Adio disable
+                    MyGame.Audio.switch();
                     break;
                 case 2:
                     let selectionIndex = this.speedOptions.findIndex((value) => value.isActive);

@@ -69,6 +69,20 @@ namespace MyGame {
         },
         true
       );
+
+      this.addEventListener(
+        "frameChanged",
+        (_event: Event) => {
+          // console.log("framChanged");
+          if (this.animatedNodeSprite.action == ACTION.WALK) {
+            let currentAnimationFrame: number = this.animatedNodeSprite.actionNode.frameCurrent;
+            if (currentAnimationFrame == 1 || currentAnimationFrame == 4)
+              Audio.play(AUDIO.MOVE);
+          }
+        },
+        true
+      );
+
       this.animatedNodeSprite.play(ACTION.IDLE);
       this.registerUpdate();
     }
@@ -141,6 +155,7 @@ namespace MyGame {
 
         case ACTION.JUMPSTART:
           this.jumpStart = true;
+          Audio.play(AUDIO.JUMP);
           ƒ.Time.game.setTimer(250, 1, () => {
             this.jumpStart = false;
           });

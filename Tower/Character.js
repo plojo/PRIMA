@@ -68,6 +68,14 @@ var MyGame;
                         this.animatedNodeSprite.play(ACTION.FALL);
                 }
             }, true);
+            this.addEventListener("frameChanged", (_event) => {
+                // console.log("framChanged");
+                if (this.animatedNodeSprite.action == ACTION.WALK) {
+                    let currentAnimationFrame = this.animatedNodeSprite.actionNode.frameCurrent;
+                    if (currentAnimationFrame == 1 || currentAnimationFrame == 4)
+                        MyGame.Audio.play(MyGame.AUDIO.MOVE);
+                }
+            }, true);
             this.animatedNodeSprite.play(ACTION.IDLE);
             this.registerUpdate();
         }
@@ -130,6 +138,7 @@ var MyGame;
                     break;
                 case ACTION.JUMPSTART:
                     this.jumpStart = true;
+                    MyGame.Audio.play(MyGame.AUDIO.JUMP);
                     ƒ.Time.game.setTimer(250, 1, () => {
                         this.jumpStart = false;
                     });

@@ -17,6 +17,7 @@ var MyGame;
                     if (actionNode.frameCurrent == actionNode.sprite.frames.length - 1) {
                         this.dispatchEvent(new CustomEvent("animationFinished"));
                     }
+                    this.dispatchEvent(new CustomEvent("frameChanged"));
                     actionNode.showFrameNext();
                 }
             };

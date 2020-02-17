@@ -6,7 +6,7 @@ namespace MyGame {
         private gameFrameCounter: number = 0;
         // private spriteFrameInterval: number = 8;
 
-        private get actionNode(): NodeSprite {
+        public get actionNode(): NodeSprite {
             return this.getNodeSprite(this.action);
         }
 
@@ -42,6 +42,7 @@ namespace MyGame {
                 if (actionNode.frameCurrent == actionNode.sprite.frames.length - 1) {
                     this.dispatchEvent(new CustomEvent("animationFinished"));
                 }
+                this.dispatchEvent(new CustomEvent("frameChanged"));
                 actionNode.showFrameNext();
             }
         }

@@ -100,16 +100,13 @@ var MyGame;
     function processInput() {
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.SPACE]) {
             MyGame.player.act(MyGame.ACTION.JUMP);
-            MyGame.Audio.play(MyGame.AUDIO.JUMP);
         }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.A]) {
             MyGame.player.act(MyGame.ACTION.WALK, MyGame.DIRECTION.LEFT);
-            MyGame.Audio.play(MyGame.AUDIO.MOVE);
             return;
         }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.D]) {
             MyGame.player.act(MyGame.ACTION.WALK, MyGame.DIRECTION.RIGHT);
-            MyGame.Audio.play(MyGame.AUDIO.MOVE);
             return;
         }
         MyGame.player.act(MyGame.ACTION.IDLE);

@@ -13,9 +13,13 @@ namespace MyGame {
       hitBox.cmpTransform.local = ƒ.Matrix4x4.MULTIPLICATION(hitBox.cmpTransform.local, this.cmpMesh.pivot);
       this.appendChild(hitBox);
 
-      this.addEventListener("registerUpdate", (_event: Event) => {
-        Tile.hitBoxes.push(this.hitBox.getRectWorld());
-      }, true);
+      this.addEventListener(
+        "registerUpdate",
+        (_event: Event) => {
+          Tile.hitBoxes.push(this.hitBox.getRectWorld());
+        },
+        true
+      );
     }
 
     public get hitBox(): Collidable {
