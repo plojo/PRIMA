@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>ScrollerCollide</title>
+  <title>Tower</title>
   <link rel="stylesheet" href="style.css">
   <script src="../Fudge/FudgeCore.js"></script>
   <script src="SpriteGenerator.js"></script>
@@ -18,32 +19,19 @@
   <script src="LevelGenerator.js"></script>
   <script src="Audio.js"></script>
   <script src="Main.js"></script>
-  <style>
-    body{
-      background-color: gray;
-      margin: unset;
-    }
-  </style>
 </head>
+
 <body>
-  <canvas width= 1000 height= 800 style="background-color: white;"> </canvas>
-  <img id="player" hidden src="assets/Adventurer.png"/>
-  <img id="font" hidden src="assets/Font.png"/>
-  <img id="assets" hidden src="assets/Assets.png"/>
-  <img id="menu" hidden src="assets/Menu.png"/>
-
-  <!-- <div>
-    <span>Movement: W, A, S, D Jump: SPACE</span>
+  <div id="head">
+    <h1 style="text-align: left;"></h1>
   </div>
-
-  <div>
-
-    <div id="Menu">
-      <h1>
-        1. press F11 for fullscreen <br />
-        2. press SPACE to start
-      </h1>
-    </div>
-  </div> -->
+  <canvas style="background-color: white;"> </canvas>
+  <div> 
+    <img id="player" hidden src="assets/Adventurer.png" />
+    <img id="font" hidden src="assets/Font.png" />
+    <img id="assets" hidden src="assets/Assets.png" />
+    <img id="menu" hidden src="assets/Menu.png" />
+  </div>
 </body>
+
 </html>
