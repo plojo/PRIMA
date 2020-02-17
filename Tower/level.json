@@ -71,16 +71,9 @@
       }
     },
     {
-      "type": "Platform",
-      "translation": {
-        "x": 16.5,
-        "y": 7.85
-      }
-    },
-    {
       "type": "Floor",
       "translation": {
-        "x": 19.5,
+        "x": 16.5,
         "y": 7.85
       }
     },
