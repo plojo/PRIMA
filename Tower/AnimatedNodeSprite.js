@@ -40,6 +40,9 @@ var MyGame;
         registerUpdate() {
             ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);
         }
+        removeUpdate() {
+            ƒ.Loop.removeEventListener("loopFrame" /* LOOP_FRAME */, this.update);
+        }
     }
     MyGame.AnimatedNodeSprite = AnimatedNodeSprite;
 })(MyGame || (MyGame = {}));

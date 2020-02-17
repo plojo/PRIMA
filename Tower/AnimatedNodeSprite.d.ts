@@ -7,6 +7,7 @@ declare namespace MyGame {
         play(_action: ACTION): void;
         getNodeSprite(_action: ACTION): NodeSprite;
         registerUpdate(): void;
+        removeUpdate(): void;
         private update;
     }
 }

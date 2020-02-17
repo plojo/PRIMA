@@ -7,5 +7,6 @@ declare namespace MyGame {
         protected readonly animatedNodeSprite: AnimatedNodeSprite;
         protected readonly hitBoxes: ƒ.Node;
         protected registerUpdate(): void;
+        protected removeUpdate(): void;
     }
 }

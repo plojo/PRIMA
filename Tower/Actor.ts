@@ -46,5 +46,9 @@ namespace MyGame {
         protected registerUpdate(): void {
             ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
         }
+
+        protected removeUpdate(): void {
+            ƒ.Loop.removeEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
+        }
     }
 }

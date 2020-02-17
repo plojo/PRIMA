@@ -28,6 +28,10 @@ namespace MyGame {
             ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
         }
 
+        public removeUpdate(): void {
+            ƒ.Loop.removeEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
+        }
+
         private update = (_event: ƒ.Eventƒ): void => {
             this.gameFrameCounter++;
             let actionNode: NodeSprite = this.actionNode;
