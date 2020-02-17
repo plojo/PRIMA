@@ -62,7 +62,7 @@ namespace MyGame {
     gui.appendChild(menu);
 
     LevelGenerator.generateLevel("level.json");
-    
+
     // adjust cameraBounds to account for screensize
     cameraXBounds[0] = cameraXBounds[0] + 15.45;
     cameraXBounds[1] = cameraXBounds[1] - 15.45;
@@ -85,7 +85,8 @@ namespace MyGame {
     document.addEventListener("keydown", handleKeyboard);
     document.addEventListener("keyup", handleKeyboard);
 
-    gui.cmpTransform.local.translate(new ƒ.Vector3(cameraXBounds[0], cameraYBounds[0]));
+    gui.cmpTransform.local.translate(new ƒ.Vector3(cameraXBounds[0] + 0.05, cameraYBounds[0] + 0.05));
+    // followPlayer();
     ƒ.RenderManager.update();
     game.broadcastEvent(new CustomEvent("registerUpdate"));
 
@@ -94,15 +95,9 @@ namespace MyGame {
     ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 60);
 
     function update(_event: ƒ.Eventƒ): void {
+      followPlayer();
       processInput();
-      let translation: ƒ.Vector3 = gui.cmpTransform.local.translation;
-      let playerTranslation: ƒ.Vector3 = player.mtxWorld.translation;
-      // console.log(playerTranslation.toString());
-      if (playerTranslation.x > cameraXBounds[0] && playerTranslation.x < cameraXBounds[1])
-        translation.x = playerTranslation.x;
-      if (playerTranslation.y > cameraYBounds[0] && playerTranslation.y < cameraYBounds[1])
-        translation.y = playerTranslation.y;
-      gui.cmpTransform.local.translation = translation;
+      
 
       viewport.draw();
     }
@@ -160,5 +155,16 @@ namespace MyGame {
     }
 
     player.act(ACTION.IDLE);
+  }
+
+  function followPlayer(): void {
+    let translation: ƒ.Vector3 = gui.cmpTransform.local.translation;
+    let playerTranslation: ƒ.Vector3 = player.mtxWorld.translation;
+    // console.log(playerTranslation.toString());
+    if (playerTranslation.x > cameraXBounds[0] && playerTranslation.x < cameraXBounds[1])
+      translation.x = playerTranslation.x;
+    if (playerTranslation.y > cameraYBounds[0] && playerTranslation.y < cameraYBounds[1])
+      translation.y = playerTranslation.y;
+    gui.cmpTransform.local.translation = translation;
   }
 }

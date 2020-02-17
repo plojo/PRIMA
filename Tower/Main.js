@@ -60,22 +60,16 @@ var MyGame;
         viewport.draw();
         document.addEventListener("keydown", handleKeyboard);
         document.addEventListener("keyup", handleKeyboard);
-        gui.cmpTransform.local.translate(new MyGame.ƒ.Vector3(MyGame.cameraXBounds[0], MyGame.cameraYBounds[0]));
+        gui.cmpTransform.local.translate(new MyGame.ƒ.Vector3(MyGame.cameraXBounds[0] + 0.05, MyGame.cameraYBounds[0] + 0.05));
+        // followPlayer();
         MyGame.ƒ.RenderManager.update();
         MyGame.game.broadcastEvent(new CustomEvent("registerUpdate"));
         MyGame.ƒ.Time.game.setScale(0);
         MyGame.ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
         MyGame.ƒ.Loop.start(MyGame.ƒ.LOOP_MODE.TIME_GAME, 60);
         function update(_event) {
+            followPlayer();
             processInput();
-            let translation = gui.cmpTransform.local.translation;
-            let playerTranslation = MyGame.player.mtxWorld.translation;
-            // console.log(playerTranslation.toString());
-            if (playerTranslation.x > MyGame.cameraXBounds[0] && playerTranslation.x < MyGame.cameraXBounds[1])
-                translation.x = playerTranslation.x;
-            if (playerTranslation.y > MyGame.cameraYBounds[0] && playerTranslation.y < MyGame.cameraYBounds[1])
-                translation.y = playerTranslation.y;
-            gui.cmpTransform.local.translation = translation;
             viewport.draw();
         }
     }
@@ -126,5 +120,15 @@ var MyGame;
             return;
         }
         MyGame.player.act(MyGame.ACTION.IDLE);
+    }
+    function followPlayer() {
+        let translation = gui.cmpTransform.local.translation;
+        let playerTranslation = MyGame.player.mtxWorld.translation;
+        // console.log(playerTranslation.toString());
+        if (playerTranslation.x > MyGame.cameraXBounds[0] && playerTranslation.x < MyGame.cameraXBounds[1])
+            translation.x = playerTranslation.x;
+        if (playerTranslation.y > MyGame.cameraYBounds[0] && playerTranslation.y < MyGame.cameraYBounds[1])
+            translation.y = playerTranslation.y;
+        gui.cmpTransform.local.translation = translation;
     }
 })(MyGame || (MyGame = {}));
