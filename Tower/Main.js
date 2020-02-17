@@ -88,8 +88,8 @@ var MyGame;
     function handleKeyboard(_event) {
         let running = MyGame.ƒ.Time.game.getScale() != 0;
         if (_event.code == MyGame.ƒ.KEYBOARD_CODE.ESC && _event.type == "keydown") {
-            MyGame.ƒ.Time.game.setScale(running ? 0 : MyGame.menu.gameSpeed);
-            MyGame.menu.show(running);
+            MyGame.ƒ.Time.game.setScale(0);
+            MyGame.menu.show(true);
             viewport.draw();
         }
         if (running)

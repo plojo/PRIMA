@@ -120,8 +120,8 @@ namespace MyGame {
     let running: boolean = ƒ.Time.game.getScale() != 0;
 
     if (_event.code == ƒ.KEYBOARD_CODE.ESC && _event.type == "keydown") {
-      ƒ.Time.game.setScale(running ? 0 : menu.gameSpeed);
-      menu.show(running);
+      ƒ.Time.game.setScale(0);
+      menu.show(true);
       viewport.draw();
     }
     if (running)
