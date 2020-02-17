@@ -9,9 +9,9 @@ var MyGame;
             let animatedNodeSprite = new MyGame.AnimatedNodeSprite("AnimatedNodeSprite");
             animatedNodeSprite.addComponent(new ƒ.ComponentTransform());
             this.appendChild(animatedNodeSprite);
-            let hitBoxes = new ƒ.Node("HitBoxes");
-            hitBoxes.addComponent(new ƒ.ComponentTransform());
-            this.appendChild(hitBoxes);
+            // let hitBoxes: ƒ.Node = new ƒ.Node("HitBoxes");
+            // hitBoxes.addComponent(new ƒ.ComponentTransform());
+            // this.appendChild(hitBoxes);
             for (let sprite of _sprites) {
                 let nodeSprite = new MyGame.NodeSprite(sprite.name, sprite);
                 nodeSprite.activate(false);
@@ -28,9 +28,6 @@ var MyGame;
         // protected abstract static generateSprites(_txtImage: ƒ.TextureImage): void; // No static abstract methods in typescript <.<
         get animatedNodeSprite() {
             return this.getChildrenByName("AnimatedNodeSprite")[0];
-        }
-        get hitBoxes() {
-            return this.getChildrenByName("HitBoxes")[0];
         }
         registerUpdate() {
             ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, this.update);

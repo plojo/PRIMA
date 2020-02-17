@@ -5,7 +5,6 @@ declare namespace MyGame {
         protected abstract update: (_event: ƒ.Eventƒ) => void;
         constructor(_name: string, _sprites: Sprite[]);
         protected readonly animatedNodeSprite: AnimatedNodeSprite;
-        protected readonly hitBoxes: ƒ.Node;
         protected registerUpdate(): void;
         protected removeUpdate(): void;
     }

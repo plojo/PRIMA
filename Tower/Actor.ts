@@ -14,9 +14,9 @@ namespace MyGame {
             animatedNodeSprite.addComponent(new ƒ.ComponentTransform());
             this.appendChild(animatedNodeSprite);
 
-            let hitBoxes: ƒ.Node = new ƒ.Node("HitBoxes");
-            hitBoxes.addComponent(new ƒ.ComponentTransform());
-            this.appendChild(hitBoxes);
+            // let hitBoxes: ƒ.Node = new ƒ.Node("HitBoxes");
+            // hitBoxes.addComponent(new ƒ.ComponentTransform());
+            // this.appendChild(hitBoxes);
 
             for (let sprite of _sprites) {
                 let nodeSprite: NodeSprite = new NodeSprite(sprite.name, sprite);
@@ -37,10 +37,6 @@ namespace MyGame {
         
         protected get animatedNodeSprite(): AnimatedNodeSprite {
             return <AnimatedNodeSprite>this.getChildrenByName("AnimatedNodeSprite")[0];
-        }
-
-        protected get hitBoxes(): ƒ.Node {
-            return this.getChildrenByName("HitBoxes")[0];
         }
 
         protected registerUpdate(): void {

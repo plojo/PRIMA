@@ -47,7 +47,6 @@ namespace MyGame {
     }
 
     game = new ƒ.Node("Game");
-    game.appendChild(background);
     player = new Character("Player");
     player.cmpTransform.local.translate(new ƒ.Vector3(14, 1, 0));
     level = new ƒ.Node("Level");
@@ -59,6 +58,7 @@ namespace MyGame {
     game.appendChild(player);
     game.appendChild(level);
     game.appendChild(gui);
+    level.appendChild(background);
     gui.appendChild(menu);
 
     LevelGenerator.generateLevel("level.json");

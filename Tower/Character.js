@@ -43,13 +43,13 @@ var MyGame;
             hitBox.cmpTransform.local.scaleY(1.8);
             hitBox.cmpTransform.local.scaleX(0.39);
             hitBox.cmpTransform.local.translateY(0.9);
-            this.hitBoxes.appendChild(hitBox);
+            this.appendChild(hitBox);
             hitBox = new MyGame.Collidable("HitBoxHorizontal");
             // hitBox.cmpTransform.local = ƒ.Matrix4x4.MULTIPLICATION(hitBox.cmpTransform.local,  this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).cmpMesh.pivot);
             hitBox.cmpTransform.local.scaleY(1.4);
             hitBox.cmpTransform.local.scaleX(0.80);
             hitBox.cmpTransform.local.translateY(0.9);
-            this.hitBoxes.appendChild(hitBox);
+            this.appendChild(hitBox);
             this.animatedNodeSprite.getNodeSprite(ACTION.JUMPSQUAT).spriteFrameInterval = 3; // jumpsquat animation should last for 5 frames only
             this.animatedNodeSprite.getNodeSprite(ACTION.JUMP).spriteFrameInterval = 7;
             this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).activate(true);
@@ -99,10 +99,10 @@ var MyGame;
             this.sprites.push(sprite);
         }
         get hitBoxVertical() {
-            return this.hitBoxes.getChildrenByName("HitBoxVertical")[0];
+            return this.getChildrenByName("HitBoxVertical")[0];
         }
         get hitBoxHorizontal() {
-            return this.hitBoxes.getChildrenByName("HitBoxHorizontal")[0];
+            return this.getChildrenByName("HitBoxHorizontal")[0];
         }
         act(_action, _direction) {
             // console.log(_action);

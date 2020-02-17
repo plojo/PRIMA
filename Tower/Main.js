@@ -30,7 +30,6 @@ var MyGame;
             }
         }
         MyGame.game = new MyGame.ƒ.Node("Game");
-        MyGame.game.appendChild(background);
         MyGame.player = new MyGame.Character("Player");
         MyGame.player.cmpTransform.local.translate(new MyGame.ƒ.Vector3(14, 1, 0));
         MyGame.level = new MyGame.ƒ.Node("Level");
@@ -41,6 +40,7 @@ var MyGame;
         MyGame.game.appendChild(MyGame.player);
         MyGame.game.appendChild(MyGame.level);
         MyGame.game.appendChild(gui);
+        MyGame.level.appendChild(background);
         gui.appendChild(MyGame.menu);
         MyGame.LevelGenerator.generateLevel("level.json");
         // adjust cameraBounds to account for screensize
