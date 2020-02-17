@@ -2,7 +2,7 @@
 
 ## Wichtige Hinweise
  - F11 für Vollbildmodus
- - bei **Performance Problemen einfach das Browserfenster verkleinern**
+ - bei **Performance Problemen einfach das Browser Fenster verkleinern**
  - das Level ist schwierig aber nicht unschaffbar
  
 ## Links
