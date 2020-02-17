@@ -88,7 +88,7 @@ namespace MyGame {
     gui.cmpTransform.local.translate(new ƒ.Vector3(cameraXBounds[0] + 0.05, cameraYBounds[0] + 0.05));
     // followPlayer();
     ƒ.RenderManager.update();
-    game.broadcastEvent(new CustomEvent("registerUpdate"));
+    level.broadcastEvent(new CustomEvent("registerHitBox"));
 
     ƒ.Time.game.setScale(0);
     ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
