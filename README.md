@@ -2,7 +2,9 @@
 
 **Wichtiger Hinweis** Drücke F11 für Vollbildmodus, bei **Performanceproblemen einfach das Browserfenster verkleinern**.
  - [Lauffähiges Spiel](https://plojo.github.io/PRIMA/Tower/index.html)
- - [Quellcode und Designdokument hier](https://github.com/plojo/PRIMA/tree/master/Tower)
+ - [Quellcode](https://github.com/plojo/PRIMA/tree/master/Tower)
+ - [Designdokument](https://github.com/plojo/PRIMA/blob/master/Tower/documents/Designdokument.pdf)
+ - [Installations- und Bedienungsanleitung](https://github.com/plojo/PRIMA/blob/master/Tower/documents/Anleitung.pdf)
 
 ## Hinweis
 
@@ -37,20 +39,3 @@
   * Die Projektordner inklusive aller erforderlichen Dateien, also auch Bild- und Audiodaten
   * Eine kurze Anleitung zur Installation der Anwendung unter Berücksichtigung erforderlicher Dienste (z.B. Heroku, MongoDB etc.) 
   * Eine kurze Anleitung zur Interaktion mit der Anwendung
-
-## GameZone
-Wenn Du dein Spiel bei der Dauerausstellung "GameZone" am Tag der Medien sehen möchtest, ergänze folgendes  
-* Einen Ordner mit zwei Screenshots der laufenden Applikation in den Größen 250x100 und 1920x400 pixel sowie ein Textdokument mit den Informationen:
-* Titel
-* Autor
-* Jahr und Semester der Entwicklung (Sose, Wise)
-* Studiensemester
-* Lehrplansemester
-* Studiengang
-* Veranstaltung im Rahmen derer die Entwicklung durchgeführt wurde
-* betreuender Dozent
-* Genre des Spiels
-* ggf. passende Tags/ Schlagwörter zu dem Spiel
-* Untertitel (max 40 Zeichen), der Menschen zum Spielen animiert
-* Kurzbeschreibung (max 250 Zeichen), die kurz erklärt wie zu spielen ist
-* Erklärung, dass die Fakultät Digitale Medien die Anwendung bei Veranstaltungen, insbesondere am Tag der Medien, mit einem expliziten Verweis auf den Autor, vorführen darf.
