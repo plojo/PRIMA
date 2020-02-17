@@ -31,13 +31,3 @@
 |  9 | Subklassen            | Folgende Klassenhierachie existiert: <br> Charakter, Gust und GustSpawner  erben alle von der abstrakten Klasse Actor. Jede von ihnen enthält eine Update-Methode welche in der Game-Loop registriert wird. Charakter und Gust nutzen zusätlich die AnimatedNodeSprite von Actor. <br> Folgende Klassen erben direkt von Node: Actor, Background, Menu, Collidable, NodeSprite damit sie zu SPielobjekten werden. <br> Folgende Klassen erben von NodeSprite: MenuComponent, Tile damit sie direkt über die Spriteanzeige-Funktionalität verfügen. |
 | 10 | Maße & Positionen     | Eine Einheit enspricht genau einem Meter. Der Spielerchrakter ist somit ca. 1,8m groß. Es werden echte physiklaische Einheiten benutzt(m, s, m/s, m/s^2). Die Levelbausteine wurden so gesetzt, dass sich der Spieler nur auf positiven Welt-Koordinaten bewegt. Gusts bewegen sich in bezug auf die lokalen koordinaten der GustSpawner (Beim drehen des Spawners wird richtung von Gust bestimmt) |
 | 11 | Event-System          | Die AnimatedNodeSprite-Komponente sendet folgende Events nach oben in die Hierachie: <br> "frameChanged" - wenn sich ihr dargestlltes SpriteFrame geändert hat, Charakter nimmt dieses Event entgegen um die Fußtritt-Sounds im richtigen Moment abzuspielen. <br> "animationFinished" - wenn alle SpriteFrames einer NodeSprite einmal angezeigt wurden (am Ende der Animation), Charakter nimmt dieses Event entgegen um seine Idle Animationen(Fallen/Rumstehen) im Anschluss an einmalige Animationen(Springen) zu starten. Ebenfalls wird hier nach beendigen der Absprunganimation (JumpSquat) der eigentlich Sprung gestartet. |
-
-## Abgabeformat
-* Fasse die Konzeption als ein wohlformatiertes Designdokument in PDF zusammen!
-* Platziere einen Link in der Readme-Datei deines PRIMA-Repositories auf Github auf die fertige und in Github-Pages lauffähige Anwendung.
-* Platziere ebenso Links zu den Stellen in deinem Repository, an denen der Quellcode und das Designdokument zu finden sind.
-* Stelle zudem auf diese Art dort auch ein gepacktes Archiv zur Verfügung, welches folgende Daten enthält
-  * Das Designdokument 
-  * Die Projektordner inklusive aller erforderlichen Dateien, also auch Bild- und Audiodaten
-  * Eine kurze Anleitung zur Installation der Anwendung unter Berücksichtigung erforderlicher Dienste (z.B. Heroku, MongoDB etc.) 
-  * Eine kurze Anleitung zur Interaktion mit der Anwendung
