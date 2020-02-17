@@ -4,6 +4,7 @@ var MyGame;
     MyGame.ƒ = FudgeCore;
     window.addEventListener("load", test);
     let keysPressed = {};
+    let background = new MyGame.ƒ.Node("Background");
     // this should be an own class but i'm running out of time
     let gui;
     // bounds will be overriden in levelgenerator
@@ -14,7 +15,22 @@ var MyGame;
         let canvas = document.querySelector("canvas");
         MyGame.ƒ.RenderManager.initialize(true, false); // Transparence is weired
         generateSprites();
+        let backgrounds = document.querySelectorAll("img");
+        let distance = 30;
+        for (let i = 0; i < backgrounds.length; i++) {
+            let txt = new MyGame.ƒ.TextureImage();
+            let backgroundImg = backgrounds[i];
+            if (backgroundImg.id == "background") {
+                txt.image = backgroundImg;
+                let bg = new MyGame.Background(txt, distance);
+                bg.cmpTransform.local.scaleY(9 * 6);
+                bg.cmpTransform.local.scaleX(16 * 6);
+                background.appendChild(bg);
+                distance = distance - 3;
+            }
+        }
         MyGame.game = new MyGame.ƒ.Node("Game");
+        MyGame.game.appendChild(background);
         MyGame.player = new MyGame.Character("Player");
         MyGame.player.cmpTransform.local.translate(new MyGame.ƒ.Vector3(14, 1, 0));
         MyGame.level = new MyGame.ƒ.Node("Level");
