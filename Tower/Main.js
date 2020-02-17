@@ -13,7 +13,7 @@ var MyGame;
     let viewport;
     function test() {
         let canvas = document.querySelector("canvas");
-        MyGame.ƒ.RenderManager.initialize(true, false); // Transparence is weired
+        MyGame.ƒ.RenderManager.initialize(false, false); // Transparence is weired
         generateSprites();
         let backgrounds = document.querySelectorAll("img");
         let distance = 30;

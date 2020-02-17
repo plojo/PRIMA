@@ -27,22 +27,19 @@
     }
 
     body {
-      background-color: black;
+      background-color: white;
     }
 
     .canvasContainer {
-      position: relative;
-      width: 800px;
-      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-      float: left;
-      height: 0;
+      width: 100%;
     }
 
     canvas {
+      display: block;
       width: 100%;
-      /* position: absolute; */
-      /* left: 0; */
+      height: auto;
     }
+    
   </style>
 </head>
 
@@ -52,17 +49,17 @@
     <img id="font" hidden src="assets/Font.png" />
     <img id="assets" hidden src="assets/Assets.png" />
     <img id="menu" hidden src="assets/Menu.png" />
-    <img id="background" hidden src="assets/Background7.png"/>
-    <img id="background" hidden src="assets/Background6.png"/>
-    <img id="background" hidden src="assets/Background5.png"/>
-    <img id="background" hidden src="assets/Background4.png"/>
-    <img id="background" hidden src="assets/Background3.png"/>
-    <img id="background" hidden src="assets/Background2.png"/>
-    <img id="background" hidden src="assets/Background1.png"/>
-
+    <img id="background" hidden src="assets/Background7.png" />
+    <img id="background" hidden src="assets/Background6.png" />
+    <img id="background" hidden src="assets/Background5.png" />
+    <img id="background" hidden src="assets/Background4.png" />
+    <img id="background" hidden src="assets/Background3.png" />
+    <img id="background" hidden src="assets/Background2.png" />
+    <img id="background" hidden src="assets/Background1.png" />
   </div>
+
   <div class="canvasContainer">
-    <canvas> </canvas>
+    <canvas width="640" height="360"> </canvas>
   </div>
 </body>
 

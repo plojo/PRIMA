@@ -24,7 +24,7 @@ namespace MyGame {
 
   function test(): void {
     let canvas: HTMLCanvasElement = document.querySelector("canvas");
-    ƒ.RenderManager.initialize(true, false); // Transparence is weired
+    ƒ.RenderManager.initialize(false, false); // Transparence is weired
     generateSprites();
 
     let backgrounds: NodeListOf<HTMLImageElement> = document.querySelectorAll(
