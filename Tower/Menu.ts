@@ -198,13 +198,20 @@ namespace MyGame {
         this.removeChild(this.getChildrenByName(MENUCOMPONENT.TITLE)[0]);
         leftColumn.removeChild(leftColumn.getChildrenByName(MENUCOMPONENT.PLAY)[0]);
 
-        Audio.play(AUDIO.MUSIC);
+        let isActive: boolean = Audio.getAudio(AUDIO.MUSIC).isActive;
+        if (!isActive) {
+          Audio.getAudio(AUDIO.MUSIC).activate(true);
+          Audio.play(AUDIO.MUSIC, true, true);
+          Audio.getAudio(AUDIO.MUSIC).activate(false);
+        } else
+          Audio.play(AUDIO.MUSIC);
+
 
         this.actionStart = () => {
           this.show(false);
           ƒ.Time.game.setScale(this.gameSpeed);
         };
-        
+
         this.actionStart();
       };
     }

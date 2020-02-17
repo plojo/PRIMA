@@ -14,7 +14,8 @@ declare namespace MyGame {
         static start(): void;
         static switch(): void;
         static pause(_on: boolean): void;
-        static play(_audio: AUDIO, _on?: boolean): void;
+        static play(_audio: AUDIO, _on?: boolean, _force?: boolean): void;
+        static getAudio(_audio: AUDIO): ƒ.ComponentAudio;
         private static appendAudio;
     }
 }

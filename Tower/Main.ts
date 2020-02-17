@@ -68,7 +68,6 @@ namespace MyGame {
     ƒ.RenderManager.update();
     game.broadcastEvent(new CustomEvent("registerUpdate"));
 
-
     ƒ.Time.game.setScale(0);
     ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
     ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 60);

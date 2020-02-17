@@ -157,7 +157,14 @@ var MyGame;
                 leftColumn.getChildrenByName(MENUCOMPONENT.RESUME)[0].activate(true);
                 this.removeChild(this.getChildrenByName(MENUCOMPONENT.TITLE)[0]);
                 leftColumn.removeChild(leftColumn.getChildrenByName(MENUCOMPONENT.PLAY)[0]);
-                MyGame.Audio.play(MyGame.AUDIO.MUSIC);
+                let isActive = MyGame.Audio.getAudio(MyGame.AUDIO.MUSIC).isActive;
+                if (!isActive) {
+                    MyGame.Audio.getAudio(MyGame.AUDIO.MUSIC).activate(true);
+                    MyGame.Audio.play(MyGame.AUDIO.MUSIC, true, true);
+                    MyGame.Audio.getAudio(MyGame.AUDIO.MUSIC).activate(false);
+                }
+                else
+                    MyGame.Audio.play(MyGame.AUDIO.MUSIC);
                 this.actionStart = () => {
                     this.show(false);
                     ƒ.Time.game.setScale(this.gameSpeed);
