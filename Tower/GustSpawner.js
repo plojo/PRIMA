@@ -20,6 +20,7 @@ var MyGame;
             this.registerUpdate();
             this.animatedNodeSprite.getNodeSprite(MyGame.ACTION.IDLE).activate(true);
             this.animatedNodeSprite.play(MyGame.ACTION.IDLE);
+            this.animatedNodeSprite.registerUpdate();
             ƒ.Time.game.setTimer(_lifespan, 1, () => {
                 this.removeUpdate();
                 this.getParent().removeChild(this);
@@ -28,7 +29,7 @@ var MyGame;
         static generateSprites(_txtImage) {
             this.sprites = [];
             let sprite = new MyGame.Sprite(MyGame.ACTION.IDLE);
-            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 42, 40), 1, ƒ.Vector2.ZERO(), 16, ƒ.ORIGIN2D.CENTER);
+            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 42, 40), 4, ƒ.Vector2.ZERO(), 16, ƒ.ORIGIN2D.CENTER);
             this.sprites.push(sprite);
         }
         get hitBox() {
