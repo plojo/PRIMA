@@ -15,9 +15,11 @@ namespace MyGame {
             this.appendChild(hitBox);
 
             this.registerUpdate();
-
+            
             this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).activate(true);
             this.animatedNodeSprite.play(ACTION.IDLE);
+
+            this.animatedNodeSprite.registerUpdate();
 
             ƒ.Time.game.setTimer(_lifespan, 1, () => {
                 this.removeUpdate();
@@ -29,7 +31,7 @@ namespace MyGame {
         public static generateSprites(_txtImage: ƒ.TextureImage): void {
             this.sprites = [];
             let sprite: Sprite = new Sprite(ACTION.IDLE);
-            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 42, 40), 1, ƒ.Vector2.ZERO(), 16, ƒ.ORIGIN2D.CENTER);
+            sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 0, 42, 40), 4, ƒ.Vector2.ZERO(), 16, ƒ.ORIGIN2D.CENTER);
             this.sprites.push(sprite);
         }
 
