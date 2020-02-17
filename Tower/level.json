@@ -120,10 +120,17 @@
       }
     },
     {
+      "type": "Platform",
+      "translation": {
+        "x": 1,
+        "y": 19
+      }
+    },
+    {
       "type": "Floor",
       "translation": {
         "x": 6,
-        "y": 20
+        "y": 21
       }
     },
     {
@@ -135,7 +142,7 @@
       "parameter": {
         "offset": 100,
         "interval": 2,
-        "rotation": 90,
+        "rotation": 180,
         "lifespan": 5,
         "speed": 8
       }
@@ -149,7 +156,7 @@
       "parameter": {
         "offset": 100,
         "interval": 2,
-        "rotation": 90,
+        "rotation": 180,
         "lifespan": 5,
         "speed": 8
       }
