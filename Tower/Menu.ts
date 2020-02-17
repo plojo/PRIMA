@@ -201,7 +201,7 @@ namespace MyGame {
         Audio.play(AUDIO.MUSIC);
 
         this.actionStart = () => {
-          this.activate(false);
+          this.show(false);
           ƒ.Time.game.setScale(this.gameSpeed);
         };
         
@@ -241,6 +241,12 @@ namespace MyGame {
           });
           this.gameSpeed = this.getSpeed(selectionIndex);
       }
+      Audio.play(AUDIO.CONFIRM);
+    }
+
+    public show(_on: boolean) {
+      this.activate(_on);
+      Audio.pause(_on);
     }
 
     private getSpeed(_option: number): number {

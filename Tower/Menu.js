@@ -159,7 +159,7 @@ var MyGame;
                 leftColumn.removeChild(leftColumn.getChildrenByName(MENUCOMPONENT.PLAY)[0]);
                 MyGame.Audio.play(MyGame.AUDIO.MUSIC);
                 this.actionStart = () => {
-                    this.activate(false);
+                    this.show(false);
                     ƒ.Time.game.setScale(this.gameSpeed);
                 };
                 this.actionStart();
@@ -196,6 +196,11 @@ var MyGame;
                     });
                     this.gameSpeed = this.getSpeed(selectionIndex);
             }
+            MyGame.Audio.play(MyGame.AUDIO.CONFIRM);
+        }
+        show(_on) {
+            this.activate(_on);
+            MyGame.Audio.pause(_on);
         }
         getSpeed(_option) {
             switch (_option) {

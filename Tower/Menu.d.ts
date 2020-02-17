@@ -34,6 +34,7 @@ declare namespace MyGame {
         constructor();
         navigate(_direction: number): void;
         triggerAction(): void;
+        show(_on: boolean): void;
         private getSpeed;
     }
 }

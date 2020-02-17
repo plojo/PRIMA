@@ -4,6 +4,7 @@ declare namespace MyGame {
         JUMP = "sounds/Jump.wav",
         MOVE = "sounds/Move.mp3",
         CURSOR = "sounds/Cursor.wav",
+        CONFIRM = "sounds/Confirm.wav",
         MUSIC = "sounds/Music.wav"
     }
     class Audio extends ƒ.Node {
@@ -12,7 +13,7 @@ declare namespace MyGame {
         private static readonly node;
         static start(): void;
         static switch(): void;
-        static stop(): void;
+        static pause(_on: boolean): void;
         static play(_audio: AUDIO, _on?: boolean): void;
         private static appendAudio;
     }

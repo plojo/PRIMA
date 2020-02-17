@@ -7,6 +7,7 @@ namespace MyGame {
     JUMP = "sounds/Jump.wav",
     MOVE = "sounds/Move.mp3",
     CURSOR = "sounds/Cursor.wav",
+    CONFIRM = "sounds/Confirm.wav",
     MUSIC = "sounds/Music.wav"
   }
 
@@ -30,30 +31,27 @@ namespace MyGame {
       }
     }
 
-    public static stop(): void {
-      for (const child of this.components.values()) {
-        child.play(false);
-      }
+    public static pause(_on: boolean): void {
+      Audio.components.get(AUDIO.MUSIC).volume = _on ? 0.25 : 0.5;
     }
 
     public static play(_audio: AUDIO, _on: boolean = true): void {
-      ƒ.Debug.log(_audio);
       if (this.on)
         Audio.components.get(_audio).play(_on);
     }
 
 
     private static async appendAudio(): Promise<void> {
-      // Audio.components.set(AUDIO.START, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.START), true, true));
-      // Audio.components.set(AUDIO.PLAY, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.PLAY), true, false));
       Audio.components.set(AUDIO.JUMP, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.JUMP), false, false));
       Audio.components.set(AUDIO.MOVE, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.MOVE), false, false));
       Audio.components.set(AUDIO.CURSOR, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.CURSOR), false, false));
+      Audio.components.set(AUDIO.CONFIRM, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.CONFIRM), false, false));
       Audio.components.set(AUDIO.MUSIC, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.MUSIC), true, false));
 
       Audio.components.get(AUDIO.JUMP).volume = 0.5;
       Audio.components.get(AUDIO.MOVE).volume = 0.2;
-      Audio.components.get(AUDIO.CURSOR).volume = 3;
+      Audio.components.get(AUDIO.CURSOR).volume = 2;
+      Audio.components.get(AUDIO.CONFIRM).volume = 0.5;
       Audio.components.get(AUDIO.MUSIC).volume = 0.5;
 
       Audio.components.forEach(element => Audio.node.addComponent(element));

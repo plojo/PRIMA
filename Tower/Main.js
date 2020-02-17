@@ -79,7 +79,7 @@ var MyGame;
         let running = MyGame.ƒ.Time.game.getScale() != 0;
         if (_event.code == MyGame.ƒ.KEYBOARD_CODE.ESC && _event.type == "keydown") {
             MyGame.ƒ.Time.game.setScale(running ? 0 : MyGame.menu.gameSpeed);
-            MyGame.menu.activate(running);
+            MyGame.menu.show(running);
             viewport.draw();
         }
         if (running)

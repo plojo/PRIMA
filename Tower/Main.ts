@@ -107,7 +107,7 @@ namespace MyGame {
 
     if (_event.code == ƒ.KEYBOARD_CODE.ESC && _event.type == "keydown") {
       ƒ.Time.game.setScale(running ? 0 : menu.gameSpeed);
-      menu.activate(running);
+      menu.show(running);
       viewport.draw();
     }
     if (running)
