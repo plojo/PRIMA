@@ -71,9 +71,16 @@
       }
     },
     {
-      "type": "Floor",
+      "type": "Platform",
       "translation": {
         "x": 16.5,
+        "y": 7.85
+      }
+    },
+    {
+      "type": "Floor",
+      "translation": {
+        "x": 19.5,
         "y": 7.85
       }
     },
@@ -113,6 +120,13 @@
       }
     },
     {
+      "type": "Wall",
+      "translation": {
+        "x": 0,
+        "y": 36
+      }
+    },
+    {
       "type": "Platform",
       "translation": {
         "x": 3,
@@ -130,7 +144,7 @@
       "type": "Floor",
       "translation": {
         "x": 6,
-        "y": 21
+        "y": 22
       }
     },
     {
@@ -144,6 +158,69 @@
         "interval": 4,
         "rotation": 180,
         "lifespan": 5,
+        "speed": 8
+      }
+    },
+    {
+      "type": "Platform",
+      "translation": {
+        "x": 20,
+        "y": 8.5
+      }
+    },
+    {
+      "type": "Platform",
+      "translation": {
+        "x": 5,
+        "y": 25
+      }
+    },
+    {
+      "type": "Platform",
+      "translation": {
+        "x": 11,
+        "y": 28.5
+      }
+    },
+    {
+      "type": "Platform",
+      "translation": {
+        "x": 16,
+        "y": 34
+      }
+    },
+    {
+      "type": "Platform",
+      "translation": {
+        "x": 21,
+        "y": 34
+      }
+    },
+    {
+      "type": "GustSpawner",
+      "translation": {
+        "x": 9,
+        "y": 32
+      },
+      "parameter": {
+        "offset": 100,
+        "interval": 2,
+        "rotation": 270,
+        "lifespan": 1,
+        "speed": 8
+      }
+    },
+    {
+      "type": "GustSpawner",
+      "translation": {
+        "x": 14.5,
+        "y": 28
+      },
+      "parameter": {
+        "offset": 100,
+        "interval": 2,
+        "rotation": 90,
+        "lifespan": 3,
         "speed": 8
       }
     },
