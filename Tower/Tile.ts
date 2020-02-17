@@ -14,7 +14,7 @@ namespace MyGame {
       this.appendChild(hitBox);
 
       this.addEventListener(
-        "registerUpdate",
+        "registerHitBox",
         (_event: Event) => {
           Tile.hitBoxes.push(this.hitBox.getRectWorld());
         },

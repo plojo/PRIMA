@@ -63,7 +63,7 @@ var MyGame;
         gui.cmpTransform.local.translate(new MyGame.ƒ.Vector3(MyGame.cameraXBounds[0] + 0.05, MyGame.cameraYBounds[0] + 0.05));
         // followPlayer();
         MyGame.ƒ.RenderManager.update();
-        MyGame.game.broadcastEvent(new CustomEvent("registerUpdate"));
+        MyGame.level.broadcastEvent(new CustomEvent("registerHitBox"));
         MyGame.ƒ.Time.game.setScale(0);
         MyGame.ƒ.Loop.addEventListener("loopFrame" /* LOOP_FRAME */, update);
         MyGame.ƒ.Loop.start(MyGame.ƒ.LOOP_MODE.TIME_GAME, 60);
