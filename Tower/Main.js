@@ -2,7 +2,7 @@
 var MyGame;
 (function (MyGame) {
     MyGame.ƒ = FudgeCore;
-    window.addEventListener("load", test);
+    window.addEventListener("load", start);
     let keysPressed = {};
     let background = new MyGame.ƒ.Node("Background");
     // this should be an own class but i'm running out of time
@@ -11,7 +11,7 @@ var MyGame;
     MyGame.cameraXBounds = [0, 1000];
     MyGame.cameraYBounds = [0, 1000];
     let viewport;
-    function test() {
+    function start() {
         let canvas = document.querySelector("canvas");
         MyGame.ƒ.RenderManager.initialize(false, false); // Transparence is weired
         generateSprites();

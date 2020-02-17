@@ -1,7 +1,7 @@
 namespace MyGame {
   export import ƒ = FudgeCore;
 
-  window.addEventListener("load", test);
+  window.addEventListener("load", start);
 
   interface KeyPressed {
     [code: string]: boolean;
@@ -22,7 +22,7 @@ namespace MyGame {
 
   let viewport: ƒ.Viewport;
 
-  function test(): void {
+  function start(): void {
     let canvas: HTMLCanvasElement = document.querySelector("canvas");
     ƒ.RenderManager.initialize(false, false); // Transparence is weired
     generateSprites();
