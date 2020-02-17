@@ -1,6 +1,6 @@
 # PRIMA
 
-## Wichtige Hinweis
+## Wichtige Hinweise
  - F11 für Vollbildmodus
  - bei **Performance Problemen einfach das Browserfenster verkleinern**
  - das Level ist schwierig aber nicht unschaffbar
