@@ -28,10 +28,17 @@ var MyGame;
         static pause(_on) {
             Audio.components.get(AUDIO.MUSIC).volume = _on ? 0.25 : 0.5;
         }
-        static play(_audio, _on = true) {
-            if (this.on)
-                Audio.components.get(_audio).play(_on);
+        static play(_audio, _on = true, _force = false) {
+            if (this.on || _force)
+                Audio.getAudio(_audio).play(_on);
         }
+        static getAudio(_audio) {
+            return Audio.components.get(_audio);
+        }
+        // public static switchAudio(_audio: AUDIO): void {
+        //   console.log(!Audio.components.get(_audio).isActive);
+        //   Audio.components.get(_audio).activate(!Audio.components.get(_audio).isActive);
+        // }
         static async appendAudio() {
             Audio.components.set(AUDIO.JUMP, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.JUMP), false, false));
             Audio.components.set(AUDIO.MOVE, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.MOVE), false, false));

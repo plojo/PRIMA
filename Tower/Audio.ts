@@ -35,11 +35,19 @@ namespace MyGame {
       Audio.components.get(AUDIO.MUSIC).volume = _on ? 0.25 : 0.5;
     }
 
-    public static play(_audio: AUDIO, _on: boolean = true): void {
-      if (this.on)
-        Audio.components.get(_audio).play(_on);
+    public static play(_audio: AUDIO, _on: boolean = true, _force: boolean = false): void {
+      if (this.on || _force)
+        Audio.getAudio(_audio).play(_on);
     }
 
+    public static getAudio(_audio: AUDIO): ƒ.ComponentAudio {
+      return Audio.components.get(_audio);
+    }
+
+    // public static switchAudio(_audio: AUDIO): void {
+    //   console.log(!Audio.components.get(_audio).isActive);
+    //   Audio.components.get(_audio).activate(!Audio.components.get(_audio).isActive);
+    // }
 
     private static async appendAudio(): Promise<void> {
       Audio.components.set(AUDIO.JUMP, new ƒ.ComponentAudio(await ƒ.Audio.load(AUDIO.JUMP), false, false));
