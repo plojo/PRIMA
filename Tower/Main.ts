@@ -13,10 +13,11 @@ namespace MyGame {
   export let player: Character;
   export let menu: Menu;
 
-  // this could be an own class
+  // this should be an own class but i'm running out of time
   let gui: ƒ.Node;
-  export let cameraXBounds: number[];
-  export let cameraYBounds: number[];
+  // bounds will be overriden in levelgenerator
+  export let cameraXBounds: number[] = [0, 1000];
+  export let cameraYBounds: number[] = [0, 1000];
 
   let viewport: ƒ.Viewport;
 

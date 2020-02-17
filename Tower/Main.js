@@ -4,8 +4,11 @@ var MyGame;
     MyGame.ƒ = FudgeCore;
     window.addEventListener("load", test);
     let keysPressed = {};
-    // this could be an own class
+    // this should be an own class but i'm running out of time
     let gui;
+    // bounds will be overriden in levelgenerator
+    MyGame.cameraXBounds = [0, 1000];
+    MyGame.cameraYBounds = [0, 1000];
     let viewport;
     function test() {
         let canvas = document.querySelector("canvas");
