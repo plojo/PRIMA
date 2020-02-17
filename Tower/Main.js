@@ -33,7 +33,7 @@ var MyGame;
         MyGame.cameraYBounds[0] = MyGame.cameraYBounds[0] + 8.65;
         MyGame.cameraYBounds[1] = MyGame.cameraYBounds[1] - 8.65;
         // console.log(game);
-        // Audio.start();
+        MyGame.Audio.start();
         let cmpCamera = new MyGame.ƒ.ComponentCamera();
         cmpCamera.pivot.translateZ(28);
         cmpCamera.pivot.lookAt(MyGame.ƒ.Vector3.ZERO());
@@ -54,7 +54,7 @@ var MyGame;
             processInput();
             let translation = gui.cmpTransform.local.translation;
             let playerTranslation = MyGame.player.mtxWorld.translation;
-            console.log(playerTranslation.toString());
+            // console.log(playerTranslation.toString());
             if (playerTranslation.x > MyGame.cameraXBounds[0] && playerTranslation.x < MyGame.cameraXBounds[1])
                 translation.x = playerTranslation.x;
             if (playerTranslation.y > MyGame.cameraYBounds[0] && playerTranslation.y < MyGame.cameraYBounds[1])
@@ -100,18 +100,16 @@ var MyGame;
     function processInput() {
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.SPACE]) {
             MyGame.player.act(MyGame.ACTION.JUMP);
-            // Audio.play(AUDIO.JUMP);
+            MyGame.Audio.play(MyGame.AUDIO.JUMP);
         }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.A]) {
             MyGame.player.act(MyGame.ACTION.WALK, MyGame.DIRECTION.LEFT);
-            // Audio.play(AUDIO.MOVE);
+            MyGame.Audio.play(MyGame.AUDIO.MOVE);
             return;
         }
         if (keysPressed[MyGame.ƒ.KEYBOARD_CODE.D]) {
             MyGame.player.act(MyGame.ACTION.WALK, MyGame.DIRECTION.RIGHT);
-            // setInterval(function () {
-            //   Audio.play(AUDIO.MOVE);
-            // }, 3000);
+            MyGame.Audio.play(MyGame.AUDIO.MOVE);
             return;
         }
         MyGame.player.act(MyGame.ACTION.IDLE);

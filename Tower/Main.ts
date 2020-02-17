@@ -49,7 +49,7 @@ namespace MyGame {
     cameraYBounds[1] = cameraYBounds[1] - 8.65;
 
     // console.log(game);
-    // Audio.start();
+    Audio.start();
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
     cmpCamera.pivot.translateZ(28);
@@ -77,7 +77,7 @@ namespace MyGame {
       processInput();
       let translation: ƒ.Vector3 = gui.cmpTransform.local.translation;
       let playerTranslation: ƒ.Vector3 = player.mtxWorld.translation;
-      console.log(playerTranslation.toString());
+      // console.log(playerTranslation.toString());
       if (playerTranslation.x > cameraXBounds[0] && playerTranslation.x < cameraXBounds[1])
         translation.x = playerTranslation.x;
       if (playerTranslation.y > cameraYBounds[0] && playerTranslation.y < cameraYBounds[1])
@@ -129,18 +129,16 @@ namespace MyGame {
   function processInput(): void {
     if (keysPressed[ƒ.KEYBOARD_CODE.SPACE]) {
       player.act(ACTION.JUMP);
-      // Audio.play(AUDIO.JUMP);
+      Audio.play(AUDIO.JUMP);
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.A]) {
       player.act(ACTION.WALK, DIRECTION.LEFT);
-      // Audio.play(AUDIO.MOVE);
+      Audio.play(AUDIO.MOVE);
       return;
     }
     if (keysPressed[ƒ.KEYBOARD_CODE.D]) {
       player.act(ACTION.WALK, DIRECTION.RIGHT);
-      // setInterval(function () {
-      //   Audio.play(AUDIO.MOVE);
-      // }, 3000);
+      Audio.play(AUDIO.MOVE);
       return;
     }
 

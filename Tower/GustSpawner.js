@@ -17,7 +17,7 @@ var MyGame;
             this.appendChild(hitBox);
             this.registerUpdate();
             ƒ.Time.game.setTimer(_lifespan, 1, () => {
-                ƒ.Loop.removeEventListener("loopFrame" /* LOOP_FRAME */, this.update);
+                this.removeUpdate();
                 this.getParent().removeChild(this);
             });
         }

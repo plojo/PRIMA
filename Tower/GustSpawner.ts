@@ -15,7 +15,7 @@ namespace MyGame {
             this.registerUpdate();
 
             ƒ.Time.game.setTimer(_lifespan, 1, () => {
-                ƒ.Loop.removeEventListener(ƒ.EVENT.LOOP_FRAME, this.update);
+                this.removeUpdate();
                 this.getParent().removeChild(this);
             });
 
