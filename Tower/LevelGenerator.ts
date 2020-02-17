@@ -6,9 +6,9 @@ namespace MyGame {
         FLOOR = "Floor",
         CEILING = "Ceiling",
         WALL = "Wall",
-        WALLRIGHT = "WallRight",
         GUST = "Gust",
-        GUSTSPAWNER = "GustSpawner"
+        GUSTSPAWNER = "GustSpawner",
+        CAMERABOUNDS = "CameraBounds"
     }
 
     interface TranslationJSON {
@@ -31,6 +31,13 @@ namespace MyGame {
 
     interface GustSpawnerJSON extends GenericJSON {
         parameter: ParameterJSON;
+    }
+
+    interface CameraBoundsJSON extends GenericJSON {
+        leftBound: number;
+        rightBound: number;
+        lowerBound: number;
+        upperBound: number;
     }
 
     interface LevelJSON {
@@ -56,15 +63,23 @@ namespace MyGame {
                     let tileJSON: GenericJSON = _object;
                     let tile: Tile = new Tile(_object.type);
                     tile.cmpTransform.local.translate(new ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
-                    staticObjects.appendChild(tile);
+                    level.appendChild(tile);
                     break;
                 case TYPE.GUSTSPAWNER:
                     let gustSpawnerJSON: GustSpawnerJSON = <GustSpawnerJSON>_object;
                     let gustSpawner: GustSpawner = new GustSpawner(gustSpawnerJSON.parameter.offset, gustSpawnerJSON.parameter.interval, gustSpawnerJSON.parameter.lifespan, gustSpawnerJSON.parameter.speed);
                     gustSpawner.cmpTransform.local.translate(new ƒ.Vector3(gustSpawnerJSON.translation.x, gustSpawnerJSON.translation.y, 0));
                     gustSpawner.cmpTransform.local.rotateZ(gustSpawnerJSON.parameter.rotation);
-                    dynamicObjects.appendChild(gustSpawner);
+                    level.appendChild(gustSpawner);
                     break;
+                case TYPE.CAMERABOUNDS:
+                    let cameraBoundsJSON: CameraBoundsJSON = <CameraBoundsJSON>_object;
+                    cameraXBounds = [];
+                    cameraYBounds = [];
+                    cameraXBounds[0] = cameraBoundsJSON.leftBound;
+                    cameraXBounds[1] = cameraBoundsJSON.rightBound;
+                    cameraYBounds[0] = cameraBoundsJSON.lowerBound;
+                    cameraYBounds[1] = cameraBoundsJSON.upperBound;
             }
         }
     }

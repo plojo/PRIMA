@@ -44,7 +44,7 @@ namespace MyGame {
 
       buttonType = MENUCOMPONENT.SOUND;
       sprite = new Sprite(buttonType);
-      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 9, 40, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
+      sprite.generateByGrid(_txtImage, ƒ.Rectangle.GET(0, 9, 39, 9), 1, ƒ.Vector2.ZERO(), resolutionQuad, ƒ.ORIGIN2D.CENTERLEFT);
       this.sprites.set(buttonType, sprite);
 
       buttonType = MENUCOMPONENT.ON;

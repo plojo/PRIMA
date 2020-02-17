@@ -10,11 +10,13 @@ namespace MyGame {
 
   export let game: ƒ.Node;
   export let level: ƒ.Node;
-  export let dynamicObjects: ƒ.Node;
-  export let staticObjects: ƒ.Node;
   export let player: Character;
   export let menu: Menu;
+
+  // this could be an own class
   let gui: ƒ.Node;
+  export let cameraXBounds: number[];
+  export let cameraYBounds: number[];
 
   let viewport: ƒ.Viewport;
 
@@ -25,10 +27,8 @@ namespace MyGame {
 
     game = new ƒ.Node("Game");
     player = new Character("Player");
-    player.cmpTransform.local.translate(new ƒ.Vector3(6, 3, 0));
+    player.cmpTransform.local.translate(new ƒ.Vector3(14, 1, 0));
     level = new ƒ.Node("Level");
-    staticObjects = new ƒ.Node("StaticObjects");
-    dynamicObjects = new ƒ.Node("DynamicObjects");
     gui = new ƒ.Node("GUI");
     gui.addComponent(new ƒ.ComponentTransform());
     menu = new Menu();
@@ -38,11 +38,14 @@ namespace MyGame {
     game.appendChild(level);
     game.appendChild(gui);
     gui.appendChild(menu);
-    level.appendChild(staticObjects);
-    level.appendChild(dynamicObjects);
 
     LevelGenerator.generateLevel("level.json");
-
+    
+    // adjust cameraBounds to account for screensize
+    cameraXBounds[0] = cameraXBounds[0] + 15.45;
+    cameraXBounds[1] = cameraXBounds[1] - 15.45;
+    cameraYBounds[0] = cameraYBounds[0] + 8.65;
+    cameraYBounds[1] = cameraYBounds[1] - 8.65;
 
     // console.log(game);
     // Audio.start();
@@ -60,8 +63,11 @@ namespace MyGame {
     document.addEventListener("keydown", handleKeyboard);
     document.addEventListener("keyup", handleKeyboard);
 
+    gui.cmpTransform.local.translate(new ƒ.Vector3(cameraXBounds[0], cameraYBounds[0]));
     ƒ.RenderManager.update();
     game.broadcastEvent(new CustomEvent("registerUpdate"));
+
+
     ƒ.Time.game.setScale(0);
     ƒ.Loop.addEventListener(ƒ.EVENT.LOOP_FRAME, update);
     ƒ.Loop.start(ƒ.LOOP_MODE.TIME_GAME, 60);
@@ -69,8 +75,12 @@ namespace MyGame {
     function update(_event: ƒ.Eventƒ): void {
       processInput();
       let translation: ƒ.Vector3 = gui.cmpTransform.local.translation;
-      translation.x = player.mtxWorld.translation.x;
-      translation.y = player.mtxWorld.translation.y;
+      let playerTranslation: ƒ.Vector3 = player.mtxWorld.translation;
+      console.log(playerTranslation.toString());
+      if (playerTranslation.x > cameraXBounds[0] && playerTranslation.x < cameraXBounds[1])
+        translation.x = playerTranslation.x;
+      if (playerTranslation.y > cameraYBounds[0] && playerTranslation.y < cameraYBounds[1])
+        translation.y = playerTranslation.y;
       gui.cmpTransform.local.translation = translation;
 
       viewport.draw();

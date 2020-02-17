@@ -8,9 +8,9 @@ var MyGame;
         TYPE["FLOOR"] = "Floor";
         TYPE["CEILING"] = "Ceiling";
         TYPE["WALL"] = "Wall";
-        TYPE["WALLRIGHT"] = "WallRight";
         TYPE["GUST"] = "Gust";
         TYPE["GUSTSPAWNER"] = "GustSpawner";
+        TYPE["CAMERABOUNDS"] = "CameraBounds";
     })(TYPE = MyGame.TYPE || (MyGame.TYPE = {}));
     class LevelGenerator {
         static generateLevel(_filename) {
@@ -30,15 +30,23 @@ var MyGame;
                     let tileJSON = _object;
                     let tile = new MyGame.Tile(_object.type);
                     tile.cmpTransform.local.translate(new MyGame.ƒ.Vector3(tileJSON.translation.x, tileJSON.translation.y, 0));
-                    MyGame.staticObjects.appendChild(tile);
+                    MyGame.level.appendChild(tile);
                     break;
                 case TYPE.GUSTSPAWNER:
                     let gustSpawnerJSON = _object;
                     let gustSpawner = new MyGame.GustSpawner(gustSpawnerJSON.parameter.offset, gustSpawnerJSON.parameter.interval, gustSpawnerJSON.parameter.lifespan, gustSpawnerJSON.parameter.speed);
                     gustSpawner.cmpTransform.local.translate(new MyGame.ƒ.Vector3(gustSpawnerJSON.translation.x, gustSpawnerJSON.translation.y, 0));
                     gustSpawner.cmpTransform.local.rotateZ(gustSpawnerJSON.parameter.rotation);
-                    MyGame.dynamicObjects.appendChild(gustSpawner);
+                    MyGame.level.appendChild(gustSpawner);
                     break;
+                case TYPE.CAMERABOUNDS:
+                    let cameraBoundsJSON = _object;
+                    MyGame.cameraXBounds = [];
+                    MyGame.cameraYBounds = [];
+                    MyGame.cameraXBounds[0] = cameraBoundsJSON.leftBound;
+                    MyGame.cameraXBounds[1] = cameraBoundsJSON.rightBound;
+                    MyGame.cameraYBounds[0] = cameraBoundsJSON.lowerBound;
+                    MyGame.cameraYBounds[1] = cameraBoundsJSON.upperBound;
             }
         }
     }

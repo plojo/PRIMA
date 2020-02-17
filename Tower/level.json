@@ -1,6 +1,13 @@
 {
   "objects": [
     {
+      "type": "CameraBounds",
+      "leftBound": 0,
+      "rightBound": 31,
+      "lowerBound": 0,
+      "upperBound": 20
+    },
+    {
       "type": "Platform",
       "translation": {
         "x": 3,
@@ -15,6 +22,13 @@
       }
     },
     {
+      "type": "Platform",
+      "translation": {
+        "x": 7.5,
+        "y": 5
+      }
+    },
+    {
       "type": "Wall",
       "translation": {
         "x": 0,
@@ -24,14 +38,14 @@
     {
       "type": "Wall",
       "translation": {
-        "x": 22,
+        "x": 28,
         "y": 0
       }
     },
     {
       "type": "Floor",
       "translation": {
-        "x": 0,
+        "x": 3,
         "y": 0
       }
     },

@@ -4,6 +4,7 @@ var MyGame;
     MyGame.ƒ = FudgeCore;
     window.addEventListener("load", test);
     let keysPressed = {};
+    // this could be an own class
     let gui;
     let viewport;
     function test() {
@@ -12,10 +13,8 @@ var MyGame;
         generateSprites();
         MyGame.game = new MyGame.ƒ.Node("Game");
         MyGame.player = new MyGame.Character("Player");
-        MyGame.player.cmpTransform.local.translate(new MyGame.ƒ.Vector3(6, 3, 0));
+        MyGame.player.cmpTransform.local.translate(new MyGame.ƒ.Vector3(14, 1, 0));
         MyGame.level = new MyGame.ƒ.Node("Level");
-        MyGame.staticObjects = new MyGame.ƒ.Node("StaticObjects");
-        MyGame.dynamicObjects = new MyGame.ƒ.Node("DynamicObjects");
         gui = new MyGame.ƒ.Node("GUI");
         gui.addComponent(new MyGame.ƒ.ComponentTransform());
         MyGame.menu = new MyGame.Menu();
@@ -24,9 +23,12 @@ var MyGame;
         MyGame.game.appendChild(MyGame.level);
         MyGame.game.appendChild(gui);
         gui.appendChild(MyGame.menu);
-        MyGame.level.appendChild(MyGame.staticObjects);
-        MyGame.level.appendChild(MyGame.dynamicObjects);
         MyGame.LevelGenerator.generateLevel("level.json");
+        // adjust cameraBounds to account for screensize
+        MyGame.cameraXBounds[0] = MyGame.cameraXBounds[0] + 15.45;
+        MyGame.cameraXBounds[1] = MyGame.cameraXBounds[1] - 15.45;
+        MyGame.cameraYBounds[0] = MyGame.cameraYBounds[0] + 8.65;
+        MyGame.cameraYBounds[1] = MyGame.cameraYBounds[1] - 8.65;
         // console.log(game);
         // Audio.start();
         let cmpCamera = new MyGame.ƒ.ComponentCamera();
@@ -39,6 +41,7 @@ var MyGame;
         viewport.draw();
         document.addEventListener("keydown", handleKeyboard);
         document.addEventListener("keyup", handleKeyboard);
+        gui.cmpTransform.local.translate(new MyGame.ƒ.Vector3(MyGame.cameraXBounds[0], MyGame.cameraYBounds[0]));
         MyGame.ƒ.RenderManager.update();
         MyGame.game.broadcastEvent(new CustomEvent("registerUpdate"));
         MyGame.ƒ.Time.game.setScale(0);
@@ -47,8 +50,12 @@ var MyGame;
         function update(_event) {
             processInput();
             let translation = gui.cmpTransform.local.translation;
-            translation.x = MyGame.player.mtxWorld.translation.x;
-            translation.y = MyGame.player.mtxWorld.translation.y;
+            let playerTranslation = MyGame.player.mtxWorld.translation;
+            console.log(playerTranslation.toString());
+            if (playerTranslation.x > MyGame.cameraXBounds[0] && playerTranslation.x < MyGame.cameraXBounds[1])
+                translation.x = playerTranslation.x;
+            if (playerTranslation.y > MyGame.cameraYBounds[0] && playerTranslation.y < MyGame.cameraYBounds[1])
+                translation.y = playerTranslation.y;
             gui.cmpTransform.local.translation = translation;
             viewport.draw();
         }

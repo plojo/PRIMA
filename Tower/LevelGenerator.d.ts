@@ -5,9 +5,9 @@ declare namespace MyGame {
         FLOOR = "Floor",
         CEILING = "Ceiling",
         WALL = "Wall",
-        WALLRIGHT = "WallRight",
         GUST = "Gust",
-        GUSTSPAWNER = "GustSpawner"
+        GUSTSPAWNER = "GustSpawner",
+        CAMERABOUNDS = "CameraBounds"
     }
     class LevelGenerator {
         static generateLevel(_filename: string): void;

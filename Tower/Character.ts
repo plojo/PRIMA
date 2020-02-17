@@ -224,6 +224,7 @@ namespace MyGame {
         this.grounded = true;
       } else {
         _translation.y = _tile.top + _hitBox.height;
+        this.jumpStart = false;
         this.animatedNodeSprite.play(ACTION.FALL);
       }
       this.speed.y = 0;
