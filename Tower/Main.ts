@@ -12,6 +12,7 @@ namespace MyGame {
   export let level: ƒ.Node;
   export let player: Character;
   export let menu: Menu;
+  let background: ƒ.Node = new ƒ.Node("Background");
 
   // this should be an own class but i'm running out of time
   let gui: ƒ.Node;
@@ -26,7 +27,27 @@ namespace MyGame {
     ƒ.RenderManager.initialize(true, false); // Transparence is weired
     generateSprites();
 
+    let backgrounds: NodeListOf<HTMLImageElement> = document.querySelectorAll(
+      "img"
+    );
+
+    let distance: number = 30;
+
+    for (let i: number = 0; i < backgrounds.length; i++) {
+      let txt: ƒ.TextureImage = new ƒ.TextureImage();
+      let backgroundImg: HTMLImageElement = backgrounds[i];
+      if (backgroundImg.id == "background") {
+        txt.image = backgroundImg;
+        let bg: Background = new Background(txt, distance);
+        bg.cmpTransform.local.scaleY(9 * 6);
+        bg.cmpTransform.local.scaleX(16 * 6);
+        background.appendChild(bg);
+        distance = distance - 3;
+      }
+    }
+
     game = new ƒ.Node("Game");
+    game.appendChild(background);
     player = new Character("Player");
     player.cmpTransform.local.translate(new ƒ.Vector3(14, 1, 0));
     level = new ƒ.Node("Level");
