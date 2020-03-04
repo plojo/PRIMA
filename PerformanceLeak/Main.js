@@ -6,6 +6,8 @@ var PerformanceLeak;
     let game;
     let viewport;
     let elapsedTime = 0;
+    let cmpMesh = new PerformanceLeak.ƒ.ComponentMesh(new PerformanceLeak.ƒ.MeshSprite());
+    let cmpMaterial = new PerformanceLeak.ƒ.ComponentMaterial(new PerformanceLeak.ƒ.Material("Node", PerformanceLeak.ƒ.ShaderUniColor, new PerformanceLeak.ƒ.CoatColored(PerformanceLeak.ƒ.Color.CSS("blue", 0.2))));
     function test() {
         let canvas = document.querySelector("canvas");
         PerformanceLeak.ƒ.RenderManager.initialize(true, false);
@@ -42,8 +44,7 @@ var PerformanceLeak;
         function createNode(_name) {
             let node = new PerformanceLeak.ƒ.Node(_name);
             node.addComponent(new PerformanceLeak.ƒ.ComponentTransform());
-            node.addComponent(new PerformanceLeak.ƒ.ComponentMaterial(new PerformanceLeak.ƒ.Material(_name, PerformanceLeak.ƒ.ShaderUniColor, new PerformanceLeak.ƒ.CoatColored(PerformanceLeak.ƒ.Color.CSS("blue", 0.2)))));
-            let cmpMesh = new PerformanceLeak.ƒ.ComponentMesh(new PerformanceLeak.ƒ.MeshSprite());
+            node.addComponent(cmpMaterial);
             node.addComponent(cmpMesh);
             game.appendChild(node);
             return node;

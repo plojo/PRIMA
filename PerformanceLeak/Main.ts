@@ -7,6 +7,8 @@ namespace PerformanceLeak {
     let game: ƒ.Node;
     let viewport: ƒ.Viewport;
     let elapsedTime: number = 0;
+    let cmpMesh: ƒ.ComponentMesh = new ƒ.ComponentMesh(new ƒ.MeshSprite());
+    let cmpMaterial: ƒ.ComponentMaterial = new ƒ.ComponentMaterial(new ƒ.Material("Node", ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("blue", 0.2))));
 
     function test(): void {
         let canvas: HTMLCanvasElement = document.querySelector("canvas");
@@ -54,8 +56,7 @@ namespace PerformanceLeak {
         function createNode(_name: string): ƒ.Node {
             let node: ƒ.Node = new ƒ.Node(_name);
             node.addComponent(new ƒ.ComponentTransform());
-            node.addComponent(new ƒ.ComponentMaterial(new ƒ.Material(_name, ƒ.ShaderUniColor, new ƒ.CoatColored(ƒ.Color.CSS("blue", 0.2)))));
-            let cmpMesh: ƒ.ComponentMesh = new ƒ.ComponentMesh(new ƒ.MeshSprite());
+            node.addComponent(cmpMaterial);
             node.addComponent(cmpMesh);
             game.appendChild(node);
             return node;
