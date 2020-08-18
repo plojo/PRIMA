@@ -10,7 +10,7 @@ declare namespace MyGame {
         CAMERABOUNDS = "CameraBounds"
     }
     class LevelGenerator {
-        static generateLevel(_filename: string): void;
+        static generateLevel(_filename: string): Promise<void>;
         private static generateObject;
     }
 }

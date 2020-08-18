@@ -26,8 +26,8 @@ declare namespace MyGame {
         private jumpStart;
         constructor(_name: string);
         static generateSprites(_txtImage: ƒ.TextureImage): void;
-        readonly hitBoxVertical: Collidable;
-        readonly hitBoxHorizontal: Collidable;
+        get hitBoxVertical(): Collidable;
+        get hitBoxHorizontal(): Collidable;
         act(_action: ACTION, _direction?: DIRECTION): void;
         protected update: (_event: ƒ.Eventƒ) => void;
         private absMinSigned;

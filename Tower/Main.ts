@@ -22,7 +22,7 @@ namespace MyGame {
 
   let viewport: ƒ.Viewport;
 
-  function start(): void {
+  async function start(): Promise<void> {
     let canvas: HTMLCanvasElement = document.querySelector("canvas");
     ƒ.RenderManager.initialize(false, false); // Transparence is weired
     generateSprites();
@@ -55,13 +55,13 @@ namespace MyGame {
     menu = new Menu();
     menu.gameSpeed = 1;
 
-    game.appendChild(player);
     game.appendChild(level);
     game.appendChild(gui);
     level.appendChild(background);
     gui.appendChild(menu);
 
-    LevelGenerator.generateLevel("level.json");
+    await LevelGenerator.generateLevel("level.json");
+    game.appendChild(player);
 
     // adjust cameraBounds to account for screensize
     cameraXBounds[0] = cameraXBounds[0] + 15.45;

@@ -11,7 +11,7 @@ var MyGame;
     MyGame.cameraXBounds = [0, 1000];
     MyGame.cameraYBounds = [0, 1000];
     let viewport;
-    function start() {
+    async function start() {
         let canvas = document.querySelector("canvas");
         MyGame.ƒ.RenderManager.initialize(false, false); // Transparence is weired
         generateSprites();
@@ -37,12 +37,12 @@ var MyGame;
         gui.addComponent(new MyGame.ƒ.ComponentTransform());
         MyGame.menu = new MyGame.Menu();
         MyGame.menu.gameSpeed = 1;
-        MyGame.game.appendChild(MyGame.player);
         MyGame.game.appendChild(MyGame.level);
         MyGame.game.appendChild(gui);
         MyGame.level.appendChild(background);
         gui.appendChild(MyGame.menu);
-        MyGame.LevelGenerator.generateLevel("level.json");
+        await MyGame.LevelGenerator.generateLevel("level.json");
+        MyGame.game.appendChild(MyGame.player);
         // adjust cameraBounds to account for screensize
         MyGame.cameraXBounds[0] = MyGame.cameraXBounds[0] + 15.45;
         MyGame.cameraXBounds[1] = MyGame.cameraXBounds[1] - 15.45;

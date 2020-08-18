@@ -45,11 +45,12 @@ namespace MyGame {
     }
 
     export class LevelGenerator {
-        public static generateLevel(_filename: string): void {
-            let file: XMLHttpRequest = new XMLHttpRequest();
-            file.open("GET", _filename, false);
-            file.send(null);
-            let levelJSON: LevelJSON = JSON.parse(file.responseText);
+        public static async generateLevel(_filename: string): Promise<void> {
+            // let file: XMLHttpRequest = new XMLHttpRequest();
+            // file.open("GET", _filename, false);
+            // file.send(null);
+            let levelJSON: LevelJSON = await window.fetch(_filename)
+            .then(_response => _response.json());
             for (let object of levelJSON.objects) {
                 this.generateObject(object);
             }

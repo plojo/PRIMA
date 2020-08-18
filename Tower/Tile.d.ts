@@ -4,7 +4,7 @@ declare namespace MyGame {
         static hitBoxes: ƒ.Rectangle[];
         protected static sprites: Map<TYPE, Sprite>;
         constructor(_type: TYPE);
-        readonly hitBox: Collidable;
+        get hitBox(): Collidable;
         static generateSprites(_txtImage: ƒ.TextureImage): void;
     }
 }

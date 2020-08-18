@@ -3,7 +3,7 @@ declare namespace MyGame {
     class AnimatedNodeSprite extends ƒ.Node {
         action: ACTION;
         private gameFrameCounter;
-        readonly actionNode: NodeSprite;
+        get actionNode(): NodeSprite;
         play(_action: ACTION): void;
         getNodeSprite(_action: ACTION): NodeSprite;
         registerUpdate(): void;

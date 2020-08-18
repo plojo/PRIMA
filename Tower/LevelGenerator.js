@@ -13,11 +13,12 @@ var MyGame;
         TYPE["CAMERABOUNDS"] = "CameraBounds";
     })(TYPE = MyGame.TYPE || (MyGame.TYPE = {}));
     class LevelGenerator {
-        static generateLevel(_filename) {
-            let file = new XMLHttpRequest();
-            file.open("GET", _filename, false);
-            file.send(null);
-            let levelJSON = JSON.parse(file.responseText);
+        static async generateLevel(_filename) {
+            // let file: XMLHttpRequest = new XMLHttpRequest();
+            // file.open("GET", _filename, false);
+            // file.send(null);
+            let levelJSON = await window.fetch(_filename)
+                .then(_response => _response.json());
             for (let object of levelJSON.objects) {
                 this.generateObject(object);
             }
