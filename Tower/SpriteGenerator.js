@@ -3,11 +3,17 @@ var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
     class SpriteFrame {
+        rectTexture;
+        pivot;
+        material;
+        timeScale;
     }
     MyGame.SpriteFrame = SpriteFrame;
     class Sprite {
+        static mesh = new ƒ.MeshSprite();
+        frames = [];
+        name;
         constructor(_name) {
-            this.frames = [];
             this.name = _name;
         }
         static getMesh() {
@@ -72,14 +78,16 @@ var MyGame;
             return frame;
         }
     }
-    Sprite.mesh = new ƒ.MeshSprite();
     MyGame.Sprite = Sprite;
     class NodeSprite extends ƒ.Node {
+        sprite;
+        frameCurrent = 0;
+        spriteFrameInterval = 10; // 
+        cmpMesh;
+        cmpMaterial;
+        direction = 1;
         constructor(_name, _sprite) {
             super(_name);
-            this.frameCurrent = 0;
-            this.spriteFrameInterval = 10; // 
-            this.direction = 1;
             this.sprite = _sprite;
             this.cmpMesh = new ƒ.ComponentMesh(Sprite.getMesh());
             this.cmpMaterial = new ƒ.ComponentMaterial();

@@ -14,8 +14,11 @@ var MyGame;
     })(AUDIO = MyGame.AUDIO || (MyGame.AUDIO = {}));
     // this structure is from https://github.com/JirkaDellOro/Episoma
     class Audio extends ƒ.Node {
-        static start() {
-            Audio.appendAudio();
+        static on = true;
+        static components = new Map();
+        static node = new Audio("Audio");
+        static async start() {
+            await Audio.appendAudio();
             MyGame.game.appendChild(Audio.node);
             ƒ.AudioManager.default.listenTo(Audio.node);
         }
@@ -53,8 +56,5 @@ var MyGame;
             Audio.components.forEach(element => Audio.node.addComponent(element));
         }
     }
-    Audio.on = true;
-    Audio.components = new Map();
-    Audio.node = new Audio("Audio");
     MyGame.Audio = Audio;
 })(MyGame || (MyGame = {}));

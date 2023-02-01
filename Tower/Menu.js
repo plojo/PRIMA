@@ -22,6 +22,7 @@ var MyGame;
         MENUCOMPONENT["TITLE"] = "Title";
     })(MENUCOMPONENT = MyGame.MENUCOMPONENT || (MyGame.MENUCOMPONENT = {}));
     class MenuComponent extends MyGame.NodeSprite {
+        static sprites;
         constructor(_menuComponent) {
             super(_menuComponent, MenuComponent.sprites.get(_menuComponent));
             this.addComponent(new ƒ.ComponentTransform());
@@ -85,12 +86,15 @@ var MyGame;
     }
     MyGame.MenuComponent = MenuComponent;
     class Menu extends ƒ.Node {
+        rowOffsetY = 1.5;
+        gameSpeed;
+        leftColumnOptionAmount;
+        selection = 0;
+        soundOptions = [];
+        speedOptions = [];
+        actionStart;
         constructor() {
             super(MENUCOMPONENT.MENU);
-            this.rowOffsetY = 1.5;
-            this.selection = 0;
-            this.soundOptions = [];
-            this.speedOptions = [];
             this.addComponent(new ƒ.ComponentTransform());
             this.cmpTransform.local.translateZ(10);
             let component = new MenuComponent(MENUCOMPONENT.TITLE);

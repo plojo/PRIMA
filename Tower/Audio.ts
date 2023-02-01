@@ -18,8 +18,8 @@ namespace MyGame {
     private static components: Map<AUDIO, ƒ.ComponentAudio> = new Map();
     private static readonly node: Audio = new Audio("Audio");
 
-    public static start(): void {
-      Audio.appendAudio();
+    public static async start(): Promise<void> {
+      await Audio.appendAudio();
       game.appendChild(Audio.node);
       ƒ.AudioManager.default.listenTo(Audio.node);
     }

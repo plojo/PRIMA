@@ -3,15 +3,10 @@ var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
     class Gust extends MyGame.Actor {
+        speed;
+        lastFrameCollision = false;
         constructor(_speed, _lifespan) {
             super(MyGame.TYPE.GUST, Gust.sprites);
-            this.lastFrameCollision = false;
-            this.update = (_event) => {
-                let timeFrame = ƒ.Loop.timeFrameGame / 1000; // seconds
-                let distance = ƒ.Vector3.SCALE(this.speed, timeFrame);
-                this.cmpTransform.local.translate(distance);
-                this.checkCollision(distance);
-            };
             this.speed = _speed;
             let hitBox = new MyGame.Collidable("HitBox");
             hitBox.cmpTransform.local.scaleY(1.5);
@@ -35,6 +30,12 @@ var MyGame;
         get hitBox() {
             return this.getChildrenByName("HitBox")[0];
         }
+        update = (_event) => {
+            let timeFrame = ƒ.Loop.timeFrameGame / 1000; // seconds
+            let distance = ƒ.Vector3.SCALE(this.speed, timeFrame);
+            this.cmpTransform.local.translate(distance);
+            this.checkCollision(distance);
+        };
         checkCollision(_distance) {
             if (this.hitBox.getRectWorld().collides(MyGame.player.hitBoxHorizontal.getRectWorld())) {
                 this.lastFrameCollision = true;
@@ -48,6 +49,10 @@ var MyGame;
     }
     MyGame.Gust = Gust;
     class GustSpawner extends MyGame.Actor {
+        elapsedTime = 0;
+        interval;
+        gustLifespan;
+        gustSpeed;
         /**
          *
          * @param _name name
@@ -58,16 +63,6 @@ var MyGame;
          */
         constructor(_offset = 0, _interval, _gustLifespan, _gustSpeed) {
             super(MyGame.TYPE.GUSTSPAWNER, []);
-            this.elapsedTime = 0;
-            this.update = (_event) => {
-                let timeFrame = ƒ.Loop.timeFrameGame;
-                this.elapsedTime += timeFrame;
-                if (this.elapsedTime >= this.interval) {
-                    let gust = new Gust(ƒ.Vector3.X(this.gustSpeed), this.gustLifespan);
-                    this.appendChild(gust);
-                    this.elapsedTime = 0;
-                }
-            };
             this.interval = _interval * 1000;
             this.gustLifespan = _gustLifespan * 1000;
             this.gustSpeed = _gustSpeed;
@@ -75,6 +70,15 @@ var MyGame;
                 this.registerUpdate();
             });
         }
+        update = (_event) => {
+            let timeFrame = ƒ.Loop.timeFrameGame;
+            this.elapsedTime += timeFrame;
+            if (this.elapsedTime >= this.interval) {
+                let gust = new Gust(ƒ.Vector3.X(this.gustSpeed), this.gustLifespan);
+                this.appendChild(gust);
+                this.elapsedTime = 0;
+            }
+        };
     }
     MyGame.GustSpawner = GustSpawner;
 })(MyGame || (MyGame = {}));

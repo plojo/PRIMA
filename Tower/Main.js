@@ -42,6 +42,7 @@ var MyGame;
         MyGame.level.appendChild(background);
         gui.appendChild(MyGame.menu);
         await MyGame.LevelGenerator.generateLevel("level.json");
+        await MyGame.Audio.start();
         MyGame.game.appendChild(MyGame.player);
         // adjust cameraBounds to account for screensize
         MyGame.cameraXBounds[0] = MyGame.cameraXBounds[0] + 15.45;
@@ -49,7 +50,6 @@ var MyGame;
         MyGame.cameraYBounds[0] = MyGame.cameraYBounds[0] + 8.65;
         MyGame.cameraYBounds[1] = MyGame.cameraYBounds[1] - 8.65;
         // console.log(game);
-        MyGame.Audio.start();
         let cmpCamera = new MyGame.ƒ.ComponentCamera();
         cmpCamera.pivot.translateZ(28);
         cmpCamera.pivot.lookAt(MyGame.ƒ.Vector3.ZERO());

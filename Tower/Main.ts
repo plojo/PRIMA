@@ -61,6 +61,7 @@ namespace MyGame {
     gui.appendChild(menu);
 
     await LevelGenerator.generateLevel("level.json");
+    await Audio.start();
     game.appendChild(player);
 
     // adjust cameraBounds to account for screensize
@@ -70,7 +71,7 @@ namespace MyGame {
     cameraYBounds[1] = cameraYBounds[1] - 8.65;
 
     // console.log(game);
-    Audio.start();
+
 
     let cmpCamera: ƒ.ComponentCamera = new ƒ.ComponentCamera();
     cmpCamera.pivot.translateZ(28);

@@ -3,6 +3,7 @@ var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
     class Actor extends ƒ.Node {
+        static sprites; // this should be abstract...
         constructor(_name, _sprites) {
             super(_name);
             this.addComponent(new ƒ.ComponentTransform());

@@ -3,6 +3,8 @@ var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
     class Tile extends MyGame.NodeSprite {
+        static hitBoxes = [];
+        static sprites;
         constructor(_type) {
             super(_type, Tile.sprites.get(_type));
             this.addComponent(new ƒ.ComponentTransform());
@@ -36,6 +38,5 @@ var MyGame;
             // this.sprites.set(TYPE.WALLLEFT, sprite);
         }
     }
-    Tile.hitBoxes = [];
     MyGame.Tile = Tile;
 })(MyGame || (MyGame = {}));

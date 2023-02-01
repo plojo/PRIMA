@@ -17,27 +17,20 @@ var MyGame;
         DIRECTION[DIRECTION["RIGHT"] = 1] = "RIGHT";
     })(DIRECTION = MyGame.DIRECTION || (MyGame.DIRECTION = {}));
     class Character extends MyGame.Actor {
+        // one unit = one meter
+        static speedMax = new ƒ.Vector2(6, 30); // units per second
+        static distanceMax = new ƒ.Vector2(0.2, 0.2);
+        static gravity = 20; //units per square second
+        static friction = 5 * Character.speedMax.x; // = 15 //units per square second
+        static accelerationGround = 10 * Character.speedMax.x; // = 30 //units per square second, used to calculate ground movement
+        static accelerationMidAir = 1.5 * Character.speedMax.x; // 4.5 //units per square second, used to calculate mid air movement
+        static jumpSpeed = 8;
+        acceleration = new ƒ.Vector3(0, -Character.gravity, 0);
+        speed = ƒ.Vector3.ZERO();
+        grounded;
+        jumpStart = false;
         constructor(_name) {
             super(_name, Character.sprites);
-            this.acceleration = new ƒ.Vector3(0, -Character.gravity, 0);
-            this.speed = ƒ.Vector3.ZERO();
-            this.jumpStart = false;
-            this.update = (_event) => {
-                let timeFrame = ƒ.Loop.timeFrameGame / 1000; // seconds
-                // console.log("acc: " + this.acceleration.x);
-                this.speed = ƒ.Vector3.SUM(this.speed, ƒ.Vector3.SCALE(this.acceleration, timeFrame));
-                this.speed.x = this.absMinSigned(this.speed.x, Character.speedMax.x);
-                this.speed.y = this.absMinSigned(this.speed.y, Character.speedMax.y);
-                // console.log("speed: " + this.speed.x);
-                // this.posLast = this.cmpTransform.local.translation;
-                let distance = ƒ.Vector3.SCALE(this.speed, timeFrame);
-                distance.x = this.absMinSigned(distance.x, Character.distanceMax.x);
-                distance.y = this.absMinSigned(distance.y, Character.distanceMax.y);
-                this.grounded = false;
-                this.checkCollision(distance);
-                this.cmpTransform.local.translate(distance);
-                // console.log("y: " + this.cmpTransform.local.translation.y);
-            };
             let hitBox = new MyGame.Collidable("HitBoxVertical");
             // hitBox.cmpTransform.local = ƒ.Matrix4x4.MULTIPLICATION(hitBox.cmpTransform.local,  this.animatedNodeSprite.getNodeSprite(ACTION.IDLE).cmpMesh.pivot);
             hitBox.cmpTransform.local.scaleY(1.8);
@@ -159,6 +152,22 @@ var MyGame;
                     break;
             }
         }
+        update = (_event) => {
+            let timeFrame = ƒ.Loop.timeFrameGame / 1000; // seconds
+            // console.log("acc: " + this.acceleration.x);
+            this.speed = ƒ.Vector3.SUM(this.speed, ƒ.Vector3.SCALE(this.acceleration, timeFrame));
+            this.speed.x = this.absMinSigned(this.speed.x, Character.speedMax.x);
+            this.speed.y = this.absMinSigned(this.speed.y, Character.speedMax.y);
+            // console.log("speed: " + this.speed.x);
+            // this.posLast = this.cmpTransform.local.translation;
+            let distance = ƒ.Vector3.SCALE(this.speed, timeFrame);
+            distance.x = this.absMinSigned(distance.x, Character.distanceMax.x);
+            distance.y = this.absMinSigned(distance.y, Character.distanceMax.y);
+            this.grounded = false;
+            this.checkCollision(distance);
+            this.cmpTransform.local.translate(distance);
+            // console.log("y: " + this.cmpTransform.local.translation.y);
+        };
         absMinSigned(x, y) {
             return Math.sign(x) * Math.min(Math.abs(x), Math.abs(y));
         }
@@ -212,13 +221,5 @@ var MyGame;
             this.speed.x = 0;
         }
     }
-    // one unit = one meter
-    Character.speedMax = new ƒ.Vector2(6, 30); // units per second
-    Character.distanceMax = new ƒ.Vector2(0.2, 0.2);
-    Character.gravity = 20; //units per square second
-    Character.friction = 5 * Character.speedMax.x; // = 15 //units per square second
-    Character.accelerationGround = 10 * Character.speedMax.x; // = 30 //units per square second, used to calculate ground movement
-    Character.accelerationMidAir = 1.5 * Character.speedMax.x; // 4.5 //units per square second, used to calculate mid air movement
-    Character.jumpSpeed = 8;
     MyGame.Character = Character;
 })(MyGame || (MyGame = {}));

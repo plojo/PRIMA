@@ -3,6 +3,7 @@ var MyGame;
 (function (MyGame) {
     var ƒ = FudgeCore;
     class Background extends ƒ.Node {
+        static mesh = new ƒ.MeshSprite();
         constructor(image, dist) {
             super("Background" + dist.toString());
             this.addComponent(new ƒ.ComponentTransform());
@@ -19,6 +20,5 @@ var MyGame;
             this.addComponent(cmpMesh);
         }
     }
-    Background.mesh = new ƒ.MeshSprite();
     MyGame.Background = Background;
 })(MyGame || (MyGame = {}));
